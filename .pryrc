@@ -1,3 +1,8 @@
+# add some pry aliases
+Pry.commands.alias_command 'c', 'continue'
+Pry.commands.alias_command 's', 'step'
+Pry.commands.alias_command 'n', 'next'
+
 # switch default editor for pry to sublime text
 Pry.config.editor = proc { |file, line| %("subl" "#{file}":#{line}) }
 
