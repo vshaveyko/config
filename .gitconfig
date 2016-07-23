@@ -1,8 +1,8 @@
 [user]
-	name = vs
-	email = vshaveyko@gmail.com
+  name = vs
+  email = vshaveyko@gmail.com
 [branch]
-	autosetuprebase = always
+  autosetuprebase = always
 [alias]
   a = add --all
   a. = add .
