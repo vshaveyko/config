@@ -86,11 +86,10 @@
   s = status
   sb = status -s -b
   #############
-  s = stash save
+  st = stash save
   sp = stash pop
   sl = stash list
   sa = stash apply
-  saf = stash apply stash@{0}
 
   sc = stash clear
   sd = stash drop
