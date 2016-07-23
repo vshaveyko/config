@@ -4,8 +4,8 @@
 [branch]
   autosetuprebase = always
 [alias]
-  a = add --all
-  a. = add .
+  al = add --all
+  a = add .
   #############
   b = branch
   ba = branch -a
