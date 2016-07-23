@@ -28,7 +28,7 @@
   dck = diff --cached --check
   #############
   co = checkout
-  cob = checkout -b
+  cb = checkout -b
   #############
   p = push
   pf = push -f
