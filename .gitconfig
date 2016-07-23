@@ -19,6 +19,9 @@
   cem = commit --allow-empty -m
   cam = commit -am
   #############
+  co = checkout
+  cb = checkout -b
+  #############
   d = diff
   dc = diff --cached
   dl = difftool
@@ -26,9 +29,6 @@
   dk = diff --check
   dp = diff --patience
   dck = diff --cached --check
-  #############
-  co = checkout
-  cb = checkout -b
   #############
   p = push
   pf = push -f
