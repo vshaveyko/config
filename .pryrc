@@ -1,4 +1,4 @@
-#tch default editor for pry to sublime text
+# switch default editor for pry to sublime text
 Pry.config.editor = proc { |file, line| %("subl" "#{file}":#{line}) }
 
 # format prompt to be <Rails version>@<ruby version>(<object>)>
