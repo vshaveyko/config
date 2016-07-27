@@ -9,9 +9,9 @@ map <C-\> :NERDTreeToggle<CR>
 inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v
 
-vnoremap <C-z> <Esc>uv
-inoremap <C-z> <Esc>ui
-nnoremap <C-z> u
+vnoremap <C-u> <Esc>uv
+inoremap <C-u> <Esc>ui
+nnoremap <C-u> u
 
 inoremap <C-j> <Esc>O
 nnoremap <C-j> O<Esc>

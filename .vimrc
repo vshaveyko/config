@@ -6,7 +6,7 @@ syntax on             " Enable syntax highlighting
 " filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
-
+set hlsearch
 " open line numbers
 set number  
 

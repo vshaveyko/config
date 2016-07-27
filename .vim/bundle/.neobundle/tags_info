@@ -1,6 +1,7 @@
 JSON.vim
 NrrwRgn
 ag.vim
+auto-pairs
 ctrlp.vim
 jade.vim
 neobundle.vim
@@ -21,3 +22,4 @@ vim-ruby
 vim-surround
 vim-syntastic-coffee
 vim-textobj-rubyblock
+vim-textobj-user

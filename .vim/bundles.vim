@@ -12,7 +12,7 @@ NeoBundle 'kien/ctrlp.vim'
 " Multiple cursors like sublime alt-F3
 NeoBundle 'terryma/vim-multiple-cursors'
 
-NeoBundle 'Shougo/neosnippet.vim'
+" NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-cucumber'
@@ -32,5 +32,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'powerman/vim-plugin-ruscmd'
 
 NeoBundle 'tpope/vim-surround'
+
+NeoBundle 'kana/vim-textobj-user' " rubyblock dependency
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 call neobundle#end()
