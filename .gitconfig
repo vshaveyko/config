@@ -12,8 +12,8 @@
   bd = branch -D
   br = branch -r
   #############
-  c = commit -m
-  cm = commit
+  c = commit
+  cm = commit -m
   ca = commit -a
   cd = commit --amend
   cem = commit --allow-empty -m
