@@ -1,6 +1,9 @@
+" Map leader key
+let mapleader=","
 " Toggle comments on Shift-/
 noremap ? :call NERDComment(0,"toggle")<C-m>
-"
+" Enter in normal mode to add line
+nnoremap <Enter> i<Enter><Esc>
 " default sublime mapping for starters
 map <C-f> /
 map <C-a> GVgg
@@ -30,8 +33,13 @@ noremap <leader>2 2gt
 noremap <leader>3 3gt
 noremap <leader>4 4gt
 noremap <leader>5 5gt
-noremap <leader>` :tabnew <Enter>
+noremap <leader>` <C-W>T
 noremap < <<
 noremap > >>
 noremap J 10j
 noremap K 10k
+
+nnoremap <leader>. :CtrlPTag<cr>
+" Multiple cursors Hackz
+nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>

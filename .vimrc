@@ -1,6 +1,12 @@
 source ~/.vim/settings/neobundle.vim
 source ~/.vim/bundles.vim
 source ~/.vim/binding.vim
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+" open all config fiels in vim/cfg
+for cfgfile in split(globpath("~/.vim/cfg", "*.vim"), '\n') 
+  execute('source '.cfgfile)
+endfor
 
 syntax on             " Enable syntax highlighting
 " filetype on           " Enable filetype detection
@@ -9,9 +15,6 @@ filetype plugin on    " Enable filetype-specific plugins
 set hlsearch
 " open line numbers
 set number  
-
-" open NerdTree automagically on vim start
-autocmd vimenter * NERDTree
 
 " search by current NerdTree dir
 let g:NERDTreeChDirMode       = 2
@@ -30,7 +33,7 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " color settings
 set background=dark
-colorscheme elflord
+colorscheme srcery
 
 " neocomplete settings
 let g:neocomplete#enable_at_startup = 1
@@ -41,3 +44,17 @@ set autoindent
 
 " path for finders
 set path=$PWD/**
+" tags support
+set tags+=gems.tags
+" Fix multiplecursors + neocomplete combo
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction

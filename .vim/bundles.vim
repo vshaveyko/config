@@ -3,10 +3,12 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundle 'jiangmiao/auto-pairs'
 " File Tree
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 " Silver searcher interface
 NeoBundle 'rking/ag.vim'
 " comment stuff
 NeoBundle 'scrooloose/nerdcommenter'
+
 " CtrlP sublime search
 NeoBundle 'kien/ctrlp.vim'
 " Multiple cursors like sublime alt-F3
