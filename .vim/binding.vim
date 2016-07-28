@@ -5,8 +5,9 @@ noremap ? :call NERDComment(0,"toggle")<C-m>
 " Enter in normal mode to add line
 nnoremap <Enter> i<Enter><Esc>
 " default sublime mapping for starters
-map <C-f> /
-map <C-a> GVgg
+map <C-f> :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+vnoremap <C-f> y:Ag <C-R>*<CR>
+
 map <C-\> :NERDTreeToggle<CR>
 
 inoremap <C-r> <Esc><C-r>i

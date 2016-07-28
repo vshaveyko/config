@@ -7,6 +7,8 @@
 #### Vim
 .vimrc / .vim
 
+Optional : the_silver_searcher
+
 Run: ./install.sh - add symlinks for configs to current dir; ./guake.sh - change guake colors to adapt for vim colorscheme
 
 Scripts may need chmod +x *ScriptFileName*
