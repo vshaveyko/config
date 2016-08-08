@@ -17,13 +17,13 @@ vnoremap <C-u> <Esc>uv
 inoremap <C-u> <Esc>ui
 nnoremap <C-u> u
 
-inoremap <C-j> <Esc>O
-nnoremap <C-j> O<Esc>
-vnoremap <C-j> <Esc>O<Esc>v
+inoremap <C-k> <Esc>O
+nnoremap <C-k> O<Esc>
+vnoremap <C-k> <Esc>O<Esc>v
 
-inoremap <C-k> <Esc>o
-nnoremap <C-k> o<Esc>
-vnoremap <C-k> <Esc>o<Esc>v
+inoremap <C-j> <Esc>o
+nnoremap <C-j> o<Esc>
+vnoremap <C-j> <Esc>o<Esc>v
 
 " search for visually selected file with CtrlP plugin
 vnoremap <C-p> y<Esc><C-p><C-v><CR>

@@ -1,3 +1,5 @@
+set t_Co=256
+
 source ~/.vim/settings/neobundle.vim
 source ~/.vim/bundles.vim
 source ~/.vim/binding.vim
@@ -36,7 +38,7 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " color settings
 set background=dark
-colorscheme srcery
+colorscheme hybrid 
 
 " neocomplete settings
 let g:neocomplete#enable_at_startup = 1

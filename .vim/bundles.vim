@@ -1,5 +1,8 @@
 call neobundle#begin(expand('~/.vim/bundle/'))
 
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'jiangmiao/auto-pairs'
 " File Tree
 NeoBundle 'scrooloose/nerdtree'
@@ -18,6 +21,7 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-cucumber'
+
 NeoBundle 'JSON.vim'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'tpope/vim-surround'
