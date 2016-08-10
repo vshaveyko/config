@@ -1,5 +1,5 @@
 set t_Co=256
-
+let g:ycm_server_python_interpreter = '/usr/bin/python'
 source ~/.vim/settings/neobundle.vim
 source ~/.vim/bundles.vim
 source ~/.vim/binding.vim
@@ -38,6 +38,7 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " color settings
 set background=dark
+let g:hybrid_custom_term_colors = 1
 colorscheme hybrid 
 
 " neocomplete settings
