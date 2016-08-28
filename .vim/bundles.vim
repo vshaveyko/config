@@ -18,6 +18,7 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vitaly/vim-syntastic-coffee'
 NeoBundle 'vim-scripts/jade.vim'
+NeoBundle 'slim-template/vim-slim'
 NeoBundle 'josemarluedke/vim-rspec'
 NeoBundle 'chrisbra/NrrwRgn'
 
