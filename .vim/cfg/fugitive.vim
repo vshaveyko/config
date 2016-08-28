@@ -12,5 +12,5 @@ nnoremap <space>gp :Ggrep<Space>
 nnoremap <space>gm :Gmove<Space>
 nnoremap <space>gb :Git branch<Space>
 nnoremap <space>go :Git checkout<Space>
-nnoremap <space>gps :!git push<CR>
-nnoremap <space>gpl :!git pull<CR>
+nnoremap <space>gps :silent !git push<CR><C-l>
+nnoremap <space>gpl :silent !git pull<CR><C-l>
