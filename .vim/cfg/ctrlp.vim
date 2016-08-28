@@ -19,9 +19,8 @@ if executable('ag')
         \ --ignore "**/*.pyc"
         \ -g ""'
 endif
-" bind \ (backward slash) to grep shortcut
-" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
+
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
 " search by current NerdTree dir
 let g:NERDTreeChDirMode       = 2

@@ -4,9 +4,8 @@ let mapleader=","
 noremap ? :call NERDComment(0,"toggle")<C-m>
 " Enter in normal mode to add line
 nnoremap <Enter> i<Enter><Esc>
-" default sublime mapping for starters
-map <C-f> :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-vnoremap <C-f> y:Ag <C-R>*<CR>
+" bind \ (backward slash) to grep shortcut
+nnoremap \ :Search<SPACE>
 
 map <C-\> :NERDTreeToggle<CR>
 
