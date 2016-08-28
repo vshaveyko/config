@@ -1,5 +1,4 @@
 call neobundle#begin(expand('~/.vim/bundle/'))
-
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'jiangmiao/auto-pairs'
 " File Tree
@@ -12,8 +11,6 @@ NeoBundle 'scrooloose/nerdcommenter'
 
 " CtrlP sublime search
 NeoBundle 'kien/ctrlp.vim'
-" Multiple cursors like sublime alt-F3
-NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'JSON.vim'
