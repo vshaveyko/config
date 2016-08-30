@@ -8,3 +8,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDSpaceDelims = 1
+ 
+let NERDTreeIgnore=['.swp']
+let NERDTreeRespectWildIgnore=1
