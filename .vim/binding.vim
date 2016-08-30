@@ -7,6 +7,7 @@ nnoremap <Enter> i<Enter><Esc>
 " bind \ (backward slash) to grep shortcut
 nnoremap \ :Search<SPACE>
 
+map <Bar> :NERDTreeFind<CR>
 map <C-\> :NERDTreeToggle<CR>
 
 inoremap <C-r> <Esc><C-r>i
