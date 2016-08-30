@@ -33,3 +33,5 @@ set autoindent
 set path=$PWD/**
 " tags support
 set tags+=gems.tags
+
+autocmd FileType rb, rabl, coffee, jade autocmd BufWritePre <buffer> %s/\s\+$//e
