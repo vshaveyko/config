@@ -4,7 +4,7 @@ Pry.commands.alias_command 's', 'step'
 Pry.commands.alias_command 'n', 'next'
 
 # switch default editor for pry to sublime text
-Pry.config.editor = proc { |file, line| %("subl" "#{file}":#{line}) }
+Pry.config.editor = 'vim'
 
 # format prompt to be <Rails version>@<ruby version>(<object>)>
 Pry.config.prompt = proc do |obj, level, _|
