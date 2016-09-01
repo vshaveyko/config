@@ -1,0 +1,15 @@
+/tmp/
+/node_modules/
+
+custom_plan.rb
+zeus.json
+
+tasks/cucumber.rake
+**/db/test.rake
+/knapsack.rb
+**/Rakefile
+
+*.sw?
+
+lib/tasks/cucumber.rake
+
