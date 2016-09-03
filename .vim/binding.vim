@@ -1,5 +1,4 @@
 " Map leader key
-let mapleader=","
 " Toggle comments on Shift-/
 noremap ? :call NERDComment(0,"toggle")<C-m>
 " Enter in normal mode to add line
@@ -31,10 +30,30 @@ noremap <leader>3 3gt
 noremap <leader>4 4gt
 noremap <leader>5 5gt
 noremap <leader>` <C-W>T
-noremap < <<
-noremap > >>
+
+noremap < <gv
+noremap > >gv
 
 nnoremap <leader>. :CtrlPTag<cr>
 " Multiple cursors Hackz
 nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
 vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+
+" Split navigation using arrows
+nnoremap <Right> <C-w>l
+nnoremap <Left> <C-w>h
+nnoremap <Up> <C-w>k
+nnoremap <Down> <C-w>j
+
+noremap j gj
+noremap k gk
+
+" Tab configuration
+map <leader>tn :tabnew<cr>
+map <leader>te :tabedit
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" Replace
+nnoremap <leader>s :%s//<left>
+vnoremap <leader>s :s//<left>

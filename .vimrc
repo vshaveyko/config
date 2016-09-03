@@ -6,7 +6,7 @@ source ~/.vim/binding.vim
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 " open all config fiels in vim/cfg
-for cfgfile in split(globpath("~/.vim/cfg", "*.vim"), '\n') 
+for cfgfile in split(globpath("~/.vim/cfg", "*.vim"), '\n')
   execute('source '.cfgfile)
 endfor
 
@@ -17,17 +17,18 @@ filetype plugin on    " Enable filetype-specific plugins
 
 "highlight search with /
 set hlsearch
+set ignorecase
+set incsearch
+
 " open line numbers
-set number  
+set number
 
 " color settings
 set background=dark
 let g:hybrid_custom_term_colors = 1
-colorscheme hybrid 
+colorscheme hybrid
 
-set expandtab
 set tabstop=2 shiftwidth=2 softtabstop=2
-set autoindent
 
 " path for finders
 set path=$PWD/**
@@ -35,3 +36,38 @@ set path=$PWD/**
 set tags+=gems.tags
 
 autocmd FileType rb, rabl, coffee, jade autocmd BufWritePre <buffer> %s/\s\+$//e
+set spelllang=ru_ru,en_us           " spellchecker for english and russian
+set nobackup
+set noswapfile
+set confirm
+
+" Encoding
+set encoding=utf8
+set fileencoding=utf8
+set termencoding=utf-8
+set fileencodings=utf8,cp1251
+
+" Input
+let mapleader=","
+set iminsert=0                      " english as default keyboard layout
+set expandtab                       " convert tab to spaces
+set autoindent                      " inherit indent from previous line
+set formatoptions-=o                " dont continue comments when pushing o/O
+autocmd BufWritePre * :%s/\s\+$//e  " Delete spaces from end on lines
+autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$## " Delete trailing lines at the end of file
+autocmd FocusLost * silent! wh      " Auto save files when focus is lost
+autocmd BufLeave * silent! :w       "   or leave buffer
+
+" View
+set ruler                           " show cursor position
+set mousehide                       " hide mouser corse in typing
+set cursorline                      " highlight current position of cursor
+
+" set foldmethod=indent
+" set foldlevel=20
+
+autocmd Syntax slim,html,erb setlocal foldmethod=indent
+autocmd Syntax slim,html,erb normal zR
+
+map <Leader>c "+y
+map <Leader>v "+P
