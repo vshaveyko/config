@@ -1,7 +1,6 @@
 set nocompatible
 set t_Co=256
 
-source ~/.vim/settings/neobundle.vim
 source ~/.vim/bundles.vim
 source ~/.vim/binding.vim
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>

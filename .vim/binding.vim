@@ -5,25 +5,28 @@ map <Leader>c "+y
 map <Leader>v "+P
 " Toggle comments on Shift-/
 noremap ? :call NERDComment(0,"toggle")<C-m>
+
 " Enter in normal mode to add line
 nnoremap <Enter> i<Enter><Esc>
+nmap <S-Enter> O<Esc>
+
 " bind \ (backward slash) to grep shortcut
 nnoremap \ :Search<SPACE>
 
 map <Bar> :E<CR>
-map <C-\> :e.<CR> 
+map <C-\> :e.<CR>
 inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v
+"
+" inoremap <C-k> <Esc>O
+" nnoremap <C-k> O<Esc>
+" vnoremap <C-k> <Esc>O<Esc>v
+"
+" inoremap <C-j> <Esc>o
+" nnoremap <C-j> o<Esc>
+" vnoremap <C-j> <Esc>o<Esc>v
 
-inoremap <C-k> <Esc>O
-nnoremap <C-k> O<Esc>
-vnoremap <C-k> <Esc>O<Esc>v
-
-inoremap <C-j> <Esc>o
-nnoremap <C-j> o<Esc>
-vnoremap <C-j> <Esc>o<Esc>v
-
-noremap <C-SPACE> <esc><right>
+noremap <C-C> <esc><right>
 
 " search for visually selected file with CtrlP plugin
 vnoremap <C-p> y<Esc><C-p><C-v><CR>
@@ -40,16 +43,16 @@ noremap < <gv
 noremap > >gv
 
 " Split navigation using arrows
-nnoremap <Right> <C-w>l
-nnoremap <Left> <C-w>h
-nnoremap <Up> <C-w>k
-nnoremap <Down> <C-w>j
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-k> <C-w>k
+noremap <C-j> <C-w>j
 
 noremap j gj
 noremap k gk
 
 " Tab configuration
-map <leader>tn :tabnew<cr>
+map <leader>t :tabnew<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
@@ -58,5 +61,4 @@ map <leader>w :w!<CR>
 " Replace
 nnoremap <leader>s :%s//<left>
 vnoremap <leader>s :s//<left>
-nnoremap <C-L> :nohl<CR><C-L>
-
+nnoremap <S-K> :nohl \| redraw!<CR>
