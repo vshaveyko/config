@@ -1,0 +1,19 @@
+Metrics/LineLength:
+  Max: 150
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  SupportedStyles:
+    - nested
+    - compact
+AllCops:
+  TargetRubyVersion: '2.3.0'

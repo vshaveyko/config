@@ -21,13 +21,22 @@ set hlsearch
 set ignorecase
 set incsearch
 
-" open line numbers
-set number
-
 " color settings
 set background=dark
 let g:hybrid_custom_term_colors = 1
 colorscheme hybrid
+
+" open line numbers
+set relativenumber
+set number
+
+autocmd WinLeave * :set nornu
+autocmd WinEnter * :set rnu
+autocmd InsertEnter * :set nornu
+autocmd InsertLeave * :set rnu
+
+hi CursorLineNR ctermfg=118
+hi LineNr ctermfg=12
 
 set tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -37,7 +46,7 @@ set path=$PWD/**
 set tags+=gems.tags
 
 autocmd FileType rb, rabl, coffee, jade autocmd BufWritePre <buffer> %s/\s\+$//e
-" set spelllang=ru_ru,en_us           " spellchecker for english and russian
+set spelllang=ru_ru,en_us           " spellchecker for english and russian
 set nobackup
 set noswapfile
 
@@ -71,3 +80,20 @@ set notimeout ttimeout ttimeoutlen=200
 
 autocmd Syntax slim,html,erb setlocal foldmethod=indent
 autocmd Syntax slim,html,erb normal zR
+
+set splitbelow
+set splitright
+
+runtime macros/matchit.vim
+
+let g:syntastic_ruby_checkers = ['rubocop']
+
+if has('persistent_undo')
+    " enable autowrite and persistent undo
+    set aw
+    set undolevels=5000
+    set undodir=$HOME/.vim/undo-files
+    set undofile
+endif
+
+set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg

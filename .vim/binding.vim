@@ -1,8 +1,9 @@
 " Map leader key
 let mapleader=","
 " file operations copy\paste
-map <Leader>c "+y
 map <Leader>v "+P
+nnoremap <Leader>c "+yy
+vnoremap <Leader>c "+y
 " Toggle comments on Shift-/
 noremap ? :call NERDComment(0,"toggle")<C-m>
 
@@ -48,8 +49,9 @@ noremap <C-h> <C-w>h
 noremap <C-k> <C-w>k
 noremap <C-j> <C-w>j
 
-noremap j gj
-noremap k gk
+"  move  by  virtual  lines  without  count  and  by  physical  with  count
+noremap  <silent>  <expr>  j  (v:count  ==  0  ?  'gj'  :  'j')
+noremap  <silent>  <expr>  k  (v:count  ==  0  ?  'gk'  :  'k')
 
 " Tab configuration
 map <leader>t :tabnew<cr>
@@ -62,3 +64,35 @@ map <leader>w :w!<CR>
 nnoremap <leader>s :%s//<left>
 vnoremap <leader>s :s//<left>
 nnoremap <S-K> :nohl \| redraw!<CR>
+
+"  REALLY  delete  with  leader
+nnoremap  <leader>d  "_d
+vnoremap  <leader>d  "_d
+
+nnoremap  <leader>l  o<Esc>
+
+noremap  <leader>p  :pu<CR>
+noremap  <leader><S-p>  :pu!<CR>
+
+function! NumberToggle()
+  if &rnu  ==  1
+    set nornu
+  else
+    set rnu
+  endif
+endfunc
+
+nnoremap  <C-n>  :call  NumberToggle()<cr>
+inoremap  <C-e>  <C-o>$
+
+nnoremap  <Leader>rc  :%s/\<<C-r><C-w>\>/
+vnoremap  <Leader>rc  y:%s/<C-r>"/
+
+nnoremap  <Leader>cc  :%s/\<<C-r><C-w>\>/<C-r><C-w>
+vnoremap  <Leader>cc  y:%s/<C-r>"/<C-r>"
+
+nnoremap  <Leader>rts  :%s/	/  /g<CR>
+
+nnoremap  <silent>  <leader>a  :ArgWrap<CR>
+
+noremap Y y$

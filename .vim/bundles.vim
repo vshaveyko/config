@@ -25,7 +25,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundle 'digitaltoad/vim-pug'
   NeoBundle 'slim-template/vim-slim'
 
-  " NeoBundle 'josemarluedke/vim-rspec'
+  NeoBundle 'thoughtbot/vim-rspec'
   NeoBundle 'chrisbra/NrrwRgn'
 
   NeoBundle 'tpope/vim-surround'
@@ -45,6 +45,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundle 'Yggdroot/indentLine'
 
   NeoBundle 'scrooloose/syntastic'
+  NeoBundle 'FooSoft/vim-argwrap'
 call neobundle#end()
 
 NeoBundleCheck
