@@ -1,3 +1,4 @@
+set nocompatible
 set t_Co=256
 
 source ~/.vim/settings/neobundle.vim
@@ -12,9 +13,10 @@ endfor
 
 syntax on             " Enable syntax highlighting
 " filetype on           " Enable filetype detection
-filetype indent on    " Enable filetype-specific indenting
-filetype plugin on    " Enable filetype-specific plugins
+filetype indent plugin on    " Enable filetype-specific indenting
 
+set ar
+" set ch=2
 "highlight search with /
 set hlsearch
 set ignorecase
@@ -36,10 +38,9 @@ set path=$PWD/**
 set tags+=gems.tags
 
 autocmd FileType rb, rabl, coffee, jade autocmd BufWritePre <buffer> %s/\s\+$//e
-set spelllang=ru_ru,en_us           " spellchecker for english and russian
+" set spelllang=ru_ru,en_us           " spellchecker for english and russian
 set nobackup
 set noswapfile
-set confirm
 
 " Encoding
 set encoding=utf8
@@ -48,7 +49,6 @@ set termencoding=utf-8
 set fileencodings=utf8,cp1251
 
 " Input
-let mapleader=","
 set iminsert=0                      " english as default keyboard layout
 set expandtab                       " convert tab to spaces
 set autoindent                      " inherit indent from previous line
@@ -62,12 +62,13 @@ autocmd BufLeave * silent! :w       "   or leave buffer
 set ruler                           " show cursor position
 set mousehide                       " hide mouser corse in typing
 set cursorline                      " highlight current position of cursor
+set wildmenu
+set lazyredraw          " redraw only when we need to
 
 " set foldmethod=indent
-" set foldlevel=20
+set foldlevel=20
+
+set notimeout ttimeout ttimeoutlen=200
 
 autocmd Syntax slim,html,erb setlocal foldmethod=indent
 autocmd Syntax slim,html,erb normal zR
-
-map <Leader>c "+y
-map <Leader>v "+P

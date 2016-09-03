@@ -20,7 +20,7 @@ if executable('ag')
         \ -g ""'
 endif
 
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
 " search by current NerdTree dir
 let g:NERDTreeChDirMode       = 2
@@ -28,5 +28,3 @@ let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
-
-

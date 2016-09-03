@@ -11,7 +11,6 @@ NeoBundle 'scrooloose/nerdcommenter'
 
 " CtrlP sublime search
 NeoBundle 'kien/ctrlp.vim'
-
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'JSON.vim'
 NeoBundle 'ervandew/supertab'
@@ -19,7 +18,8 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vitaly/vim-syntastic-coffee'
 NeoBundle 'digitaltoad/vim-pug'
 NeoBundle 'slim-template/vim-slim'
-NeoBundle 'josemarluedke/vim-rspec'
+
+" NeoBundle 'josemarluedke/vim-rspec'
 NeoBundle 'chrisbra/NrrwRgn'
 
 NeoBundle 'tpope/vim-surround'
@@ -35,4 +35,6 @@ NeoBundle 'airblade/vim-gitgutter'
 
 NeoBundle 'kana/vim-textobj-user' " rubyblock dependency
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
+
+NeoBundle 'Yggdroot/indentLine'
 call neobundle#end()
