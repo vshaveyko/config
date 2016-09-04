@@ -1,12 +1,12 @@
-#!/bin/bash 
+#!/bin/bash
 
-# Save this script into set_colors.sh, make this file executable and run it: 
-# 
-# $ chmod +x set_colors.sh 
-# $ ./set_colors.sh 
-# 
-# Alternatively copy lines below directly into your shell. 
-# 
+# Save this script into set_colors.sh, make this file executable and run it:
+#
+# $ chmod +x set_colors.sh
+# $ ./set_colors.sh
+#
+# Alternatively copy lines below directly into your shell.
+#
 # *background: #1D1F21
 # *foreground: #C5C8C6
 # ! black

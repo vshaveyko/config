@@ -46,6 +46,9 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
   NeoBundle 'scrooloose/syntastic'
   NeoBundle 'FooSoft/vim-argwrap'
+  NeoBundle 'edkolev/tmuxline.vim'
+  NeoBundle 'christoomey/vim-tmux-navigator'
+
 call neobundle#end()
 
 NeoBundleCheck

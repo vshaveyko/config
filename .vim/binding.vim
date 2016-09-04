@@ -14,7 +14,7 @@ nmap <S-Enter> O<Esc>
 " bind \ (backward slash) to grep shortcut
 nnoremap \ :Search<SPACE>
 
-map <Bar> :E<CR>
+map <Bar> :NERDTreeFind<CR>
 map <C-\> :e.<CR>
 inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v
@@ -69,10 +69,10 @@ nnoremap <S-K> :nohl \| redraw!<CR>
 nnoremap  <leader>d  "_d
 vnoremap  <leader>d  "_d
 
-nnoremap  <leader>l  o<Esc>
-
-noremap  <leader>p  :pu<CR>
-noremap  <leader><S-p>  :pu!<CR>
+nnoremap <leader>l o<Esc>
+nnoremap <leader>o O<Esc>
+noremap <leader>p :pu<CR>
+noremap <leader><S-p> :pu!<CR>
 
 function! NumberToggle()
   if &rnu  ==  1
@@ -96,3 +96,17 @@ nnoremap  <Leader>rts  :%s/	/  /g<CR>
 nnoremap  <silent>  <leader>a  :ArgWrap<CR>
 
 noremap Y y$
+
+" turn ruby hash literals to 1.9 syntax
+map <silent> <F2> :let _s=@/<Bar>:%s/:\([^ =,"']*\)\(\s*\)=>\(\s*\)/\1: /ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
+" correct whitespaces at hash start\end
+map <silent> <F3> :let _s=@/<Bar>:%s/{\s*\(.\{-}\)\s*}/{ \1 }/ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
+
+" convert strings to symbols in current line
+" map <silent> <F4> :let _s=@/<Bar>:s/["']\([^ '"]\)["']/:\1/ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
+" open and close folds
+nnoremap <space> za
+
+inoremap <C-a> <C-o>^
+nnoremap <C-a> ^
+vnoremap <C-a> ^

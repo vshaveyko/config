@@ -1,5 +1,6 @@
 set nocompatible
 set t_Co=256
+set term=xterm-256color
 
 source ~/.vim/bundles.vim
 source ~/.vim/binding.vim
@@ -15,11 +16,13 @@ syntax on             " Enable syntax highlighting
 filetype indent plugin on    " Enable filetype-specific indenting
 
 set ar
+set linebreak
 " set ch=2
 "highlight search with /
 set hlsearch
 set ignorecase
 set incsearch
+set smartcase
 
 " color settings
 set background=dark
@@ -47,6 +50,7 @@ set tags+=gems.tags
 
 autocmd FileType rb, rabl, coffee, jade autocmd BufWritePre <buffer> %s/\s\+$//e
 set spelllang=ru_ru,en_us           " spellchecker for english and russian
+
 set nobackup
 set noswapfile
 
@@ -88,12 +92,32 @@ runtime macros/matchit.vim
 
 let g:syntastic_ruby_checkers = ['rubocop']
 
+" enable autowrite and persistent undo
 if has('persistent_undo')
-    " enable autowrite and persistent undo
-    set aw
-    set undolevels=5000
-    set undodir=$HOME/.vim/undo-files
-    set undofile
+  set aw
+  set undolevels=5000
+  set undodir=$HOME/.vim/undo-files
+  silent call system('mkdir -p ' . &undodir)
+  set undofile
 endif
 
+
+set so=3 " display 3 tabs below\above cursor
 set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
+
+" TMUXLINE
+"Far bottom right shows DHCP WiFi IP, with an H appended at home
+let g:tmuxline_preset = {
+      \'a'       : '#S:#I',
+      \'b disabled'       : '',
+      \'c disabled'       : '',
+      \'win'     : ['#I', '#W'],
+      \'cwin'    : ['#I', '#W'],
+      \'x disabled'       : '',
+      \'y'       : ['%a', '%Y-%m-%d', '%l:%M%p'],
+      \'z'       : ['#(whoami)'],
+      \'options' : {'status-justify': 'left'}}
+
+set langmenu=en_US.utf-8             " sets the language of the menu (gvim)
+
+language en_US.utf-8                 " sets the language of the messages / ui (vim)
