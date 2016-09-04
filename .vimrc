@@ -118,6 +118,5 @@ let g:tmuxline_preset = {
       \'z'       : ['#(whoami)'],
       \'options' : {'status-justify': 'left'}}
 
-set langmenu=en_US.utf-8             " sets the language of the menu (gvim)
 
-language en_US.utf-8                 " sets the language of the messages / ui (vim)
+let g:ycm_collect_identifiers_from_tags_files = 1

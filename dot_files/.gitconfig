@@ -127,3 +127,5 @@
   default = simple
 [core]
 	excludesfile = ~/config/.gitignore_global
+[init]
+	templatedir = ~/.git_template
