@@ -20,10 +20,9 @@ call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundle 'kien/ctrlp.vim'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'JSON.vim'
-  NeoBundle 'ervandew/supertab'
   NeoBundle 'kchmck/vim-coffee-script'
-  NeoBundle 'digitaltoad/vim-pug'
-  NeoBundle 'slim-template/vim-slim'
+  NeoBundle 'digitaltoad/vim-pug' " JADE syntax
+  NeoBundle 'slim-template/vim-slim' " SLIM syntax
 
   NeoBundle 'thoughtbot/vim-rspec'
   NeoBundle 'chrisbra/NrrwRgn'
@@ -48,6 +47,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundle 'FooSoft/vim-argwrap'
   NeoBundle 'edkolev/tmuxline.vim'
   NeoBundle 'christoomey/vim-tmux-navigator'
+  NeoBundle 'godlygeek/tabular'
 
 call neobundle#end()
 

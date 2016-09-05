@@ -97,11 +97,23 @@ nnoremap  <silent>  <leader>a  :ArgWrap<CR>
 
 noremap Y y$
 
+function! CorrectReplace(replace_command)
+
+  :let _s=@/
+  :exec replace_command
+
+  :let @/=_s
+  :nohl<CR><C-o>
+
+endfunc
+
 " turn ruby hash literals to 1.9 syntax
-map <silent> <F2> :let _s=@/<Bar>:%s/:\([^ =,"']*\)\(\s*\)=>\(\s*\)/\1: /ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
+map <silent> <F2> :call CorrectReplace(':%s/:\([^ =,"']*\)\(\s*\)=>\(\s*\)/\1: /ge')
+
 " correct whitespaces at hash start\end
 map <silent> <F3> :let _s=@/<Bar>:%s/{\s*\(.\{-}\)\s*}/{ \1 }/ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
 
+map <silent> <F4> :let _s=@/<Bar>:%!cat -s<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
 " convert strings to symbols in current line
 " map <silent> <F4> :let _s=@/<Bar>:s/["']\([^ '"]\)["']/:\1/ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
 " open and close folds
@@ -110,3 +122,9 @@ nnoremap <space> za
 inoremap <C-a> <C-o>^
 nnoremap <C-a> ^
 vnoremap <C-a> ^
+
+nnoremap <F5> :so $HOME/.vimrc<CR>
+
+" Tabularize bindings
+vnoremap <Tab>= :'<,'>Tabularize /=
+vnoremap <Tab>: :'<,'>Tabularize /:
