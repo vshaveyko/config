@@ -10,6 +10,15 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endi
 let NERDTreeIgnore=['.swp', '.git']
 let NERDTreeRespectWildIgnore=1
 
+let NERDTreeMinimalUI=1
+let NERDTreeWinPos='right'
+let NERDTreeShowHidden=1
+let NERDTreeMapJumpPrevSibling='K'
+let NERDTreeMapJumpNextSibling='J'
+let NERDTreeMapJumpLastChild=''
+let NERDTreeMapJumpFirstChild=''
+let NERDTreeAutoDeleteBuffer=1
+
 " NetRW
 "
 " let g:netrw_liststyle=3 " Use tree-mode as default view

@@ -7,7 +7,7 @@ call plug#begin()
 
   " File Tree
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
-  Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+  Plug 'scrooloose/nerdtree'
 
   Plug 'Valloric/YouCompleteMe'
   Plug 'jiangmiao/auto-pairs'
@@ -56,7 +56,12 @@ call plug#begin()
 
 call plug#end()
 
-autocmd! BufWritePost,BufEnter * Neomake " Neomake on write
+set mouse=hr " mouse enabled in help and in 'PRESS ENTER' window
+
+" Neomake on write
+let g:neomake_ruby_enabled_makers = ['rubocop']
+
+autocmd! BufWritePost,BufEnter * Neomake
 
 " source ~/.vim/bundles.vim
 source ~/.vim/binding.vim
@@ -67,7 +72,6 @@ for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                    
 endfor
 
 syntax on                                                                         " Enable syntax highlighting
-" filetype on                                                                     " Enable filetype detection
 filetype indent plugin on                                                         " Enable filetype-specific indenting
 
 set ar
