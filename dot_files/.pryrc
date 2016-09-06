@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+# author: Vadim Shaveiko <@vshaveyko>
 # add some pry aliases
 Pry.commands.alias_command 'c', 'continue'
 Pry.commands.alias_command 's', 'step'
 Pry.commands.alias_command 'n', 'next'
 
-# switch default editor for pry to sublime text
-Pry.config.editor = 'vim'
+# switch default editor for pry to current editor
+Pry.config.editor = ENV['EDITOR']
 
 # format prompt to be <Rails version>@<ruby version>(<object>)>
-Pry.config.prompt = proc do |obj, level, _|
+Pry.config.prompt = proc do |obj, _level, _|
   prompt = "\e[1;36m"
   prompt << "#{Rails.version} @ " if defined?(Rails)
-  prompt << "#{RUBY_VERSION}"
+  prompt << RUBY_VERSION.to_s
   "#{prompt} (#{obj})>\e[0m "
 end
 

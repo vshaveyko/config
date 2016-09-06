@@ -15,5 +15,11 @@ Style/ClassAndModuleChildren:
   SupportedStyles:
     - nested
     - compact
+
 AllCops:
   TargetRubyVersion: 2.3
+
+Style/Copyright:
+  Enabled: true
+  Notice: '^# [A|a]uthor: (.*) <(.*)>$'
+  AutocorrectNotice: '# author: Vadim Shaveiko <@vshaveyko>'
