@@ -100,8 +100,23 @@ install.fonts() {
 }
 
 install.ycm() {
-  cd ~/.vim/bundle/YouCompleteMe
-  ./install.py
+# if already built
+if [ -e ~/ycm_build ]; then
+  return
+fi
+
+if ! (dpkg-query -l cmake); then
+  echo "Install cmake for ycm compile( sudo apt-get install cmake )"
+  return
+fi
+
+cd ~/.vim/bundle/YouCompleteMe
+./install.py
+cd ~
+mkdir -p ycm_build
+cd ycm_build
+cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+cd $BASEDIR
 }
 
 options=("vim" "plug" "confs" "tmux" "rubo" "fonts" "ycm")
