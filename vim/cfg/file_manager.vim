@@ -7,7 +7,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endi
 " close nerdtree if it is only open window
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let NERDTreeIgnore=['.swp', '.git']
+let NERDTreeIgnore=['.swp', '.git$']
 let NERDTreeRespectWildIgnore=1
 
 let NERDTreeMinimalUI=1

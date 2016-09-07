@@ -12,12 +12,10 @@ Style/EmptyLinesAroundModuleBody:
 
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
-  SupportedStyles:
-    - nested
-    - compact
 
 AllCops:
   TargetRubyVersion: 2.3
+  RunRailsCops: true
 
 Style/Copyright:
   Enabled: true

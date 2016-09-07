@@ -99,3 +99,7 @@ init_health24() {
 alias "init=guake -t -e 'init_health24 && exit 0'"
 
 alias nvm="nvim"
+
+alias t="tmux"
+
+alias gi="git init && chmod +x .git/hooks/*"

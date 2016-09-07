@@ -15,23 +15,16 @@ nmap <S-Enter> O<Esc>
 nnoremap \ :Search<SPACE>
 
 map <Bar> :NERDTreeFind<CR>
-map <C-\> :e.<CR>
+map <C-\> :NERDTreeToggle<CR>
+
 inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v
-"
-" inoremap <C-k> <Esc>O
-" nnoremap <C-k> O<Esc>
-" vnoremap <C-k> <Esc>O<Esc>v
-"
-" inoremap <C-j> <Esc>o
-" nnoremap <C-j> o<Esc>
-" vnoremap <C-j> <Esc>o<Esc>v
 
 noremap <C-C> <esc><right>
 
 " search for visually selected file with CtrlP plugin
 vnoremap <C-p> y<Esc><C-p><C-v><CR>
-" search for visually select text
+
 " switch between tabs
 " Currently remapped by airline(airline.vim).
 " noremap <leader>1 1gt
@@ -44,7 +37,8 @@ noremap <leader>` <C-W>T
 noremap < <gv
 noremap > >gv
 
-" Split navigation using arrows
+" Split navigation using arrows. On change do NOT forget to change tmux.conf
+" for tab split navigation
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
 noremap <C-k> <C-w>k
@@ -97,8 +91,6 @@ nnoremap <Leader>rts :%s/	/ /g<CR>
 nnoremap <silent> <leader>a :ArgWrap<CR>
 
 noremap Y y$
-
-inoremap <C-I> <Insert>
 
 " convert strings to symbols in current line
 " map <silent> <F4> :let _s=@/<Bar>:s/["']\([^ '"]\)["']/:\1/ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>

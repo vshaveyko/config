@@ -1,6 +1,17 @@
 set nocompatible
 set t_Co=256
 " set term=xterm-256color
+set shortmess=a
+source ~/.vim/binding.vim
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+for cfgfile in split(globpath("~/config/binds", "*.vim                           " ), '\n')
+  execute('source '.cfgfile)
+endfor
+
+for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                     " open all config fiels in vim/cfg
+  execute('source '.cfgfile)
+endfor
 
 " Install Plugins
 call plug#begin()
@@ -28,7 +39,6 @@ call plug#begin()
   Plug 'chrisbra/NrrwRgn'                                                        " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
   Plug 'tpope/vim-surround'                                                      " Add adjective 's' - surrounding
-  Plug 'tpope/vim-cucumber'                                                      " Jump to step definition in split from feature with ]d(preview) OR <C-w>d(jump there)
   Plug 'tpope/vim-rails'                                                         " Rails integration: moves, abbrevs, etc.
   Plug 'tpope/vim-endwise'                                                       " Autoend ruby blocks
   Plug 'tpope/vim-dispatch'
@@ -50,6 +60,8 @@ call plug#begin()
   Plug 'christoomey/vim-tmux-navigator'                                          " Scripts for being able to transition between vim and tmux tabs
 
   Plug 'godlygeek/tabular'                                                       " Align stuff nicely
+  Plug 'lukaszkorecki/CoffeeTags'                                                " Coffeescript tags support
+  Plug 'majutsushi/tagbar'                                                       " Tagbar class\method defs window
 
 call plug#end()
 
@@ -72,13 +84,6 @@ function! s:Neomake_callback(options)                                           
   endif
 endfunction
 
-" source ~/.vim/bundles.vim
-source ~/.vim/binding.vim
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                     " open all config fiels in vim/cfg
-  execute('source '.cfgfile)
-endfor
 
 syntax on                                                                        " Enable syntax highlighting
 filetype indent plugin on                                                        " Enable filetype-specific indenting
@@ -121,10 +126,10 @@ set nobackup
 set noswapfile
 
 " Encoding
-set encoding=utf8
-set fileencoding=utf8
-set termencoding=utf-8
-set fileencodings=utf8,cp1251
+" set encoding=utf8
+" set fileencoding=utf8
+" set termencoding=utf-8
+" set fileencodings=utf8,cp1251
 
 " Input
 set iminsert=0                                                                   " english as default keyboard layout

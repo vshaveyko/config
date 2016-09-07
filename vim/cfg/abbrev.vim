@@ -11,9 +11,9 @@ function VimAbbrevs()
 endfunction
 
 function RubyAbbrs()
-  iab <buffer> d def
+  iab <buffer> d def<space>
   iab <buffer> p params
-  iab <buffer> m module
+  iab <buffer> m module<space>
   iab <buffer> i include
   iab <buffer> rq require ''<left>
   iab <buffer> rr require_relative ''<left>
@@ -31,5 +31,5 @@ augroup setabbrevs
   autocmd!
   autocmd BufNewFile,BufRead *.rb call RubyAbbrs()
   autocmd BufNewFile,BufRead *.coffee call CoffeeAbbrevs()
-  autocmd BufNewFile,BufRead *.vim call VimAbbrevs()
-augroup
+  autocmd BufNewFile,BufRead *.vim, vimrc call VimAbbrevs()
+augroup END
