@@ -85,6 +85,9 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export TERM=xterm-256color
+export EDITOR=nvim
+export GOPATH=$HOME/ved
 
 init_health24() {
   guake -n 'zeus' -e 'cd $GOPATH/health24-backend && zeus start' guake -r 'zeus start'
@@ -94,10 +97,5 @@ init_health24() {
 }
 
 alias "init=guake -t -e 'init_health24 && exit 0'"
-
-export TERM=xterm-256color
-export EDITOR=nvim
-
-export GOPATH=$HOME/develop
 
 alias nvm="nvim"

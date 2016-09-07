@@ -140,7 +140,7 @@ autocmd BufLeave * silent! :w                                                   
 set ruler                                                                        " show cursor position
 set mousehide                                                                    " hide mouser corse in typing
 set cursorline                                                                   " highlight current position of cursor
-set wildmenu
+set wildmenu                                                                     " Autocomplete menu commands
 set lazyredraw                                                                   " redraw only when we need to
 
 " set foldmethod=indent

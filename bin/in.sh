@@ -110,12 +110,10 @@ if ! (dpkg-query -l cmake); then
   return
 fi
 
-cd ~/.vim/bundle/YouCompleteMe
-./install.py
-cd ~
-mkdir -p ycm_build
-cd ycm_build
-cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+cd ~/.vim/plugged/YouCompleteMe && ./install.py
+cd ~ && mkdir -p ycm_build && cd ycm_build
+
+cmake -G "Unix Makefiles" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
 cd $BASEDIR
 }
 

@@ -12,6 +12,7 @@ endfunction
 
 function RubyAbbrs()
   iab <buffer> d def
+  iab <buffer> p params
   iab <buffer> m module
   iab <buffer> i include
   iab <buffer> rq require ''<left>
