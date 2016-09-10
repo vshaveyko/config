@@ -1,0 +1,164 @@
+# %s/:\([^ ]*\) => /\1: /ge
+snippet cdef "define function by selected text"
+${1:method_name}(${2:args})
+endsnippet
+
+snippet col "Migration Remove and Add Column (mrac)" w
+remove_column :${1:table}, :${2:column}${3: [press tab twice to generate add_column]}
+endsnippet
+
+snippet bto "belongs_to (bt)" w
+belongs_to :${1:object}${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}", foreign_key: "${4:${1}_id}"}
+endsnippet
+
+snippet habtm "has_and_belongs_to_many (habtm)" w
+has_and_belongs_to_many :${1:object}${2:, join_table: "${3:table_name}", foreign_key: "${4:${1}_id}"}
+endsnippet
+
+snippet hm "has_many (hm)" w
+has_many :${1:object}s${2:, class_name: "${1}", foreign_key: "${4:reference}_id"}
+endsnippet
+
+snippet hmt "has_many (through)" w
+has_many :${1:objects}, through: :${2:join_association}${3:, source: :${4:${2}_table_foreign_key_to_${1}_table}}
+endsnippet
+
+snippet hmd "has_many dependent: :destroy" w
+has_many :${1:object}s${2:, class_name: "${1}", foreign_key: "${4:reference}_id"}, dependent: :destroy$0
+endsnippet
+
+snippet ho "has_one (ho)" w
+has_one :${1:object}${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}", foreign_key: "${4:${1}_id}"}
+endsnippet
+
+snippet "^(\s*)case" "case" Awr
+case ${1:object}
+`!p snip.rv += match.group(1)`when ${2:condition}
+`!p snip.rv += match.group(1)`  ${0}
+`!p snip.rv += match.group(1)`end
+endsnippet
+
+snippet "^(\s*)de" "def func" rbA
+`!p
+indent = match.group(1)
+def formatTag(argument):
+  return indent + "# @{0} -".format(argument)
+
+arguments = t[2].split(',')
+arguments = [argument.strip() for argument in arguments if argument]
+
+if len(arguments):
+  tags = map(formatTag, arguments)
+  for tag in tags:
+    snip += tag
+  snip += ''
+else:
+  snip.rv = ''
+``!p snip.rv += indent`def ${1:method_name}(${2})
+`!p snip.rv += indent`  ${0:${VISUAL}}
+`!p snip.rv += indent`end
+
+endsnippet
+
+global !p
+from inflection import *;
+def classify(path):
+  return '::'.join(map(camelize, path.split('/')))
+
+def prefix(id):
+  if id == 'mod':
+    return 'module '
+  elif id == 'cla':
+    return 'class '
+endglobal
+
+snippet "^(mod|cla)" "define correct rails class" Abr
+`!p
+result = "# :nodoc:\n"
+result += prefix(match.group(1))
+
+m = re.search("(controllers|models|services|lib)\/(.*).rb", path)
+
+result += classify(m.group(2))
+
+if m.group(1) == 'controllers':
+  if 'api' in path:
+    result += ' < Api::ApplicationController'
+  else:
+    result += ' < ApplicationController'
+elif m.group(1) == 'models':
+  result += ' < ActiveRecord::Base'
+else:
+  result += "\n  def initialize(${1})\n    \n  end\n"
+snip.rv += result`
+  ${0:${VISUAL}}
+end
+endsnippet
+
+snippet "^(\s+)cla" "define nested module or class" Abr
+`!p
+snip.rv = match.group(1)
+snip.rv += 'class '
+`${0:${VISUAL}}Error < StandardError; end
+endsnippet
+
+snippet "^(\s+)mod" "define nested module or class" Abr
+`!p
+snip.rv = match.group(1)
+snip.rv += 'module '
+`${0}
+`!p snip.rb += match.group(1)`  ${1:${VISUAL}}
+`!p snip.rv += match.group(1)`end
+endsnippet
+
+snippet "^(\s+)anaf" "accepts_nested_attributes_for"
+`!p snip.rv = match.group(1)`accepts_nested_attributes_for :${1:association_name}${2:${3:, allow_destroy: true}${4:, reject_if: proc \{ |obj| ${5:obj.blank?} \}}}
+endsnippet
+
+global !p
+alias_iterator_map = {
+	'rej'    : 'reject',
+	'sel'    : 'select',
+	'sor'    : 'sort',
+	'each_k' : 'each_key',
+	'each_v' : 'each_value',
+	'ea'     : 'each',
+	'each_s' : 'each_slice(2)',
+	'map'    : 'map',
+	'rev'    : 'reverse_each',
+	'each_p' : 'each_pair',
+	'wind'   : 'with_index'
+}
+def iterator_name(alias):
+  return alias_iterator_map[alias]
+
+def block_param_name(block_root):
+  mwon = re.search("([A-z_]+)", block_root)
+  singular = singularize(mwon.group(1))
+  if singular == mwon.group(1):
+    return 'arg'
+  else:
+    return singular
+endglobal
+
+snippet "([\S\d]+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)([^\s]*)" "inline block expand" r
+`!p
+element_name = match.group(1).lstrip('$@')
+snip.rv = "%s.%s { |" % (match.group(1), iterator_name(match.group(2)))
+snip.rv += block_param_name(element_name) + '|'
+` ${0} }
+endsnippet
+
+snippet "^(\s*)(?:.*?)(\S+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)(!)" "multiline block expand" r
+`!p
+element_name = match.group(2).lstrip('$@')
+snip.rv = match.group(1) + "%s.%s do |" % (match.group(2), iterator_name(match.group(3)))
+snip.rv += block_param_name(element_name) + '|'
+`
+`!p snip.rv += match.group(1)`  ${0}
+`!p snip.rv += match.group(1)`end
+endsnippet
+
+snippet alias "alias :<new_name> :<old_name>" w
+alias_method :${1:new_name}, :${2:old_name}
+endsnippet

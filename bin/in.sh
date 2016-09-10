@@ -33,8 +33,10 @@ install.rubo() {
 
   # install rubocop for syntastic checking in ruby
   if ! ( gem list -i rubocop ); then
-    gem install rubocop
+    rvmsudo gem install rubocop
   fi
+  rvmsudo gem install rcodetools
+  rvmsudo gem install fastri
 
 }
 

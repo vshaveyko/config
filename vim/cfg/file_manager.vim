@@ -11,7 +11,6 @@ let NERDTreeIgnore=['.swp', '.git$']
 let NERDTreeRespectWildIgnore=1
 
 let NERDTreeMinimalUI=1
-let NERDTreeWinPos='right'
 let NERDTreeShowHidden=1
 let NERDTreeMapJumpPrevSibling='K'
 let NERDTreeMapJumpNextSibling='J'

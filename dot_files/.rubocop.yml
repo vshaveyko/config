@@ -2,10 +2,10 @@ Metrics/LineLength:
   Max: 150
 
 Style/EmptyLinesAroundBlockBody:
-  Enabled: false
+  EnforcedStyle: no_empty_lines
 
 Style/EmptyLinesAroundClassBody:
-  Enabled: false
+  EnforcedStyle: empty_lines
 
 Style/EmptyLinesAroundModuleBody:
   Enabled: false
@@ -15,9 +15,14 @@ Style/ClassAndModuleChildren:
 
 AllCops:
   TargetRubyVersion: 2.3
-  RunRailsCops: true
+
+Style/Encoding:
+  EnforcedStyle: always
+
+Rails:
+  Enabled: true
 
 Style/Copyright:
   Enabled: true
   Notice: '^# [A|a]uthor: (.*) <(.*)>$'
-  AutocorrectNotice: '# author: Vadim Shaveiko <@vshaveyko>'
+alwaysAutocorrectNotice: '# author: Vadim Shaveiko <@vshaveyko>'

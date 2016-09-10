@@ -1,9 +1,12 @@
 " Map leader key
 let mapleader=","
+
 " file operations copy\paste
 map <Leader>v "+P
+
 nnoremap <Leader>c "+yy
 vnoremap <Leader>c "+y
+
 " Toggle comments on Shift-/
 noremap ? :call NERDComment(0,"toggle")<C-m>
 
@@ -14,10 +17,64 @@ nmap <S-Enter> O<Esc>
 " bind \ (backward slash) to grep shortcut
 nnoremap \ :Search<SPACE>
 
-map <Bar> :NERDTreeFind<CR>
-map <C-\> :NERDTreeToggle<CR>
+" Run NERDTreeFind or Toggle based on current buffer
+function! NerdWrapper() abort
+  if &filetype ==# '' " Empty buffer
+    normal NERDTreeToggle
+  elseif $filetype ==# 'nerdtree' " In NERD_tree buffer
+    wincmd w
+  else " Normal file buffer
+    normal NERDTreeFind
+  endif
+endfunction
 
-inoremap <C-r> <Esc><C-r>i
+noremap <silent> <C-\> :call NerdWrapper()<CR>
+inoremap <expr> <silent> <C-\> NerdWrapper()
+
+inoremap <Esc><Leader> <Esc>
+" Tab wrapper
+function! TabComplete() abort
+  let l:col = col('.') - 1
+
+  if pumvisible()
+    return "\<C-n>"
+  else
+    if !l:col || getline('.')[l:col - 1] !~# '\k'
+      return "\<TAB>"
+    else
+      return "\<C-n>"
+    endif
+  endif
+endfunction
+
+inoremap <silent> <TAB> <C-o>:call TabComplete()<CR>
+"
+" function! g:UltiSnips_Complete()
+    " call UltiSnips#ExpandSnippet()
+    " if g:ulti_expand_res == 0
+        " if pumvisible()
+            " return "\<C-n>"
+        " else
+            " call UltiSnips#JumpForwards()
+            " if g:ulti_jump_forwards_res == 0
+               " return "\<TAB>"
+            " endif
+        " endif
+    " endif
+    " return ""
+" endfunction
+"
+" au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+
+nnoremap <leader>qq :qa!<CR>
+
+inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+
+nnoremap <leader>f :CtrlSF<Space>
+
+" inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v
 
 noremap <C-C> <esc><right>
@@ -48,12 +105,26 @@ noremap <C-j> <C-w>j
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
+" Visual linewise up and down by default (and use gj gk to go quicker)
+nnoremap gj 5j
+nnoremap gk 5k
+vnoremap j gj
+vnoremap k gk
+vnoremap gj 5j
+vnoremap gk 5k
+
+" When jump to next match also center screen
+" Note: Use :norm! to make it count as one command. (i.e. for i_CTRL-o)
+nnoremap <silent> n :norm! nzz<CR>
+nnoremap <silent> N :norm! Nzz<CR>
+vnoremap <silent> n :norm! nzz<CR>
+vnoremap <silent> N :norm! Nzz<CR>
+
 " Tab configuration
 map <leader>t :tabnew<cr>
 map <leader>te :tabedit<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
-map <leader>w :w!<CR>
 
 " Replace
 nnoremap <leader>s :%s//<left>
@@ -109,3 +180,17 @@ nnoremap <F5> :so $HOME/.vimrc<CR>
 vnoremap <F2> :'<,'>Tabularize /^[^=]*\zs=\ze/<CR>
 vnoremap <F3> :'<,'>Tabularize /^[^:]*\zs:\ze/<CR>
 vnoremap <F4> :'<,'>Tabularize /[^ ]\+\(.*\)\zs"\ze[^"]*$/<CR>
+
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+noremap ,<ESC> <ESC>
+
+" Quick save and close buffer
+map <leader>w :w!<CR>
+nnoremap <silent> <leader>c :Sayonara!<CR>
+nnoremap <silent> <leader>q :Sayonara<CR>
+
+" Intelligent windows resizing using ctrl + arrow keys
+nnoremap <silent> <C-Up> :resize +1<CR>
+nnoremap <silent> <C-Down> :resize -1<CR>

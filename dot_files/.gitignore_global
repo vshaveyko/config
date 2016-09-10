@@ -1,4 +1,4 @@
-/tmp/
+tmp/
 /node_modules/
 
 custom_plan.rb
@@ -9,7 +9,10 @@ tasks/cucumber.rake
 /knapsack.rb
 **/Rakefile
 
+/tmp/**/*
+
+*.log
+*.cache
 *.sw?
 
 lib/tasks/cucumber.rake
-

@@ -88,6 +88,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export TERM=xterm-256color
 export EDITOR=nvim
 export GOPATH=$HOME/ved
+export GIT_ACC=vshaveyko
 
 init_health24() {
   guake -n 'zeus' -e 'cd $GOPATH/health24-backend && zeus start' guake -r 'zeus start'

@@ -31,5 +31,5 @@ augroup setabbrevs
   autocmd!
   autocmd BufNewFile,BufRead *.rb call RubyAbbrs()
   autocmd BufNewFile,BufRead *.coffee call CoffeeAbbrevs()
-  autocmd BufNewFile,BufRead *.vim, vimrc call VimAbbrevs()
+  autocmd BufNewFile,BufRead *.vim call VimAbbrevs()
 augroup END
