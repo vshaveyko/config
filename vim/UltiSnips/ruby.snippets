@@ -1,4 +1,8 @@
 # %s/:\([^ ]*\) => /\1: /ge
+snippet pry "pry binding" wA
+pry binding
+endsnippet
+
 snippet cdef "define function by selected text"
 ${1:method_name}(${2:args})
 endsnippet
@@ -38,7 +42,7 @@ case ${1:object}
 `!p snip.rv += match.group(1)`end
 endsnippet
 
-snippet "^(\s*)de" "def func" rbA
+snippet "^(\s*)de" "def func" rb
 `!p
 indent = match.group(1)
 def formatTag(argument):
@@ -95,14 +99,14 @@ snip.rv += result`
 end
 endsnippet
 
-snippet "^(\s+)cla" "define nested module or class" Abr
+snippet "^(\s+)cla" "define nested module or class" br
 `!p
 snip.rv = match.group(1)
 snip.rv += 'class '
 `${0:${VISUAL}}Error < StandardError; end
 endsnippet
 
-snippet "^(\s+)mod" "define nested module or class" Abr
+snippet "^(\s+)mod" "define nested module or class" br
 `!p
 snip.rv = match.group(1)
 snip.rv += 'module '
@@ -141,15 +145,15 @@ def block_param_name(block_root):
     return singular
 endglobal
 
-snippet "([\S\d]+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)([^\s]*)" "inline block expand" r
+snippet "^(\s*)([\S\d]+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)[^!]([^\s]*)" "inline block expand" r
 `!p
-element_name = match.group(1).lstrip('$@')
-snip.rv = "%s.%s { |" % (match.group(1), iterator_name(match.group(2)))
+element_name = match.group(2).lstrip('$@')
+snip.rv = match.group(1) + "%s.%s { |" % (match.group(2), iterator_name(match.group(3)))
 snip.rv += block_param_name(element_name) + '|'
 ` ${0} }
 endsnippet
 
-snippet "^(\s*)(?:.*?)(\S+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)(!)" "multiline block expand" r
+snippet "^(\s*)(?:.*?)(\S+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)!" "multiline block expand" r
 `!p
 element_name = match.group(2).lstrip('$@')
 snip.rv = match.group(1) + "%s.%s do |" % (match.group(2), iterator_name(match.group(3)))

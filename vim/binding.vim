@@ -15,39 +15,18 @@ nnoremap <Enter> i<Enter><Esc>
 nmap <S-Enter> O<Esc>
 
 " bind \ (backward slash) to grep shortcut
-nnoremap \ :Search<SPACE>
+nnoremap \ :<Plug>CtrlSFPwordPath
+vnoremap \ :<Plug>CtrlSFVwordPath
 
-" Run NERDTreeFind or Toggle based on current buffer
-function! NerdWrapper() abort
-  if &filetype ==# '' " Empty buffer
-    normal NERDTreeToggle
-  elseif $filetype ==# 'nerdtree' " In NERD_tree buffer
-    wincmd w
-  else " Normal file buffer
-    normal NERDTreeFind
-  endif
-endfunction
+noremap <silent> <Bar> :NERDTreeToggle %<CR>
 
-noremap <silent> <C-\> :call NerdWrapper()<CR>
-inoremap <expr> <silent> <C-\> NerdWrapper()
-
-inoremap <Esc><Leader> <Esc>
-" Tab wrapper
-function! TabComplete() abort
+function! s:check_back_space() abort
   let l:col = col('.') - 1
-
-  if pumvisible()
-    return "\<C-n>"
-  else
-    if !l:col || getline('.')[l:col - 1] !~# '\k'
-      return "\<TAB>"
-    else
-      return "\<C-n>"
-    endif
-  endif
+  return !l:col || getline('.')[l:col - 1]  =~ '\s'
 endfunction
 
-inoremap <silent> <TAB> <C-o>:call TabComplete()<CR>
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
+
 "
 " function! g:UltiSnips_Complete()
     " call UltiSnips#ExpandSnippet()
@@ -77,7 +56,7 @@ nnoremap <leader>f :CtrlSF<Space>
 " inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v
 
-noremap <C-C> <esc><right>
+" noremap <C-C> <esc><right>
 
 " search for visually selected file with CtrlP plugin
 vnoremap <C-p> y<Esc><C-p><C-v><CR>
@@ -184,12 +163,13 @@ vnoremap <F4> :'<,'>Tabularize /[^ ]\+\(.*\)\zs"\ze[^"]*$/<CR>
 " let g:UltiSnipsExpandTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+noremap <ESC> <C-c>
 noremap ,<ESC> <ESC>
+
 
 " Quick save and close buffer
 map <leader>w :w!<CR>
-nnoremap <silent> <leader>c :Sayonara!<CR>
-nnoremap <silent> <leader>q :Sayonara<CR>
+nnoremap <silent> <leader>q :Sayonara!<CR>
 
 " Intelligent windows resizing using ctrl + arrow keys
 nnoremap <silent> <C-Up> :resize +1<CR>

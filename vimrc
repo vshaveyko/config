@@ -1,9 +1,9 @@
 set nocompatible
-set t_Co=256
+" set t_Co=256
 
-if has('termguicolors')
-  set termguicolors " Turn on true colors support
-endif
+" if has('termguicolors')
+  " set termguicolors " Turn on true colors support
+" endif
 
 " set term=xterm-256color
 set shortmess=a
@@ -46,6 +46,7 @@ call plug#begin()
   Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }                                                      " Rails integration: moves, abbrevs, etc.
   Plug 'tpope/vim-endwise'                                                      " Autoend ruby blocks
   Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-cucumber'
 
   " git integration
   Plug 'tpope/vim-fugitive'                                                     " Git wrapper. Adds bindings for using Git inside vim.
@@ -84,6 +85,7 @@ call plug#begin()
   " Plug 'honza/vim-snippets'
   Plug 'osyo-manga/vim-monster'
   Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+  Plug 'mhinz/vim-sayonara'
 
 call plug#end()
 
@@ -107,7 +109,7 @@ let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
 let g:UltiSnipsEditSplit='vertical'
 
 " Use Python Version
-let g:UltiSnipsUsePythonVersion = 2
+" let g:UltiSnipsUsePythonVersion = 2
 
 " let g:ultisnips_python_style="google"
 " better key bindings for UltiSnipsExpandTrigger
@@ -195,12 +197,12 @@ set mousehide                                                                   
 set cursorline                                                                  " highlight current position of cursor
 set wildmenu                                                                    " Autocomplete menu commands
 set lazyredraw                                                                  " redraw only when we need to
+set ttyfast
 
 " set foldmethod=indent
 set foldlevel=20
 
-set notimeout ttimeout ttimeoutlen=200
-set timeoutlen=150
+set timeoutlen=500 ttimeoutlen=0
 autocmd Syntax slim,html,erb setlocal foldmethod=indent
 autocmd Syntax slim,html,erb normal zR
 
@@ -263,6 +265,8 @@ let g:deoplete#sources.html = ['buffer', 'member', 'file', 'omni', 'ultisnips']
 let g:monster#completion#rcodetools#backend = "async_rct_complete"
 let g:deoplete#sources#omni#input_patterns = { "ruby" : '[^. *\t]\.\w*\|\h\w*::' }
 
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#auto_complete_delay = 20
 "}}}
 
 " Ctrl-SF settings {{{
@@ -273,4 +277,10 @@ let g:ctrlsf_position='bottom'
 let g:ctrlsf_winsize = '100%'
 let g:ctrlsf_auto_close=0
 let g:ctrlsf_regex_pattern=0
-"}}}
+
+autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+
+" Surround.vim settings {{{
+" -----------------------------------------------------
+let g:surround_124 = "|\r|"
+let g:surround_58 = ":\r"

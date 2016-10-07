@@ -25,4 +25,4 @@ Rails:
 Style/Copyright:
   Enabled: true
   Notice: '^# [A|a]uthor: (.*) <(.*)>$'
-alwaysAutocorrectNotice: '# author: Vadim Shaveiko <@vshaveyko>'
+  AutocorrectNotice: '# author: Vadim Shaveiko <@vshaveyko>'

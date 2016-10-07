@@ -123,7 +123,7 @@ options=("vim" "plug" "confs" "tmux" "rubo" "fonts" "ycm")
 
 install.all() {
   for option in ${options[*]}; do
-    instal.$option
+    install.$option
   done
 }
 
