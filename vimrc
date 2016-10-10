@@ -197,14 +197,14 @@ set mousehide                                                                   
 set cursorline                                                                  " highlight current position of cursor
 set wildmenu                                                                    " Autocomplete menu commands
 set lazyredraw                                                                  " redraw only when we need to
-set ttyfast
+" set ttyfast
 
 " set foldmethod=indent
-set foldlevel=20
+" set foldlevel=20
 
 set timeoutlen=500 ttimeoutlen=0
-autocmd Syntax slim,html,erb setlocal foldmethod=indent
-autocmd Syntax slim,html,erb normal zR
+" autocmd Syntax slim,html,erb setlocal foldmethod=indent
+" autocmd Syntax slim,html,erb normal zR
 
 set splitbelow
 set splitright
@@ -274,8 +274,8 @@ let g:deoplete#auto_complete_delay = 20
 let g:ctrlsf_default_root='project'
 let g:ctrlsf_populate_qflist=0
 let g:ctrlsf_position='bottom'
-let g:ctrlsf_winsize = '100%'
-let g:ctrlsf_auto_close=0
+" let g:ctrlsf_winsize = '100%'
+" let g:ctrlsf_auto_close=0
 let g:ctrlsf_regex_pattern=0
 
 autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab

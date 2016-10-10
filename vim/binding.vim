@@ -15,10 +15,10 @@ nnoremap <Enter> i<Enter><Esc>
 nmap <S-Enter> O<Esc>
 
 " bind \ (backward slash) to grep shortcut
-nnoremap \ :<Plug>CtrlSFPwordPath
-vnoremap \ :<Plug>CtrlSFVwordPath
+nnoremap <expr> \ <Plug>CtrlSFPwordPath
+vnoremap <expr> \ <Plug>CtrlSFVwordExec
 
-noremap <silent> <Bar> :NERDTreeToggle %<CR>
+noremap <expr><silent> <Bar> NERDTreeFind<CR>
 
 function! s:check_back_space() abort
   let l:col = col('.') - 1
@@ -47,7 +47,7 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() 
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-e>"
 
-nnoremap <leader>qq :qa!<CR>
+nnoremap <leader>qa :qa!<CR>
 
 inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 
@@ -165,7 +165,6 @@ vnoremap <F4> :'<,'>Tabularize /[^ ]\+\(.*\)\zs"\ze[^"]*$/<CR>
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 noremap <ESC> <C-c>
 noremap ,<ESC> <ESC>
-
 
 " Quick save and close buffer
 map <leader>w :w!<CR>
