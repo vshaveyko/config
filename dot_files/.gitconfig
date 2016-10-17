@@ -126,6 +126,6 @@
 [push]
   default = simple
 [core]
-	excludesfile = /home/vadim/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [init]
 	templatedir = ~/.git_template
