@@ -105,6 +105,7 @@ call deoplete#custom#set('ultisnips', 'rank', 1000)
 " Configuration for custom snips
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
 
+
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit='vertical'
 
@@ -130,6 +131,7 @@ let g:UltiSnipsSnippetsDir="~/config/vim/UltiSnips"
 set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
 
 " Neomake on write
+" TODO: think about not counting corrected warnings to global warning count
 let g:neomake_ruby_rubocopauto_maker = {
       \ 'exe'        : 'rubocop',
       \ 'args'        : ['--format', 'emacs', '-a'],
