@@ -19,13 +19,9 @@ call plug#begin()
 
   Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'               " File Tree
 
-  " Plug 'Valloric/YouCompleteMe'
-
   Plug 'jiangmiao/auto-pairs'
 
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'        " Status\Tabline
-
-  Plug 'rking/ag.vim'                                                           " Silver searcher interface
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
 
@@ -43,7 +39,7 @@ call plug#begin()
   Plug 'chrisbra/NrrwRgn'                                                       " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
-  Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }                                                      " Rails integration: moves, abbrevs, etc.
+  " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }                                                      " Rails integration: moves, abbrevs, etc.
   Plug 'tpope/vim-endwise'                                                      " Autoend ruby blocks
   Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-cucumber'
@@ -67,8 +63,6 @@ call plug#begin()
   " Ruby block text object (vir)
   Plug 'nelstrom/vim-textobj-rubyblock'
 
-  Plug 'Yggdroot/indentLine'                                                    " Display indentation
-
   Plug 'neomake/neomake'                                                        " Async task maker
   Plug 'FooSoft/vim-argwrap'                                                    " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
@@ -82,8 +76,7 @@ call plug#begin()
   Plug 'fishbullet/deoplete-ruby'
 
   Plug 'jacoborus/tender'
-  " Plug 'honza/vim-snippets'
-  Plug 'osyo-manga/vim-monster'
+  " Plug 'osyo-manga/vim-monster'
   Plug 'Shougo/vimproc.vim', {'do' : 'make'}
   Plug 'mhinz/vim-sayonara'
 
@@ -128,7 +121,7 @@ let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 set runtimepath+=~/config/vim
 let g:UltiSnipsSnippetsDir="~/config/vim/UltiSnips"
 
-set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
+" set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
 
 " Neomake on write
 " TODO: think about not counting corrected warnings to global warning count
@@ -196,13 +189,16 @@ autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$##                             
 " View
 set ruler                                                                       " show cursor position
 set mousehide                                                                   " hide mouser corse in typing
-set cursorline                                                                  " highlight current position of cursor
+set cursorline                                                                  " highlight current position of cursor line
+set cuc cul"                                                                    " highlight current position column
 set wildmenu                                                                    " Autocomplete menu commands
 set lazyredraw                                                                  " redraw only when we need to
 " set ttyfast
 
 " set foldmethod=indent
 " set foldlevel=20
+
+set clipboard=unnamed " Copy\paste from clipboard always. Test and think about if it needed.
 
 set timeoutlen=500 ttimeoutlen=0
 " autocmd Syntax slim,html,erb setlocal foldmethod=indent
@@ -279,6 +275,25 @@ let g:ctrlsf_position='bottom'
 " let g:ctrlsf_winsize = '100%'
 " let g:ctrlsf_auto_close=0
 let g:ctrlsf_regex_pattern=0
+
+let g:ctrlsf_extra_backend_args = {
+    \ 'ag': ' -i
+            \ --ignore .git
+            \ --ignore tags
+            \ --ignore .svn
+            \ --ignore .hg
+            \ --ignore node_modules
+            \ --ignore bower_components
+            \ --ignore www
+            \ --ignore images
+            \ --ignore fonts
+            \ --ignore gulp_tasks
+            \ --ignore log
+            \ --ignore tmp
+            \ --ignore bin
+            \ --ignore .DS_Store
+            \ --ignore "**/*.pyc"'
+    \ }
 
 autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
