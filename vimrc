@@ -80,18 +80,16 @@ call plug#begin()
   Plug 'Shougo/vimproc.vim', {'do' : 'make'}
   Plug 'mhinz/vim-sayonara'
 
+  Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
+
 call plug#end()
 
 let g:python3_host_prog = '/usr/bin/python3'
-
 set background=dark
 " Color scheme based on time {{{
-if strftime("%H") < 17 && strftime("%H") > 8
-  let g:hybrid_custom_term_colors = 1
-  colorscheme hybrid
-else
-  colorscheme iceberg
-endif
+let g:hybrid_custom_term_colors = 1
+colorscheme hybrid
 "}}}
 
 call deoplete#custom#set('ultisnips', 'rank', 1000)
@@ -171,7 +169,9 @@ set nobackup
 set noswapfile
 
 " Encoding
-" set encoding=utf8
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+set encoding=utf8
+
 " set fileencoding=utf8
 " set termencoding=utf-8
 " set fileencodings=utf8,cp1251
@@ -301,3 +301,6 @@ autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 " -----------------------------------------------------
 let g:surround_124 = "|\r|"
 let g:surround_58 = ":\r"
+
+" Force Vim to not lag with nerd tree
+let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions

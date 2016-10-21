@@ -52,6 +52,7 @@ nnoremap <leader>qa :qa!<CR>
 inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 
 nnoremap <leader>f :CtrlSF<Space>
+vnoremap <leader>f y:CtrlSF<Space>'<C-R>"'
 
 " inoremap <C-r> <Esc><C-r>i
 vnoremap <C-r> <Esc><C-r>v

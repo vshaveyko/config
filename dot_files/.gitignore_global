@@ -9,7 +9,6 @@ zeus.json
 tasks/cucumber.rake
 **/db/test.rake
 /knapsack.rb
-**/Rakefile
 
 /tmp/**/*
 
