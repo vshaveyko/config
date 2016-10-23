@@ -160,6 +160,7 @@ nnoremap <F5> :so $HOME/.vimrc<CR>
 vnoremap <F2> :'<,'>Tabularize /^[^=]*\zs=\ze/<CR>
 vnoremap <F3> :'<,'>Tabularize /^[^:]*\zs:\ze/<CR>
 vnoremap <F4> :'<,'>Tabularize /[^ ]\+\(.*\)\zs"\ze[^"]*$/<CR>
+vnoremap <F5> :'<.'>Tabularize /|
 
 " let g:UltiSnipsExpandTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -174,3 +175,6 @@ nnoremap <silent> <leader>q :Sayonara!<CR>
 " Intelligent windows resizing using ctrl + arrow keys
 nnoremap <silent> <C-Up> :resize +1<CR>
 nnoremap <silent> <C-Down> :resize -1<CR>
+
+" select last select
+nnoremap <Space> gv

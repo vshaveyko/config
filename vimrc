@@ -29,6 +29,12 @@ call plug#begin()
   " Ag wrapper (Unite grep alternative) search and edit
   Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
 
+  " " CSS/HTML
+  Plug 'mattn/emmet-vim' " css\sass complete
+  Plug 'valloric/MatchTagAlways', {'for': 'html'}
+  Plug 'tpope/vim-haml'
+  Plug 'mustache/vim-mustache-handlebars'
+
   Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
   Plug 'JSON.vim'
   Plug 'kchmck/vim-coffee-script'
@@ -70,6 +76,7 @@ call plug#begin()
 
   Plug 'godlygeek/tabular'                                                      " Align stuff nicely
   Plug 'lukaszkorecki/CoffeeTags'                                               " Coffeescript tags support
+  Plug 'ludovicchabant/vim-gutentags' " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -301,6 +308,9 @@ autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 " -----------------------------------------------------
 let g:surround_124 = "|\r|"
 let g:surround_58 = ":\r"
+
+" Remove 2 space margin after icons from devicons in nerdtree
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 
 " Force Vim to not lag with nerd tree
 let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions

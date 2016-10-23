@@ -85,6 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# TODO: export config path and reuse in in script
 export TERM=xterm-256color
 export EDITOR=nvim
 export GOPATH=$HOME/ved
@@ -104,3 +105,9 @@ alias nvm="nvim"
 alias t="tmux"
 
 alias gi="git init && chmod +x .git/hooks/*"
+
+autoload bashcompinit
+bashcompinit
+
+source "$HOME/config/.bash/git-completion.sh"
+source "$HOME/config/.bash/aliases.git.sh"
