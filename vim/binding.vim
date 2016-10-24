@@ -26,6 +26,7 @@ function! s:check_back_space() abort
 endfunction
 
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<S-TAB>" : deoplete#mappings#manual_complete()
 
 "
 " function! g:UltiSnips_Complete()
@@ -42,7 +43,7 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() 
     " endif
     " return ""
 " endfunction
-"
+
 " au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-e>"
