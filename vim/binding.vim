@@ -1,3 +1,6 @@
+" Shift-f Shift-t backwards repeat. Forward is mapped to ;
+noremap ' ,
+
 " Map leader key
 let mapleader=","
 
@@ -179,3 +182,12 @@ nnoremap <silent> <C-Down> :resize -1<CR>
 
 " select last select
 nnoremap <Space> gv
+
+" Disable arrow to learn vim-way
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>

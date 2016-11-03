@@ -1,4 +1,6 @@
 set nocompatible
+set hidden
+
 " set t_Co=256
 
 " if has('termguicolors')
@@ -17,6 +19,8 @@ endfor
 " Install Plugins
 call plug#begin()
 
+  Plug 'matze/vim-move' " Move lines here and there
+
   Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'               " File Tree
 
   Plug 'jiangmiao/auto-pairs'
@@ -25,14 +29,15 @@ call plug#begin()
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
 
-  Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
+  Plug 'vim-ctrlspace/vim-ctrlspace'
+  " Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
   " Ag wrapper (Unite grep alternative) search and edit
   Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
 
   " " CSS/HTML
   Plug 'mattn/emmet-vim' " css\sass complete
   Plug 'valloric/MatchTagAlways', {'for': 'html'}
-  Plug 'tpope/vim-haml'
+  Plug 'hail2u/vim-css3-syntax'
   Plug 'mustache/vim-mustache-handlebars'
 
   Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
@@ -89,6 +94,8 @@ call plug#begin()
 
   Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
+
+  Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 
@@ -177,19 +184,23 @@ set noswapfile
 
 " Encoding
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
-set encoding=utf8
 
-" set fileencoding=utf8
-" set termencoding=utf-8
-" set fileencodings=utf8,cp1251
+if !has('nvim')
+  set encoding=utf8
+  set fileencoding=utf8
+  set termencoding=utf-8
+  set fileencodings=utf8,cp1251
+endif
 
 " Input
 set iminsert=0                                                                  " english as default keyboard layout
 set expandtab                                                                   " convert tab to spaces
 set autoindent                                                                  " inherit indent from previous line
 set formatoptions-=o                                                            " dont continue comments when pushing o/O
+
 autocmd BufWritePre * :%s/\s\+$//e                                              " Delete spaces from end on lines
 autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$##                             " Delete trailing lines at the end of file
+
 " autocmd FocusLost * silent! wh                                                " Auto save files when focus is lost
 " autocmd BufLeave * silent! :w                                                 " or leave buffer
 
@@ -314,3 +325,10 @@ let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 
 " Force Vim to not lag with nerd tree
 let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions
+
+" Sass properties correct highlight(highlight properties with -, hightlight
+" moz\webkit ...)
+set iskeyword+=-
+highlight VendorPrefix guifg=#00ffff gui=bold
+match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
+au BufRead,BufNewFile *.sass set filetype=scss.css

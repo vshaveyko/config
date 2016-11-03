@@ -21,6 +21,7 @@ if executable('ag')
         \ --ignore .DS_Store
         \ --ignore "**/*.pyc"
         \ -g ""'
+  let g:CtrlSpaceGlobCommand = g:ctrlp_user_command
 endif
 
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
