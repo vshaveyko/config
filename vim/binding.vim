@@ -21,7 +21,7 @@ nmap <S-Enter> O<Esc>
 nnoremap <expr> \ <Plug>CtrlSFPwordPath
 vnoremap <expr> \ <Plug>CtrlSFVwordExec
 
-noremap <expr><silent> <Bar> NERDTreeFind<CR>
+noremap <silent> <Bar> :NERDTreeFind<CR>
 
 function! s:check_back_space() abort
   let l:col = col('.') - 1
@@ -111,8 +111,8 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
 
 " Replace
-nnoremap <leader>s :%s//<left>
-vnoremap <leader>s :s//<left>
+nnoremap <leader>s :%s///ge<left><left><left><left>
+vnoremap <leader>s :s///ge<left><left><left><left>
 nnoremap <S-K> :nohl \| redraw!<CR>
 
 " REALLY delete with leader
