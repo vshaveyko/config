@@ -96,7 +96,8 @@ call plug#begin()
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
 
   Plug 'easymotion/vim-easymotion'
-  Plug 'burnettk/vim-angular' " angular niceties
+  Plug 'leafgarland/typescript-vim'
+  " Plug 'burnettk/vim-angular' " angular niceties
 
 call plug#end()
 
