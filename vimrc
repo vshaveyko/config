@@ -283,9 +283,6 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#auto_complete_start_length = 0
 let g:auto_complete_start_length = 0
 let g:deoplete#enable_refresh_always = 1
-let g:deoplete#enable_debug = 1
-let g:deoplete#enable_profile = 1
-call deoplete#enable_logging('DEBUG', 'log/deoplete.log')
 
 " let g:deoplete#sources={}
 " let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
