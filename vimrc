@@ -17,7 +17,7 @@ for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                    
 endfor
 
 " Install Plugins
-call plug#begin()
+call plug#begin('~/.vim/plugged')
 
   Plug 'matze/vim-move' " Move lines here and there
 
@@ -29,8 +29,8 @@ call plug#begin()
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
 
-  Plug 'vim-ctrlspace/vim-ctrlspace'
-  " Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
+  " Plug 'vim-ctrlspace/vim-ctrlspace'
+  Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
   " Ag wrapper (Unite grep alternative) search and edit
   Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
 
@@ -85,19 +85,26 @@ call plug#begin()
 
   Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'fishbullet/deoplete-ruby'
+
+  function! DoRemote(arg)
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'fishbullet/deoplete-ruby', { 'do': function('DoRemote') }
+  Plug 'mhartington/deoplete-typescript'
+  " Plug 'osyo-manga/vim-monster' " deoplete ruby support
 
   Plug 'jacoborus/tender'
   " Plug 'osyo-manga/vim-monster'
-  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+  Plug 'Shougo/vimproc.vim'
   Plug 'mhinz/vim-sayonara'
 
   Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
 
   Plug 'easymotion/vim-easymotion'
+
   Plug 'leafgarland/typescript-vim'
-  " Plug 'burnettk/vim-angular' " angular niceties
 
 call plug#end()
 
@@ -133,9 +140,10 @@ let g:UltiSnipsJumpForwardTrigger='<C-j>'
 let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
 set runtimepath+=~/config/vim
+
 let g:UltiSnipsSnippetsDir="~/config/vim/UltiSnips"
 
-" set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
+set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
 
 " Neomake on write
 " TODO: think about not counting corrected warnings to global warning count
@@ -271,20 +279,28 @@ let g:deoplete#enable_at_startup=1
 let g:deoplete#enable_refresh_always=0
 let g:deoplete#file#enable_buffer_path=1
 
-let g:deoplete#sources={}
-let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
-let g:deoplete#sources.ruby = ['buffer', 'member', 'file', 'ultisnips']
-let g:deoplete#sources.vim  = ['buffer', 'member', 'file', 'ultisnips']
-let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips', 'ternjs']
-let g:deoplete#sources.css  = ['buffer', 'member', 'file', 'omni', 'ultisnips']
-let g:deoplete#sources.scss = ['buffer', 'member', 'file', 'omni', 'ultisnips']
-let g:deoplete#sources.html = ['buffer', 'member', 'file', 'omni', 'ultisnips']
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#auto_complete_start_length = 0
+let g:auto_complete_start_length = 0
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#enable_debug = 1
+let g:deoplete#enable_profile = 1
+call deoplete#enable_logging('DEBUG', 'log/deoplete.log')
 
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = { "ruby" : '[^. *\t]\.\w*\|\h\w*::' }
+" let g:deoplete#sources={}
+" let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
+" let g:deoplete#sources.ruby = ['buffer', 'member', 'file', 'ultisnips']
+" let g:deoplete#sources.vim  = ['buffer', 'member', 'file', 'ultisnips']
+" let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips', 'ternjs']
+" let g:deoplete#sources.css  = ['buffer', 'member', 'file', 'omni', 'ultisnips']
+" let g:deoplete#sources.scss = ['buffer', 'member', 'file', 'omni', 'ultisnips']
+" let g:deoplete#sources.html = ['buffer', 'member', 'file', 'omni', 'ultisnips']
 
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#auto_complete_delay = 20
+" let g:monster#completion#rcodetools#backend = "async_rct_complete"
+" let g:deoplete#sources#omni#input_patterns = { "ruby" : '[^. *\t]\.\w*\|\h\w*::' }
+
+" let g:deoplete#auto_complete_start_length = 1
+" let g:deoplete#auto_complete_delay = 20
 "}}}
 
 " Ctrl-SF settings {{{
@@ -334,3 +350,29 @@ set iskeyword+=-
 highlight VendorPrefix guifg=#00ffff gui=bold
 match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
 au BufRead,BufNewFile *.sass set filetype=scss.css
+
+" Ctrlspace config
+" lhi link CtrlSpaceNormal   PMenu
+hi link CtrlSpaceSelected Title
+hi link CtrlSpaceSearch   String
+hi link CtrlSpaceStatus   PreProc
+
+hi link CtrlPMode1 Title
+hi link CtrlPMode2 String
+hi link CtrlPStats PreProc
+hi link CtrlPPrtBase PreProc
+
+let g:CtrlSpaceSearchTiming = 500
+
+" Vim command line as bash command line shortcuts
+cnoremap <C-a>  <Home>
+cnoremap <C-e> <End>
+cnoremap <C-b>  <Left>
+cnoremap <C-f>  <Right>
+cnoremap <C-d>  <Delete>
+cnoremap <M-b>  <S-Left>
+cnoremap <M-f>  <S-Right>
+cnoremap <M-d>  <S-right><Delete>
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
+cnoremap <C-g>  <C-c>
