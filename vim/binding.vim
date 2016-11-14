@@ -181,8 +181,9 @@ nnoremap <silent> <C-Up> :resize +1<CR>
 nnoremap <silent> <C-Down> :resize -1<CR>
 
 " select last select
-nnoremap <Space> gv
-
+" nnoremap <Space> gv
+nmap < gv
+nmap > gv
 " Disable arrow to learn vim-way
 inoremap  <Down>   <NOP>
 inoremap  <Left>   <NOP>

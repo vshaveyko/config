@@ -103,6 +103,8 @@ alias "init=guake -t -e 'init_health24 && exit 0'"
 alias nvm="nvim"
 
 alias t="tmux"
+alias gu="kill -9 $(pgrep node) && gulp"
+alias r4="rails s webrick -p 4000"
 
 alias gi="git init && chmod +x .git/hooks/*"
 

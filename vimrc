@@ -104,7 +104,12 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'easymotion/vim-easymotion'
 
-  Plug 'leafgarland/typescript-vim'
+  Plug 'leafgarland/typescript-vim' " Typescript highlight \ indent
+  Plug 'Quramy/tsuquyomi' " Typesciprt omni completion \ compiler
+
+  Plug 'vim-scripts/BufOnly.vim' " :BufOnly will close all buffers except current one
+
+  Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
 
 call plug#end()
 
@@ -155,6 +160,8 @@ let g:neomake_ruby_rubocopauto_maker = {
       \ }
 let g:neomake_ruby_enabled_makers = ['rubocopauto']
 
+" let g:neomake_typescript_enabled_makers = ['tsuquyomi']
+
 autocmd BufWritePost * call neomake#Make(1, [], function('s:Neomake_callback'))
 
 function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
@@ -175,6 +182,10 @@ set hlsearch
 set ignorecase
 set incsearch
 set smartcase
+
+" Quick fix entries colors | Search colors
+hi QuickFixLine ctermbg=Black ctermfg=Blue
+hi Search ctermfg=Black ctermbg=White
 
 " Line numbers
 set relativenumber
@@ -283,6 +294,7 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#auto_complete_start_length = 0
 let g:auto_complete_start_length = 0
 let g:deoplete#enable_refresh_always = 1
+let g:deoplete#auto_complete_delay = 20
 
 " let g:deoplete#sources={}
 " let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
@@ -297,7 +309,6 @@ let g:deoplete#enable_refresh_always = 1
 " let g:deoplete#sources#omni#input_patterns = { "ruby" : '[^. *\t]\.\w*\|\h\w*::' }
 
 " let g:deoplete#auto_complete_start_length = 1
-" let g:deoplete#auto_complete_delay = 20
 "}}}
 
 " Ctrl-SF settings {{{
@@ -362,14 +373,41 @@ hi link CtrlPPrtBase PreProc
 let g:CtrlSpaceSearchTiming = 500
 
 " Vim command line as bash command line shortcuts
-cnoremap <C-a>  <Home>
+cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-cnoremap <C-b>  <Left>
-cnoremap <C-f>  <Right>
-cnoremap <C-d>  <Delete>
-cnoremap <M-b>  <S-Left>
-cnoremap <M-f>  <S-Right>
-cnoremap <M-d>  <S-right><Delete>
-cnoremap <Esc>b <S-Left>
-cnoremap <Esc>f <S-Right>
-cnoremap <C-g>  <C-c>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+cnoremap <C-d> <Delete>
+
+"Easymotion binding config
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+map <Space> <Plug>(easymotion-prefix)
+let g:EasyMotion_smartcase = 1
+nmap <Space>t <Plug>(easymotion-bd-t)
+nmap <Space>f <Plug>(easymotion-bd-f)
+
+nmap <Space>T <Plug>(easymotion-bd-tl)
+nmap <Space>F <Plug>(easymotion-bd-fl)
+
+nmap <Space>W <Plug>(easymotion-bd-w)
+nmap <Space>E <Plug>(easymotion-bd-e)
+
+nmap <Space>s <Plug>(easymotion-bd-s)
+nmap <Space>S <Plug>(easymotion-s2)
+" Gif config
+map <Space>l <Plug>(easymotion-lineforward)
+map <Space>j <Plug>(easymotion-j)
+map <Space>k <Plug>(easymotion-k)
+map <Space>h <Plug>(easymotion-linebackward)
+
+"search with easymotion
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+"These mappings just provide different highlight method and have some other features
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
+
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1 " Smartsign (type `3` and match `3`&`#`)
