@@ -384,21 +384,23 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 map <Space> <Plug>(easymotion-prefix)
 let g:EasyMotion_smartcase = 1
 nmap <Space>t <Plug>(easymotion-bd-t)
-nmap <Space>f <Plug>(easymotion-bd-f)
+nmap <Space>f <Plug>(easymotion-overwin-f)
 
 nmap <Space>T <Plug>(easymotion-bd-tl)
-nmap <Space>F <Plug>(easymotion-bd-fl)
+nmap <Space>F <Plug>(easymotion-bd-f)
 
+nmap <Space>w <Plug>(easymotion-overwin-w)
 nmap <Space>W <Plug>(easymotion-bd-w)
 nmap <Space>E <Plug>(easymotion-bd-e)
 
-nmap <Space>s <Plug>(easymotion-bd-s)
+nmap <Space>s <Plug>(easymotion-s)
 nmap <Space>S <Plug>(easymotion-s2)
 " Gif config
-map <Space>l <Plug>(easymotion-lineforward)
-map <Space>j <Plug>(easymotion-j)
-map <Space>k <Plug>(easymotion-k)
+map <Space>l <Plug>(easymotion-overwin-line)
+map <Space>j <Plug>(easymotion-jk)
+map <Space>k <Plug>(easymotion-jk)
 map <Space>h <Plug>(easymotion-linebackward)
+map <Space><Space> <Plug>(easymotion-jumptoanywhere)
 
 "search with easymotion
 map / <Plug>(easymotion-sn)
@@ -411,3 +413,6 @@ map N <Plug>(easymotion-prev)
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1 " Smartsign (type `3` and match `3`&`#`)
+
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ABCEGHILMNOPQRSTUVWXYZFD;JK'
