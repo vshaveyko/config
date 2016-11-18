@@ -80,13 +80,13 @@ noremap > >gv
 
 " Split navigation using arrows. On change do NOT forget to change tmux.conf
 " for tab split navigation
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
-noremap <C-k> <C-w>k
-noremap <C-j> <C-w>j
+noremap <C-l> <C-w>l<C-w>_
+noremap <C-h> <C-w>h<C-w>_
+noremap <C-k> <C-w>k<C-w>_
+noremap <C-j> <C-w>j<C-w>_
 
 " move by virtual lines without count and by physical with count
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> j (v:count == -1 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Visual linewise up and down by default (and use gj gk to go quicker)

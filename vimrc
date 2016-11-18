@@ -1,11 +1,11 @@
 set nocompatible
 set hidden
 
-" set t_Co=256
+set t_Co=256
 
-" if has('termguicolors')
-  " set termguicolors " Turn on true colors support
-" endif
+if has('termguicolors')
+  set termguicolors " Turn on true colors support
+endif
 
 " set term=xterm-256color
 set shortmess=a
@@ -19,9 +19,7 @@ endfor
 " Install Plugins
 call plug#begin('~/.vim/plugged')
 
-  Plug 'matze/vim-move' " Move lines here and there
-
-  Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'               " File Tree
+  " Plug 'matze/vim-move' " Move lines here and there
 
   Plug 'jiangmiao/auto-pairs'
 
@@ -29,88 +27,106 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
 
-  " Plug 'vim-ctrlspace/vim-ctrlspace'
-  Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
-  " Ag wrapper (Unite grep alternative) search and edit
-  Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
 
-  " " CSS/HTML
-  Plug 'mattn/emmet-vim' " css\sass complete
-  Plug 'valloric/MatchTagAlways', {'for': 'html'}
-  Plug 'hail2u/vim-css3-syntax'
-  Plug 'mustache/vim-mustache-handlebars'
-
-  Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
-  Plug 'JSON.vim'
-  Plug 'kchmck/vim-coffee-script'
-  Plug 'digitaltoad/vim-pug'                                                    " JADE syntax
-  Plug 'slim-template/vim-slim'                                                 " SLIM syntax
-
-  Plug 'thoughtbot/vim-rspec'
-  Plug 'chrisbra/NrrwRgn'                                                       " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
+  " Plug 'chrisbra/NrrwRgn'                                                       " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }                                                      " Rails integration: moves, abbrevs, etc.
-  Plug 'tpope/vim-endwise'                                                      " Autoend ruby blocks
-  Plug 'tpope/vim-dispatch'
-  Plug 'tpope/vim-cucumber'
+  " Plug 'tpope/vim-dispatch'
 
-  " git integration
-  Plug 'tpope/vim-fugitive'                                                     " Git wrapper. Adds bindings for using Git inside vim.
-  Plug 'airblade/vim-gitgutter'                                                 " Side columns to show git changes
 
   Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
 
   " Custom text objects creation (dependency for the latter)
-  Plug 'kana/vim-textobj-user'
+  " Plug 'kana/vim-textobj-user'
   " Argument text object (via, >a)
-  Plug 'PeterRincker/vim-argumentative'
+  " Plug 'PeterRincker/vim-argumentative'
   " Indent text object (vii)
-  Plug 'kana/vim-textobj-indent'
+  " Plug 'kana/vim-textobj-indent'
   " Line text object (vil)
-  Plug 'kana/vim-textobj-line'
+  " Plug 'kana/vim-textobj-line'
   " Entire buffer text object (vae)
-  Plug 'kana/vim-textobj-entire'
+  " Plug 'kana/vim-textobj-entire'
   " Ruby block text object (vir)
-  Plug 'nelstrom/vim-textobj-rubyblock'
 
   Plug 'neomake/neomake'                                                        " Async task maker
-  Plug 'FooSoft/vim-argwrap'                                                    " Move arguments to new lines with <leader>a
+  " Plug 'FooSoft/vim-argwrap'                                                    " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
   Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
 
   Plug 'godlygeek/tabular'                                                      " Align stuff nicely
-  Plug 'lukaszkorecki/CoffeeTags'                                               " Coffeescript tags support
   Plug 'ludovicchabant/vim-gutentags' " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-  function! DoRemote(arg)
-    UpdateRemotePlugins
-  endfunction
-
-  Plug 'fishbullet/deoplete-ruby', { 'do': function('DoRemote') }
-  Plug 'mhartington/deoplete-typescript'
-  " Plug 'osyo-manga/vim-monster' " deoplete ruby support
-
-  Plug 'jacoborus/tender'
-  " Plug 'osyo-manga/vim-monster'
-  Plug 'Shougo/vimproc.vim'
+  Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   Plug 'mhinz/vim-sayonara'
-
-  Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
 
   Plug 'easymotion/vim-easymotion'
 
-  Plug 'leafgarland/typescript-vim' " Typescript highlight \ indent
-  Plug 'Quramy/tsuquyomi' " Typesciprt omni completion \ compiler
-
   Plug 'vim-scripts/BufOnly.vim' " :BufOnly will close all buffers except current one
 
-  Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
 
+  """"""""""       SEARCH      """""""""""""
+
+    Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
+    Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
+    " Plug 'vim-ctrlspace/vim-ctrlspace'
+    " Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
+    " Ag wrapper (Unite grep alternative) search and edit
+
+  """"""""""       SEARCH      """""""""""""
+
+  """"""""""        GIT        """""""""""""
+
+    Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
+    Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+
+  """"""""""        GIT        """""""""""""
+
+  """"""""""     FILE TREE     """""""""""""
+
+    Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin' " File Tree
+    Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
+
+  """"""""""     FILE TREE     """""""""""""
+
+  """""""""" LANGUAGE SPECIFIC """"""""""
+
+    " TYPESCRIPT
+      Plug 'Quramy/tsuquyomi' " Typesciprt omni completion \ compiler
+      Plug 'leafgarland/typescript-vim' " Typescript highlight \ indent
+      Plug 'mhartington/deoplete-typescript'
+
+    " RUBY
+      Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins' }
+      " Plug 'osyo-manga/vim-monster' " deoplete ruby support
+      Plug 'nelstrom/vim-textobj-rubyblock'
+      " Plug 'thoughtbot/vim-rspec'
+      Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
+      Plug 'tpope/vim-endwise'                                                      " Autoend ruby blocks
+      Plug 'tpope/vim-cucumber'
+
+    " COFFEE_SCRIPT
+      Plug 'lukaszkorecki/CoffeeTags'                                               " Coffeescript tags support
+      Plug 'kchmck/vim-coffee-script'
+      Plug 'mustache/vim-mustache-handlebars' " angular blocks({{  }}) text object
+      Plug 'JSON.vim'
+
+    " CSS/HTML
+      Plug 'hail2u/vim-css3-syntax'
+      Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
+      Plug 'mattn/emmet-vim' " css\sass complete
+
+    " JADE
+      Plug 'digitaltoad/vim-pug'                                                    " JADE syntax
+
+    " SLIM
+      Plug 'slim-template/vim-slim'                                                 " SLIM syntax
+
+  """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
 let g:python3_host_prog = '/usr/bin/python3'
@@ -280,7 +296,7 @@ let g:ycm_complete_in_comments = 1
 " White characters settings {{{
 " ---------------------------------------------------------------------------------------------------------------------
 set list                                    " Show listchars by default
-set listchars=tab:▸\ ,nbsp:·,space:·
+set listchars=tab:▸▸ "  ,nbsp:·,space:·
 "}}}
 
 " -----------------------------------------------------
