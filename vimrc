@@ -27,13 +27,11 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
 
-
   " Plug 'chrisbra/NrrwRgn'                                                       " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }                                                      " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
-
 
   Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
 
@@ -58,7 +56,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'ludovicchabant/vim-gutentags' " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }, { 'for': ['ruby', 'coffee', 'typescript', 'slim', 'jade', 'pug'] }
 
   Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   Plug 'mhinz/vim-sayonara'
@@ -96,38 +94,42 @@ call plug#begin('~/.vim/plugged')
   """""""""" LANGUAGE SPECIFIC """"""""""
 
     " TYPESCRIPT
-      Plug 'Quramy/tsuquyomi' " Typesciprt omni completion \ compiler
-      Plug 'leafgarland/typescript-vim' " Typescript highlight \ indent
-      Plug 'mhartington/deoplete-typescript'
+      Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
+      Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
+      Plug 'mhartington/deoplete-typescript', { 'for': ['typescript'] }
 
     " RUBY
-      Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins' }
+      Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins' }, { 'for': ['ruby', 'slim'] }
       " Plug 'osyo-manga/vim-monster' " deoplete ruby support
-      Plug 'nelstrom/vim-textobj-rubyblock'
+      " Plug 'nelstrom/vim-textobj-rubyblock'
       " Plug 'thoughtbot/vim-rspec'
-      Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
-      Plug 'tpope/vim-endwise'                                                      " Autoend ruby blocks
-      Plug 'tpope/vim-cucumber'
+      Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
+      Plug 'tpope/vim-endwise' , { 'for': ['ruby'] }         " Autoend ruby blocks
+      Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
 
     " COFFEE_SCRIPT
-      Plug 'lukaszkorecki/CoffeeTags'                                               " Coffeescript tags support
-      Plug 'kchmck/vim-coffee-script'
-      Plug 'mustache/vim-mustache-handlebars' " angular blocks({{  }}) text object
-      Plug 'JSON.vim'
+      Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
+      Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
+      Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
+      Plug 'JSON.vim', { 'for': ['coffee'] }
 
     " CSS/HTML
-      Plug 'hail2u/vim-css3-syntax'
+      Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
       Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
-      Plug 'mattn/emmet-vim' " css\sass complete
+      Plug 'mattn/emmet-vim', { 'for': ['css', 'scss'] }             " css\sass complete
 
     " JADE
-      Plug 'digitaltoad/vim-pug'                                                    " JADE syntax
+      Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }         " JADE syntax
 
     " SLIM
-      Plug 'slim-template/vim-slim'                                                 " SLIM syntax
+      Plug 'slim-template/vim-slim', { 'for': ['slim'] }             " SLIM syntax
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
+
+let g:user_emmet_install_global = 0
+autocmd FileType sass, css EmmetInstall
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 let g:python3_host_prog = '/usr/bin/python3'
 set background=dark
