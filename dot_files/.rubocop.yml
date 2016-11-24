@@ -22,6 +22,11 @@ Style/Encoding:
 Rails:
   Enabled: true
 
+Style/BlockComments:
+  Description: 'Do not use block comments.'
+  StyleGuide: '#no-block-comments'
+  Enabled: true
+
 Style/Copyright:
   Enabled: true
   Notice: '^# [A|a]uthor: (.*) <(.*)>$'

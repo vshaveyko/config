@@ -3,9 +3,9 @@ set hidden
 
 set t_Co=256
 
-if has('termguicolors')
-  set termguicolors " Turn on true colors support
-endif
+" if has('termguicolors')
+  " set termguicolors " Turn on true colors support
+" endif
 
 " set term=xterm-256color
 set shortmess=a

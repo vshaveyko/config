@@ -18,8 +18,8 @@ nnoremap <Enter> i<Enter><Esc>
 nmap <S-Enter> O<Esc>
 
 " bind \ (backward slash) to grep shortcut
-nnoremap <expr> \ <Plug>CtrlSFPwordPath
-vnoremap <expr> \ <Plug>CtrlSFVwordExec
+nnoremap \ <Plug>CtrlSFPwordPath
+vnoremap \ <Plug>CtrlSFVwordExec
 
 noremap <silent> <Bar> :NERDTreeFind<CR>
 
@@ -164,7 +164,7 @@ nnoremap <F5> :so $HOME/.vimrc<CR>
 vnoremap <F2> :'<,'>Tabularize /^[^=]*\zs=\ze/<CR>
 vnoremap <F3> :'<,'>Tabularize /^[^:]*\zs:\ze/<CR>
 vnoremap <F4> :'<,'>Tabularize /[^ ]\+\(.*\)\zs"\ze[^"]*$/<CR>
-vnoremap <F5> :'<.'>Tabularize /|
+vnoremap <F5> :'<.'>Tabularize /<Bar><CR>
 
 " let g:UltiSnipsExpandTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
