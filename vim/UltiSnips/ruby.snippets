@@ -76,7 +76,7 @@ def prefix(id):
     return 'class '
 endglobal
 
-snippet "^(mod|cla)" "define correct rails class" Abr
+snippet "^(mod|cla)" "define correct rails class" br
 `!p
 result = "# :nodoc:\n"
 result += prefix(match.group(1))
@@ -93,7 +93,7 @@ if m.group(1) == 'controllers':
 elif m.group(1) == 'models':
   result += ' < ActiveRecord::Base'
 else:
-  result += "\n  def initialize(${1})\n    \n  end\n"
+  result += "\n  def initialize\n    \n  end\n"
 snip.rv += result`
   ${0:${VISUAL}}
 end

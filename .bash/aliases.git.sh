@@ -2,15 +2,16 @@
 
 alias gs="git status"
 alias gst="git stash"
-alias gsp="git stash pop"
-alias ga="git add"
+alias gstp="git stash pop"
+alias ga="git add --all"
 alias gc="git commit -m"
-alias gca="git commit -a -m"
+alias gca="git add --all && git commit -m"
 alias gp="git pull"
 alias gps="git push"
 alias gb="git branch"
+
 alias gbd="git branch -D"
-alias gcob="git checkout -b"
+alias gcb="git checkout -b"
 alias gco="git checkout"
 alias gcp="git cherry-pick"
 
