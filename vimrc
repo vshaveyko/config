@@ -56,7 +56,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'ludovicchabant/vim-gutentags' " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }, { 'for': ['ruby', 'coffee', 'typescript', 'slim', 'jade', 'pug'] }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
   Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   Plug 'mhinz/vim-sayonara'
@@ -99,7 +99,7 @@ call plug#begin('~/.vim/plugged')
       Plug 'mhartington/deoplete-typescript', { 'for': ['typescript'] }
 
     " RUBY
-      Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins' }, { 'for': ['ruby', 'slim'] }
+      Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins', 'for': ['ruby', 'slim'] }
       " Plug 'osyo-manga/vim-monster' " deoplete ruby support
       " Plug 'nelstrom/vim-textobj-rubyblock'
       " Plug 'thoughtbot/vim-rspec'
@@ -128,8 +128,21 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 let g:user_emmet_install_global = 0
-autocmd FileType sass, css EmmetInstall
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
+augroup emmet
+  autocmd!
+  autocmd FileType sass, css EmmetInstall
+  autocmd Filetype sass, css imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+augroup END
+
+augroup rabl
+  au!
+  au BufRead,BufNewFile *.rabl syn keyword rubyRabl node attribute object child collection attributes glue extends
+  au BufRead,BufNewFile *.rabl hi def link rubyRabl Function
+
+  " Rabl
+  au BufRead,BufNewFile *.rabl setf ruby
+augroup END
 
 let g:python3_host_prog = '/usr/bin/python3'
 set background=dark
