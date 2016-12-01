@@ -3,6 +3,16 @@ snippet pry "pry binding" wA
 pry binding
 endsnippet
 
+snippet /^#au/ "file start comments" Awr
+##########
+#
+# author: Vadim Shaveiko <@vshaveyko>
+# frozen_string_literal: true
+# encoding: utf-8
+#
+##########
+endsnippet
+
 snippet cdef "define function by selected text"
 ${1:method_name}(${2:args})
 endsnippet
@@ -93,7 +103,7 @@ if m.group(1) == 'controllers':
 elif m.group(1) == 'models':
   result += ' < ActiveRecord::Base'
 else:
-  result += "\n  def initialize\n    \n  end\n"
+  result += "\n\n  def initialize\n    \n  end"
 snip.rv += result`
   ${0:${VISUAL}}
 end

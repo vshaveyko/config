@@ -1,3 +1,18 @@
 snippet log "console.log(...)" b
 console.log $0
 endsnippet
+
+snippet /^#au/ "file start comments" Awr
+##########
+#
+# author: Vadim Shaveiko <@vshaveyko>
+#
+##########
+endsnippet
+
+snippet if "if ... else ..." w
+if $0
+  $1
+else
+  $2
+endsnippet
