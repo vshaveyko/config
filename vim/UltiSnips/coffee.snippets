@@ -39,10 +39,10 @@ endsnippet
 
 snippet cont "angular controller" w
 dependencies = [
-  '${2:dep}'
+	${2/([^\s,)]+)(,|)/'$1'$2/g}
 ]
 
-${1} = (${2}) ->
+${1} = ($2) ->
 
   vm = this
 
@@ -53,10 +53,10 @@ endsnippet
 
 snippet serv "angular service" w
 dependencies = [
-  ${2:dep}
+	${2/([^\s,)]+)(,|)/'$1'$2/g}
 ]
 
-$1 = (${2/'|"//g}) ->
+$1 = ($2) ->
 
   class ${1/^.*/\u$0/g}
 
