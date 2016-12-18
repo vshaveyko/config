@@ -8,7 +8,7 @@ set t_Co=256
 " endif
 
 " set term=xterm-256color
-set shortmess=a
+" set shortmess=a
 source ~/.vim/binding.vim
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
@@ -21,16 +21,45 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'matze/vim-move' " Move lines here and there
 
-  Plug 'jiangmiao/auto-pairs'
+  """""""  peekaboo """""""
+  Plug 'junegunn/vim-peekaboo'
+  let g:peekaboo_window = 'vertical botright 70new'
+  """"""" peekaboo """""""
+
+  """"""" easyclip """""""
+
+    Plug 'tpope/vim-repeat' " dependency
+    Plug 'svermeulen/vim-easyclip'
+
+    let g:EasyClipAutoFormat = 1
+    let g:EasyClipCopyExplicitRegisterToDefault = 1
+    let g:EasyClipAlwaysMoveCursorToEndOfPaste = 1
+    " let g:EasyClipPreserveCursorPositionAfterYank = 1
+    let g:EasyClipShareYanks = 1
+    let g:EasyClipEnableBlackHoleRedirect = 0
+    " let g:EasyClipUseYankDefaults = 0
+
+    let g:EasyClipUseCutDefaults = 0
+    nmap d <Plug>MoveMotionPlug
+    xmap d <Plug>MoveMotionXPlug
+    nmap dd <Plug>MoveMotionLinePlug
+
+    let g:EasyClipUsePasteToggleDefaults = 0
+    nmap <c-n> <plug>EasyClipSwapPasteForward
+    nmap <c-f> <plug>EasyClipSwapPasteBackwards
+
+  """"""" easyclip """""""
+
+  Plug 'burnettk/vim-angular'
 
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'        " Status\Tabline
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
 
-  " Plug 'chrisbra/NrrwRgn'                                                       " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
+  " Plug 'chrisbra/NrrwRgn'                                                     " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
-  " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }                                                      " Rails integration: moves, abbrevs, etc.
+  " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }        " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
 
   Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
@@ -48,12 +77,12 @@ call plug#begin('~/.vim/plugged')
   " Ruby block text object (vir)
 
   Plug 'neomake/neomake'                                                        " Async task maker
-  " Plug 'FooSoft/vim-argwrap'                                                    " Move arguments to new lines with <leader>a
+  " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
   Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
 
   Plug 'godlygeek/tabular'                                                      " Align stuff nicely
-  Plug 'ludovicchabant/vim-gutentags' " Dynamically regenerate tags
+  Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -110,8 +139,8 @@ call plug#begin('~/.vim/plugged')
     " COFFEE_SCRIPT
       Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
       Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
-      Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
-      Plug 'JSON.vim', { 'for': ['coffee'] }
+      " Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
+      " Plug 'JSON.vim', { 'for': ['coffee'] }
 
     " CSS/HTML
       Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
@@ -124,10 +153,26 @@ call plug#begin('~/.vim/plugged')
     " SLIM
       Plug 'slim-template/vim-slim', { 'for': ['slim'] }             " SLIM syntax
 
+    " GO
+      Plug 'fatih/vim-go', { 'for': ['go'] }
+
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
 let g:user_emmet_install_global = 0
+
+augroup golang
+  autocmd!
+
+  au FileType go nmap <F12> <Plug>(go-run)
+augroup END
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
 augroup emmet
   autocmd!
@@ -268,7 +313,7 @@ set lazyredraw                                                                  
 " set foldmethod=indent
 " set foldlevel=20
 
-set clipboard=unnamed " Copy\paste from clipboard always. Test and think about if it needed.
+set clipboard=unnamed,unnamedplus " Copy\paste from clipboard always. Test and think about if it needed.
 
 set timeoutlen=500 ttimeoutlen=0
 " autocmd Syntax slim,html,erb setlocal foldmethod=indent

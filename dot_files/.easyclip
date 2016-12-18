@@ -1,0 +1,27 @@
+{'type': 'V', 'text': 'nnoremap m "_d'}
+{'type': 'V', 'text': 'nnoremap m "_dvnoremap m "_d'}
+{'type': 'v', 'text': 'easyclip '}
+{'type': 'v', 'text': 'Plug '}
+{'type': 'v', 'text': 'epeat'}
+{'type': 'v', 'text': 'yclip'}
+{'type': 'v', 'text': ' '}
+{'type': 'v', 'text': 'itRegisterToDefault '}
+{'type': 'v', 'text': 'eCursorToEndOfPaste '}
+{'type': 'v', 'text': 'nks '}
+{'type': 'v', 'text': 'ackHoleRedirect '}
+{'type': 'v', 'text': 'vim-repeat'}
+{'type': 'v', 'text': 'tpope'}
+{'type': 'v', 'text': 'let '}
+{'type': 'v', 'text': 'nmap '}
+{'type': 'v', 'text': 'xmap '}
+{'type': 'V', 'text': ''}
+{'type': 'v', 'text': 'tpope/vim-repeat'}
+{'type': 'v', 'text': 'svermeulen/vim-easyclip'}
+{'type': 'v', 'text': 'ug '}
+{'type': 'v', 'text': 'g:EasyClipUseYankDefaults'}
+{'type': 'V', 'text': '  '}
+{'type': 'v', 'text': '" dependency'}
+{'type': 'v', 'text': 'has'}
+{'type': 'v', 'text': 'if '}
+{'type': 'v', 'text': 'set '}
+{'type': 'v', 'text': 'EasyClipEnableBlackHoleRedirect '}

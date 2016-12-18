@@ -90,12 +90,10 @@ noremap <silent> <expr> j (v:count == -1 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Visual linewise up and down by default (and use gj gk to go quicker)
-nnoremap gj 5j
-nnoremap gk 5k
+" nnoremap gj 5j
+" nnoremap gk 5k
 vnoremap j gj
 vnoremap k gk
-vnoremap gj 5j
-vnoremap gk 5k
 
 " When jump to next match also center screen
 " Note: Use :norm! to make it count as one command. (i.e. for i_CTRL-o)
@@ -119,6 +117,10 @@ nnoremap <S-K> :nohl \| redraw!<CR>
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 
+nnoremap m "_d
+nnoremap mm "_dd
+vnoremap m "_d
+
 nnoremap <leader>l o<Esc>
 nnoremap <leader>o O<Esc>
 noremap <leader>p :pu<CR>
@@ -132,7 +134,7 @@ function! NumberToggle()
   endif
 endfunc
 
-nnoremap <C-n> :call NumberToggle()<cr>
+" nnoremap <C-n> :call NumberToggle()<cr>
 inoremap <C-e> <C-o>$
 
 nnoremap <Leader>rc :%s/\<<C-r><C-w>\>/

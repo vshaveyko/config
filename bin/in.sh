@@ -43,7 +43,7 @@ install.rubo() {
 install.confs() {
 
   # init git templates (mostly for ctags hooks)
-  git config --global init.templatedir '~/.git_template'
+  # git config --global init.templatedir '~/.git_template'
 
   # and separate structure to other dot configs
   for f in `ls -A $BASEDIR/dot_files/`
