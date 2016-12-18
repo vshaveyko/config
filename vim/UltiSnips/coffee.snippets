@@ -2,17 +2,114 @@ snippet log "console.log(...)" b
 console.log $0
 endsnippet
 
-snippet /^#au/ "file start comments" Awr
+snippet /^#a/ "file start comments" Awr
 ##########
 #
 # author: Vadim Shaveiko <@vshaveyko>
 #
 ##########
+$0
+endsnippet
+
+snippet /(templateUrl: ['|"]|url)/ "templateUrl" r
+`!p
+path_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)
+
+template_url = path_data.group(1) + 'template'
+`templateUrl: '`!p snip.rv += template_url`'
+$0
+endsnippet
+
+snippet callb "form-selector callbacks" Ai
+callbacks =
+    onSelect: () ->
+      $0
+    onReset: () ->
+
+    onNew: () ->
+
 endsnippet
 
 snippet if "if ... else ..." w
 if $0
-  $1
+  ${1}
 else
-  $2
+  ${2}
+endsnippet
+
+snippet cont "angular controller" w
+dependencies = [
+  '${2:dep}'
+]
+
+${1} = (${2}) ->
+
+  vm = this
+
+  return
+
+angular.module('app').controller '$1Controller', dependencies.concat $1
+endsnippet
+
+snippet serv "angular service" w
+dependencies = [
+  ${2:dep}
+]
+
+$1 = (${2/'|"//g}) ->
+
+  class ${1/^.*/\u$0/g}
+
+  new ${1/^.*/\u$0/g}
+
+angular.module('app').service '${1}', dependencies.concat $1
+endsnippet
+
+snippet fact "angular factory" w
+dependencies = [
+  ${2/([^\s,)]+)(,|)/'$1'$2/g}
+]
+
+$1 = ($2) ->
+
+  class $1
+
+    constructor: () ->
+      $3
+
+angular.module('app').factory '${1}', dependencies.concat $1
+endsnippet
+
+snippet comp "angular component" w
+`!p
+path_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)
+
+template_url = path_data.group(1) + 'template'
+
+`angular.module('app').component '${1}',
+
+  templateUrl: '`!p snip.rv += template_url`'
+
+  controller: '${1/^.*/\u$0/g}Controller as $1Ctrl'
+
+  bindings:
+   ${2}: '<'
+
+endsnippet
+
+snippet scomp "angular state component" w
+`!p
+path_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)
+
+template_url = path_data.group(1) + 'template'
+
+`angular.module('app').component '${1}State',
+
+  templateUrl: '`!p snip.rv += template_url`'
+
+  controller: '${1/^.*/\u$0/g}StateController as $1StateCtrl'
+
+  bindings:
+    ${2}: '<'
+
 endsnippet

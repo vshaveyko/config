@@ -45,12 +45,10 @@ call plug#begin('~/.vim/plugged')
     nmap dd <Plug>MoveMotionLinePlug
 
     let g:EasyClipUsePasteToggleDefaults = 0
-    nmap <c-n> <plug>EasyClipSwapPasteForward
+    nmap <c-g> <plug>EasyClipSwapPasteForward
     nmap <c-f> <plug>EasyClipSwapPasteBackwards
 
   """"""" easyclip """""""
-
-  Plug 'burnettk/vim-angular'
 
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'        " Status\Tabline
 
@@ -165,19 +163,70 @@ augroup golang
   autocmd!
 
   au FileType go nmap <F12> <Plug>(go-run)
+  au FileType go let g:go_highlight_functions = 1
+  au FileType go let g:go_highlight_methods = 1
+  au FileType go let g:go_highlight_fields = 1
+  au FileType go let g:go_highlight_types = 1
+  au FileType go let g:go_highlight_operators = 1
+  au FileType go let g:go_highlight_build_constraints = 1
+  set suffixesadd+=.go
 augroup END
 
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
+function! MoveToControllerByShortHandName(shortName)
+  " transform shorthand ctrl name "compNameCtrl" to real "compNameController"
+  let s:b = substitute(a:shortName, '^\(.*\)Ctrl$', '\1Controller', '')
+
+  " try redirecting to Controller
+  exe ':tag coffee'.s:b
+endfunc
+
+function! MoveToComponentByTemplateName(templateName)
+  " transform component name "comp-name" to  real name "compName"
+  let s:a = substitute(a:templateName, '-\(\l\)', '\u\1', 'g')
+
+  " catch and try redirecting to component if shorthand name was broken
+  exe ':tag coffee'.s:a
+endfunc
+
+function! MoveToTagByHtmlName(tagName)
+  try
+    call MoveToControllerByShortHandName(a:tagName)
+  catch " Tag no found
+    call MoveToComponentByTemplateName(a:tagName)
+  endtry
+endfunc
+
+function! MoveToLibByName(libName)
+  try
+    call MoveToControllerByShortHandName(a:libName)
+  catch " Tag no found
+      " else redirect the way it were
+    exe ':tag coffee'.a:libName
+  endtry
+endfunc
+
+augroup coffee
+  autocmd!
+  autocmd Filetype coffee noremap <buffer> <C-]> "*yaw:call MoveToLibByName(@*)<cr>
+  set suffixesadd+=.coffee
+augroup END
+
+augroup jade
+  autocmd!
+  autocmd Filetype pug noremap <buffer> <C-]> "*yaw:call MoveToTagByHtmlName(@*)<cr>
+  set suffixesadd+=.jade,.pug
+augroup END
+
+augroup rb
+  autocmd!
+  set suffixesadd+=.rb,.rake
+augroup END
 
 augroup emmet
   autocmd!
   autocmd FileType sass, css EmmetInstall
-  autocmd Filetype sass, css imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+  autocmd Filetype sass, css imap <expr> <buffer> <tab> emmet#expandAbbrIntelligent("\<tab>")
+  set suffixesadd+=.css,.sass,.csss
 augroup END
 
 augroup rabl
@@ -187,6 +236,7 @@ augroup rabl
 
   " Rabl
   au BufRead,BufNewFile *.rabl setf ruby
+  set suffixesadd+=.rabl
 augroup END
 
 let g:python3_host_prog = '/usr/bin/python3'

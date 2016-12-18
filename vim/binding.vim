@@ -48,7 +48,7 @@ inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space(
 " endfunction
 
 " au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-e>"
 
 nnoremap <leader>qa :qa!<CR>
@@ -109,14 +109,11 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
 
 " Replace
-nnoremap <leader>s :%s///ge<left><left><left><left>
-vnoremap <leader>s :s///ge<left><left><left><left>
+nnoremap <leader>s :%s//ge<left><left><left><left>
+vnoremap <leader>s :s//ge<left><left><left><left>
 nnoremap <S-K> :nohl \| redraw!<CR>
 
-" REALLY delete with leader
-nnoremap <leader>d "_d
-vnoremap <leader>d "_d
-
+" REALLY delete with m
 nnoremap m "_d
 nnoremap mm "_dd
 vnoremap m "_d

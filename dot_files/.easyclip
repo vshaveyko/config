@@ -1,27 +1,48 @@
-{'type': 'V', 'text': 'nnoremap m "_d'}
-{'type': 'V', 'text': 'nnoremap m "_dvnoremap m "_d'}
-{'type': 'v', 'text': 'easyclip '}
-{'type': 'v', 'text': 'Plug '}
-{'type': 'v', 'text': 'epeat'}
-{'type': 'v', 'text': 'yclip'}
-{'type': 'v', 'text': ' '}
-{'type': 'v', 'text': 'itRegisterToDefault '}
-{'type': 'v', 'text': 'eCursorToEndOfPaste '}
-{'type': 'v', 'text': 'nks '}
-{'type': 'v', 'text': 'ackHoleRedirect '}
-{'type': 'v', 'text': 'vim-repeat'}
-{'type': 'v', 'text': 'tpope'}
-{'type': 'v', 'text': 'let '}
-{'type': 'v', 'text': 'nmap '}
-{'type': 'v', 'text': 'xmap '}
+{'type': 'V', 'text': '    try'}
 {'type': 'V', 'text': ''}
-{'type': 'v', 'text': 'tpope/vim-repeat'}
-{'type': 'v', 'text': 'svermeulen/vim-easyclip'}
-{'type': 'v', 'text': 'ug '}
-{'type': 'v', 'text': 'g:EasyClipUseYankDefaults'}
-{'type': 'V', 'text': '  '}
-{'type': 'v', 'text': '" dependency'}
-{'type': 'v', 'text': 'has'}
-{'type': 'v', 'text': 'if '}
-{'type': 'v', 'text': 'set '}
-{'type': 'v', 'text': 'EasyClipEnableBlackHoleRedirect '}
+{'type': 'V', 'text': '    exe '':tag coffee''.a:libName'}
+{'type': 'V', 'text': '    " echo a:libName'}
+{'type': 'v', 'text': 'recAtCtrl'}
+{'type': 'v', 'text': ' '}
+{'type': 'v', 'text': 's'}
+{'type': 'V', 'text': '    endtry'}
+{'type': 'v', 'text': '.jade'}
+{'type': 'V', 'text': '  autocmd Filetype pug noremap <buffer> <C-]> "*yaw:call MoveToTagByHtmlName(@*)<cr>'}
+{'type': 'v', 'text': 'jade,.pug'}
+{'type': 'V', 'text': '  set suffixesadd+=.rabl'}
+{'type': 'v', 'text': 'css,.sass,.csss'}
+{'type': 'v', 'text': 'autocmd Filetype pug n'}
+{'type': 'v', 'text': 'autocmd Filetype pug'}
+{'type': 'v', 'text': 'E'}
+{'type': 'V', 'text': '  set suffixesadd+=.coffee'}
+{'type': 'v', 'text': 'go'}
+{'type': 'V', 'text': '  set suffixesadd+=.go'}
+{'type': 'v', 'text': 'js'}
+{'type': 'V', 'text': '--regex-coffee=/\.*as ([A-Za-z0-9_$]+)["|'']/coffee\1/,class/'}
+{'type': 'v', 'text': 'tagName'}
+{'type': 'v', 'text': 'call '}
+{'type': 'v', 'text': 'e'}
+{'type': 'V', 'text': '    co'}
+{'type': 'V', 'text': 'function! MoveToClassOrModuleByName()'}
+{'type': 'v', 'text': 'depe1, dep2, dep3, $state, $scope'}
+{'type': 'V', 'text': 'dependencies = [  ''dwwdw'',''dwwd'',''wd'',''wd'',''wd'',''wd'',''wd'',''w'',''d'',''wd'',, ] = (dwwdw,dwwd,wd,wd,wd,wd,wd,w,d,wd, awdawd) ->  class     constructor: () ->      awdawd      dwa      awd      awd      aw      daw      dangular.module(''app'').factory '''', dependencies.concat '}
+{'type': 'v', 'text': 'dwwdw,dwwd,wd,wd,wd,wd,wd,w,d,wd,)'}
+{'type': 'v', 'text': '?'}
+{'type': 'V', 'text': '${3:2}'}
+{'type': 'V', 'text': 'dependencies = [  ''deps'']Name = (deps) ->  class Nameangular.module(''app'').factory ''Name'', dependencies.concat Name'}
+{'type': 'v', 'text': 'Name'}
+{'type': 'v', 'text': ')'}
+{'type': 'V', 'text': 'vnoremap <leader>d "_d'}
+{'type': 'V', 'text': 'nnoremap m "_d'}
+{'type': 'v', 'text': '<leader>d '}
+{'type': 'v', 'text': 'emplateUrl: ''src/js/___ui-elements/__ng-model/template''templateUrl: ''src/js/___ui-elements/__ng-model/template''  templateUrl: ''src/js/___ui-elements/__ng-model/template''  '}
+{'type': 'V', 'text': '`!ppath_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)template_url = path_data.group(1) + ''template'''}
+{'type': 'V', 'text': 'if $0${1}else${2}'}
+{'type': 'v', 'text': 'if ... else ...'}
+{'type': 'V', 'text': '	  $0'}
+{'type': 'v', 'text': '{'}
+{'type': 'v', 'text': 'MyNewFactory'}
+{'type': 'V', 'text': 'angular.module(''app'').component '''',  templateUrl: ''src/js/___ui-elements/__ng-model/template''  controller: ''Controller as AbsCtrl''  bindings:    : ''<'''}
+{'type': 'v', 'text': '}'}
+{'type': 'V', 'text': 'angular.module(''app'').component '''',  templateUrl: ''''  controller: ''Controller as AsbCtrl''  bindings:    : ''<'''}
+{'type': 'V', 'text': 'angular.module(''app'').component '''',  templateUrl: ''snip.rv += template_url''  controller: ''Controller as Ctrl''  bindings:    : ''<'''}
