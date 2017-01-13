@@ -19,6 +19,10 @@ install.vim() {
   for f in `ls $BASEDIR/vim`
   do linking $BASEDIR/vim/$f $HOME/.vim/$f
   done
+
+  for f in `ls $BASEDIR/vim`
+  do linking $BASEDIR/vim/$f $HOME/.config/nvim/$f
+  done
 }
 
 install.plug() {

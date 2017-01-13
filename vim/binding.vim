@@ -1,5 +1,13 @@
 " Shift-f Shift-t backwards repeat. Forward is mapped to ;
-noremap ' ,
+nnoremap ' ,
+" nnoremap б ,
+" nnoremap Ж :
+" nnoremap ж ;
+" nnoremap бц :w!<cr>
+
+inoremap <C-x><C-k> <NOP>
+
+map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
 
 " Map leader key
 let mapleader=","
@@ -10,16 +18,13 @@ map <Leader>v "+P
 nnoremap <Leader>c "+yy
 vnoremap <Leader>c "+y
 
-" Toggle comments on Shift-/
-noremap ? :call NERDComment(0,"toggle")<C-m>
-
 " Enter in normal mode to add line
 nnoremap <Enter> i<Enter><Esc>
 nmap <S-Enter> O<Esc>
 
 " bind \ (backward slash) to grep shortcut
-nnoremap \ <Plug>CtrlSFPwordPath
-vnoremap \ <Plug>CtrlSFVwordExec
+nmap <Bslash> <Plug>CtrlSFPwordPath
+vmap <Bslash> <Plug>CtrlSFVwordExec
 
 noremap <silent> <Bar> :NERDTreeFind<CR>
 
@@ -28,32 +33,60 @@ function! s:check_back_space() abort
   return !l:col || getline('.')[l:col - 1]  =~ '\s'
 endfunction
 
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
-inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<S-TAB>" : deoplete#mappings#manual_complete()
+function! Tab() abort
+  " insert <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
+  " call UltiSnips#ExpandSnippet()
+  exec g:_uspy "UltiSnips_Manager.expand_or_jump()"
 
+  " if g:ulti_expand_or_jump_res
+  if g:ulti_expand_res
+    return ""
+  endif
+
+  if pumvisible()
+    return "\<C-n>"
+  endif
+
+  " <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
+
+  " if !<SID>check_back_space()
+  "   return "\<TAB>"
+  " endif
+  "
+  return ""
+
+  " return "\<Space>"
+endfunction
+
+function! Stab() abort
+  pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<S-TAB>" : "\<C-k>"
+endfunction
+
+function! Enter() abort
+  if pumvisible()
+    " UltiSnips#ExpandSnippetOrJump()
+    exec g:_uspy "UltiSnips_Manager.expand_or_jump()"
+  end
+
+  if g:ulti_expand_or_jump_res
+    " if g:ulti_expand_res == 1
+    return ""
+  endif
+
+  return "\<Enter>"
+endfunction
+
+inoremap <silent><expr> <Enter>
+inoremap <silent><expr> <TAB> "\<C-j>" . Tab()
+inoremap <silent><expr> <S-TAB>  "\<C-k>/"
 "
-" function! g:UltiSnips_Complete()
-    " call UltiSnips#ExpandSnippet()
-    " if g:ulti_expand_res == 0
-        " if pumvisible()
-            " return "\<C-n>"
-        " else
-            " call UltiSnips#JumpForwards()
-            " if g:ulti_jump_forwards_res == 0
-               " return "\<TAB>"
-            " endif
-        " endif
-    " endif
-    " return ""
-" endfunction
-
 " au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-e>"
 
 nnoremap <leader>qa :qa!<CR>
 
-inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 
 nnoremap <leader>f :CtrlSF<Space>
 vnoremap <leader>f y:CtrlSF<Space>'<C-R>"'
@@ -80,10 +113,6 @@ noremap > >gv
 
 " Split navigation using arrows. On change do NOT forget to change tmux.conf
 " for tab split navigation
-noremap <C-l> <C-w>l<C-w>_
-noremap <C-h> <C-w>h<C-w>_
-noremap <C-k> <C-w>k<C-w>_
-noremap <C-j> <C-w>j<C-w>_
 
 " move by virtual lines without count and by physical with count
 noremap <silent> <expr> j (v:count == -1 ? 'gj' : 'j')
@@ -109,13 +138,12 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
 
 " Replace
-nnoremap <leader>s :%s//ge<left><left><left><left>
-vnoremap <leader>s :s//ge<left><left><left><left>
+nnoremap <leader>s :%s//ge<left><left><left>
+vnoremap <leader>s :s//ge<left><left><left>
 nnoremap <S-K> :nohl \| redraw!<CR>
 
 " REALLY delete with m
 nnoremap m "_d
-nnoremap mm "_dd
 vnoremap m "_d
 
 nnoremap <leader>l o<Esc>
@@ -173,6 +201,7 @@ noremap ,<ESC> <ESC>
 
 " Quick save and close buffer
 map <leader>w :w!<CR>
+map <leader>ц :w!<CR>
 nnoremap <silent> <leader>q :Sayonara!<CR>
 
 " Intelligent windows resizing using ctrl + arrow keys

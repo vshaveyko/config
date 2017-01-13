@@ -2,6 +2,38 @@ snippet log "console.log(...)" b
 console.log $0
 endsnippet
 
+snippet tr "stack trace" w
+console.trace()
+endsnippet
+
+snippet int "setInterval" w
+setInterval () ->
+	${1}
+}${2:, ${3}}
+endsnippet
+
+snippet tim "setTimeout" w
+setTimeout () ->
+	${1}
+}${2:, ${3}}
+endsnippet
+
+snippet lred
+console.log("%c #{${1}}", 'font-weight:bold;color:red;')
+endsnippet
+snippet lg
+console.log("%c #{${1}}", 'font-weight:bold;color:green;')
+endsnippet
+snippet lb
+console.log("%c #{${1}}", 'font-weight:bold;color:blue;')
+endsnippet
+snippet lp
+console.log("%c #{${1}}", 'font-weight:bold;color:purple;')
+endsnippet
+snippet lor
+console.log("%c #{${1}}", 'font-weight:bold;color:orange;')
+endsnippet
+
 snippet /^#a/ "file start comments" Awr
 ##########
 #
@@ -20,21 +52,21 @@ template_url = path_data.group(1) + 'template'
 $0
 endsnippet
 
-snippet callb "form-selector callbacks" Ai
+snippet callb "form-selector callbacks" w
 callbacks =
-    onSelect: () ->
-      $0
-    onReset: () ->
+	onSelect: () ->
+	$0
+	onReset: () ->
 
-    onNew: () ->
+	onNew: () ->
 
 endsnippet
 
 snippet if "if ... else ..." w
 if $0
-  ${1}
+	${1}
 else
-  ${2}
+	${2}
 endsnippet
 
 snippet cont "angular controller" w
@@ -44,9 +76,9 @@ dependencies = [
 
 ${1} = ($2) ->
 
-  vm = this
+	vm = this
 
-  return
+	return
 
 angular.module('app').controller '$1Controller', dependencies.concat $1
 endsnippet
@@ -58,24 +90,24 @@ dependencies = [
 
 $1 = ($2) ->
 
-  class ${1/^.*/\u$0/g}
+	class ${1/^.*/\u$0/g}
 
-  new ${1/^.*/\u$0/g}
+	new ${1/^.*/\u$0/g}()
 
 angular.module('app').service '${1}', dependencies.concat $1
 endsnippet
 
 snippet fact "angular factory" w
 dependencies = [
-  ${2/([^\s,)]+)(,|)/'$1'$2/g}
+	${2/([^\s,)]+)(,|)/'$1'$2/g}
 ]
 
 $1 = ($2) ->
 
-  class $1
+	class $1
 
-    constructor: () ->
-      $3
+	constructor: () ->
+		$3
 
 angular.module('app').factory '${1}', dependencies.concat $1
 endsnippet
@@ -88,12 +120,12 @@ template_url = path_data.group(1) + 'template'
 
 `angular.module('app').component '${1}',
 
-  templateUrl: '`!p snip.rv += template_url`'
+	templateUrl: '`!p snip.rv += template_url`'
 
-  controller: '${1/^.*/\u$0/g}Controller as $1Ctrl'
+	controller: '${1/^.*/\u$0/g}Controller as $1Ctrl'
 
-  bindings:
-   ${2}: '<'
+	bindings:
+		${2}: '<'
 
 endsnippet
 
@@ -105,11 +137,11 @@ template_url = path_data.group(1) + 'template'
 
 `angular.module('app').component '${1}State',
 
-  templateUrl: '`!p snip.rv += template_url`'
+	templateUrl: '`!p snip.rv += template_url`'
 
-  controller: '${1/^.*/\u$0/g}StateController as $1StateCtrl'
+	controller: '${1/^.*/\u$0/g}StateController as $1StateCtrl'
 
-  bindings:
-    ${2}: '<'
+	bindings:
+		${2}: '<'
 
 endsnippet

@@ -86,9 +86,9 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # TODO: export config path and reuse in in script
-export TERM=xterm-256color
+export TERM=screen-256color
 export EDITOR=nvim
-export GOPATH=$HOME/ved
+export GOPATH=$HOME/dev
 export GIT_ACC=vshaveyko
 
 init_health24() {
@@ -119,6 +119,8 @@ alias zr4="zeus rails s webrick -p 4000"
 alias zrt="zeus rails s webrick -e test"
 
 alias zrt4="zeus rails s webrick -e test -p 4000"
+alias rdbn="rails db:migrate"
+alias ctags="`brew --prefix`/bin/ctags"
 
 alias gi="git init && chmod +x .git/hooks/*"
 
@@ -127,3 +129,4 @@ bashcompinit
 
 source "$HOME/config/.bash/git-completion.sh"
 source "$HOME/config/.bash/aliases.git.sh"
+source ~/config/dot_files/.completion.zsh

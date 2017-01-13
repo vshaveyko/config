@@ -80,18 +80,18 @@ def classify(path):
   return '::'.join(map(camelize, path.split('/')))
 
 def prefix(id):
-  if id == 'mod':
+  if id == 'm':
     return 'module '
-  elif id == 'cla':
+  elif id == 'c':
     return 'class '
 endglobal
 
-snippet "^(mod|cla)" "define correct rails class" br
+snippet "^(m|c)" "define correct rails class" br
 `!p
 result = "# :nodoc:\n"
 result += prefix(match.group(1))
 
-m = re.search("(controllers|models|services|lib)\/(.*).rb", path)
+m = re.search("(clonners|controllers|models|jobs|printers|services|lib)\/(.*).rb", path)
 
 result += classify(m.group(2))
 
@@ -101,7 +101,11 @@ if m.group(1) == 'controllers':
   else:
     result += ' < ApplicationController'
 elif m.group(1) == 'models':
-  result += ' < ActiveRecord::Base'
+  result += ' < ApplicationRecord'
+elif m.group(1) == 'clonners':
+	result += ' < ApplicationClonner'
+elif m.group(1) == 'job':
+	result += ' < ActiveJob::Base'
 else:
   result += "\n\n  def initialize\n    \n  end"
 snip.rv += result`
@@ -109,14 +113,14 @@ snip.rv += result`
 end
 endsnippet
 
-snippet "^(\s+)cla" "define nested module or class" br
+snippet "^(\s+)c" "define nested module or class" br
 `!p
 snip.rv = match.group(1)
 snip.rv += 'class '
 `${0:${VISUAL}}Error < StandardError; end
 endsnippet
 
-snippet "^(\s+)mod" "define nested module or class" br
+snippet "^(\s+)m" "define nested module or class" br
 `!p
 snip.rv = match.group(1)
 snip.rv += 'module '
@@ -129,50 +133,67 @@ snippet "^(\s+)anaf" "accepts_nested_attributes_for"
 `!p snip.rv = match.group(1)`accepts_nested_attributes_for :${1:association_name}${2:${3:, allow_destroy: true}${4:, reject_if: proc \{ |obj| ${5:obj.blank?} \}}}
 endsnippet
 
-global !p
-alias_iterator_map = {
-	'rej'    : 'reject',
-	'sel'    : 'select',
-	'sor'    : 'sort',
-	'each_k' : 'each_key',
-	'each_v' : 'each_value',
-	'ea'     : 'each',
-	'each_s' : 'each_slice(2)',
-	'map'    : 'map',
-	'rev'    : 'reverse_each',
-	'each_p' : 'each_pair',
-	'wind'   : 'with_index'
-}
-def iterator_name(alias):
-  return alias_iterator_map[alias]
+snippet spec "init spec for given file" w
+require 'spec_helper'
 
-def block_param_name(block_root):
-  mwon = re.search("([A-z_]+)", block_root)
-  singular = singularize(mwon.group(1))
-  if singular == mwon.group(1):
-    return 'arg'
-  else:
-    return singular
-endglobal
+RSpec.describe $0 do
 
-snippet "^(\s*)([\S\d]+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)[^!]([^\s]*)" "inline block expand" r
-`!p
-element_name = match.group(2).lstrip('$@')
-snip.rv = match.group(1) + "%s.%s { |" % (match.group(2), iterator_name(match.group(3)))
-snip.rv += block_param_name(element_name) + '|'
-` ${0} }
+  before(:suite) do
+	end
+
+	before(:each) do
+	end
+
+	it 'behaves' do
+	end
+
+end
 endsnippet
 
-snippet "^(\s*)(?:.*?)(\S+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)!" "multiline block expand" r
-`!p
-element_name = match.group(2).lstrip('$@')
-snip.rv = match.group(1) + "%s.%s do |" % (match.group(2), iterator_name(match.group(3)))
-snip.rv += block_param_name(element_name) + '|'
-`
-`!p snip.rv += match.group(1)`  ${0}
-`!p snip.rv += match.group(1)`end
-endsnippet
-
-snippet alias "alias :<new_name> :<old_name>" w
-alias_method :${1:new_name}, :${2:old_name}
-endsnippet
+# global !p
+# alias_iterator_map = {
+	# 'rej'    : 'reject',
+	# 'sel'    : 'select',
+	# 'sor'    : 'sort',
+	# 'each_k' : 'each_key',
+	# 'each_v' : 'each_value',
+	# 'ea'     : 'each',
+	# 'each_s' : 'each_slice(2)',
+	# 'map'    : 'map',
+	# 'rev'    : 'reverse_each',
+	# 'each_p' : 'each_pair',
+	# 'wind'   : 'with_index'
+# }
+# def iterator_name(alias):
+  # return alias_iterator_map[alias]
+#
+# def block_param_name(block_root):
+  # mwon = re.search("([A-z_]+)", block_root)
+  # singular = singularize(mwon.group(1))
+  # if singular == mwon.group(1):
+    # return 'arg'
+  # else:
+    # return singular
+# endglobal
+#
+# snippet "^(\s*)([\S\d]+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)[^!]([^\s]*)" "inline block expand" r
+# `!p
+# element_name = match.group(2).lstrip('$@')
+# snip.rv = match.group(1) + "%s.%s { |" % (match.group(2), iterator_name(match.group(3)))
+# snip.rv += block_param_name(element_name) + '|'
+# ` ${0} }
+# endsnippet
+#
+# snippet "^(\s*)(?:.*?)(\S+)\.(rej|sel|sor|each_k|each_v|ea|each_s|map|rev|each_p|windex)!" "multiline block expand" r
+# `!p
+# element_name = match.group(2).lstrip('$@')
+# snip.rv = match.group(1) + "%s.%s do |" % (match.group(2), iterator_name(match.group(3)))
+# snip.rv += block_param_name(element_name) + '|'
+# `
+# `!p snip.rv += match.group(1)`  ${0}
+# `!p snip.rv += match.group(1)`end
+# endsnippet
+#
+# snippet alias "alias :<new_name> :<old_name>" w
+# alias_method :${1:new_name}, :${2:old_name}
+# endsnippet

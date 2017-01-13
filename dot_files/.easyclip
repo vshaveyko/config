@@ -1,48 +1,39 @@
-{'type': 'V', 'text': '    try'}
 {'type': 'V', 'text': ''}
-{'type': 'V', 'text': '    exe '':tag coffee''.a:libName'}
-{'type': 'V', 'text': '    " echo a:libName'}
-{'type': 'v', 'text': 'recAtCtrl'}
+{'type': 'V', 'text': '  custom_param :template_id  custom_param :doctor_id  create_many :answers  create_many :boundaries  create_one :units  create_one :norm_boundaries  copy_reference :method_type  copy_reference :method_material  copy_reference :dimension  copy_reference :currency'}
+{'type': 'V', 'text': '  '}
+{'type': 'V', 'text': '  -1'}
+{'type': 'v', 'text': 'ApplicationClonner'}
+{'type': 'v', 'text': 'r'}
+{'type': 'V', 'text': 'class DirectionInfo::Procedure '}
+{'type': 'V', 'text': '  class DirectionInfo::Procedure '}
+{'type': 'v', 'text': '< DirectionInfo::DoctorReferral'}
+{'type': 'V', 'text': 'class DirectionInfo::LaboratoryDirection < '}
+{'type': 'v', 'text': 'DirectionInfo::DoctorReferral'}
+{'type': 'V', 'text': 'class DirectionInfo::HospitalizationDirection '}
+{'type': 'V', 'text': 'class DirectionInfo::ConsultationDirection < '}
+{'type': 'V', 'text': '    # resource_params_for_create_all.map do |param|    #   templ_attributes = param.delete(:template_attributes)    #   resource_class.transaction do    #     if @current_user.doctor_now?    #       param[:appointment_request_attributes][:created_doctor_id] = @current_user.doctor.id    #     elsif @current_user.admin_now?    #       param[:appointment_request_attributes][:created_admin_id] = @current_user.administrator.id    #     end    #    #     direction = resource_class.create!(param)    #     if templ_attributes.present?    #       self.class::TEMPLATE_CLASS.create!(templ_attributes.merge(category_id: direction.category_id))    #     end    #     direction    #   end    # end'}
+{'type': 'v', 'text': 'flat_'}
+{'type': 'v', 'text': 'par[:access_rights_attributes]'}
+{'type': 'v', 'text': '[:access_rights_attributes]'}
+{'type': 'V', 'text': '      -1]'}
+{'type': 'v', 'text': 'unless'}
+{'type': 'v', 'text': '-'}
+{'type': 'v', 'text': 'resource_params_for_create_all'}
 {'type': 'v', 'text': ' '}
-{'type': 'v', 'text': 's'}
-{'type': 'V', 'text': '    endtry'}
-{'type': 'v', 'text': '.jade'}
-{'type': 'V', 'text': '  autocmd Filetype pug noremap <buffer> <C-]> "*yaw:call MoveToTagByHtmlName(@*)<cr>'}
-{'type': 'v', 'text': 'jade,.pug'}
-{'type': 'V', 'text': '  set suffixesadd+=.rabl'}
-{'type': 'v', 'text': 'css,.sass,.csss'}
-{'type': 'v', 'text': 'autocmd Filetype pug n'}
-{'type': 'v', 'text': 'autocmd Filetype pug'}
-{'type': 'v', 'text': 'E'}
-{'type': 'V', 'text': '  set suffixesadd+=.coffee'}
-{'type': 'v', 'text': 'go'}
-{'type': 'V', 'text': '  set suffixesadd+=.go'}
-{'type': 'v', 'text': 'js'}
-{'type': 'V', 'text': '--regex-coffee=/\.*as ([A-Za-z0-9_$]+)["|'']/coffee\1/,class/'}
-{'type': 'v', 'text': 'tagName'}
-{'type': 'v', 'text': 'call '}
-{'type': 'v', 'text': 'e'}
-{'type': 'V', 'text': '    co'}
-{'type': 'V', 'text': 'function! MoveToClassOrModuleByName()'}
-{'type': 'v', 'text': 'depe1, dep2, dep3, $state, $scope'}
-{'type': 'V', 'text': 'dependencies = [  ''dwwdw'',''dwwd'',''wd'',''wd'',''wd'',''wd'',''wd'',''w'',''d'',''wd'',, ] = (dwwdw,dwwd,wd,wd,wd,wd,wd,w,d,wd, awdawd) ->  class     constructor: () ->      awdawd      dwa      awd      awd      aw      daw      dangular.module(''app'').factory '''', dependencies.concat '}
-{'type': 'v', 'text': 'dwwdw,dwwd,wd,wd,wd,wd,wd,w,d,wd,)'}
-{'type': 'v', 'text': '?'}
-{'type': 'V', 'text': '${3:2}'}
-{'type': 'V', 'text': 'dependencies = [  ''deps'']Name = (deps) ->  class Nameangular.module(''app'').factory ''Name'', dependencies.concat Name'}
-{'type': 'v', 'text': 'Name'}
-{'type': 'v', 'text': ')'}
-{'type': 'V', 'text': 'vnoremap <leader>d "_d'}
-{'type': 'V', 'text': 'nnoremap m "_d'}
-{'type': 'v', 'text': '<leader>d '}
-{'type': 'v', 'text': 'emplateUrl: ''src/js/___ui-elements/__ng-model/template''templateUrl: ''src/js/___ui-elements/__ng-model/template''  templateUrl: ''src/js/___ui-elements/__ng-model/template''  '}
-{'type': 'V', 'text': '`!ppath_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)template_url = path_data.group(1) + ''template'''}
-{'type': 'V', 'text': 'if $0${1}else${2}'}
-{'type': 'v', 'text': 'if ... else ...'}
-{'type': 'V', 'text': '	  $0'}
-{'type': 'v', 'text': '{'}
-{'type': 'v', 'text': 'MyNewFactory'}
-{'type': 'V', 'text': 'angular.module(''app'').component '''',  templateUrl: ''src/js/___ui-elements/__ng-model/template''  controller: ''Controller as AbsCtrl''  bindings:    : ''<'''}
-{'type': 'v', 'text': '}'}
-{'type': 'V', 'text': 'angular.module(''app'').component '''',  templateUrl: ''''  controller: ''Controller as AsbCtrl''  bindings:    : ''<'''}
-{'type': 'V', 'text': 'angular.module(''app'').component '''',  templateUrl: ''snip.rv += template_url''  controller: ''Controller as Ctrl''  bindings:    : ''<'''}
+{'type': 'V', 'text': '  def create_params  end'}
+{'type': 'V', 'text': '    pry binding'}
+{'type': 'V', 'text': '  # def create_all  #   create_params = resource_params_for_create_all  #  #   if params[:template].present?  #     Drugs::Pattern::Creator.new(current_user: @current_user, template_params: params[:template], drugs_params: create_params).call  #   end  #  #   resource_class.create!(create_params)  #  #   head :ok  # end'}
+{'type': 'V', 'text': 'require ''direction_info/abstract_identifier'''}
+{'type': 'V', 'text': '           foreign_key: :referral_id'}
+{'type': 'v', 'text': 'doctor_'}
+{'type': 'v', 'text': 'association'}
+{'type': 'V', 'text': '  # def self.inherited(base)  # def self.inherited(base)  #   return if base.base_class == base    # base._reflections.merge! base.base_class._reflections  # end  # end'}
+{'type': 'v', 'text': '      def _reflect_on_association(association) #:nodoc:        _reflections[association.to_s]      end'}
+{'type': 'V', 'text': '  include ActiveRecord::Reflection'}
+{'type': 'V', 'text': '    base_class._reflections.merge super'}
+{'type': 'v', 'text': 'super '}
+{'type': 'v', 'text': '_reflections'}
+{'type': 'V', 'text': '  self.abstract_class = true'}
+{'type': 'v', 'text': 'super'}
+{'type': 'V', 'text': '  def self.inherited(base)    def base._reflections      base_class._reflections.merge super    end  end'}
+{'type': 'v', 'text': 'base_class._reflections'}

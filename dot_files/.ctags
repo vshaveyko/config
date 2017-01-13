@@ -7,11 +7,11 @@
 --fields=+i+a+S+n
 
 --langmap=ruby:
---langdef=rb
---langmap=rb:.rb.rake
---regex-rb=/(^|;)[ \t]*(class|module)[ \t]+([A-Z][[:alnum:]_]+([A-Z][[:alnum:]_]+::)*([A-Z][[:alnum:]_]+))/\5/c,class,constant/
---regex-rb=/(^|;)[ \t]*def ([a-z][[:alnum:]_\.]+)/\2/f,function/
---regex-rb=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,function,named_scope/
+--langdef=ruby
+--langmap=ruby:.rb.rake
+--regex-ruby=/(^|;)[ \t]*(class|module)[ \t]+([A-Z][[:alnum:]_]+([A-Z][[:alnum:]_]+::)*([A-Z][[:alnum:]_]+))/\5/c,class,constant/
+--regex-ruby=/(^|;)[ \t]*def ([a-z][[:alnum:]_\.]+)/\2/f,function/
+--regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,function,named_scope/
 
 --langdef=coffee
 --langmap=coffee:.coffee
@@ -25,7 +25,8 @@
 --regex-coffee=/\.*controllerAs *: *["|']([A-Za-z0-9_$]+)["|']/coffee\1/,class/
 
 --exclude=log
---exclude=db\/
+--exclude=backend/db
+--exclude=db
 --exclude=.git
 --exclude=.svn
 --exclude=.hg

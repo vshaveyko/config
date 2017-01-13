@@ -1,6 +1,6 @@
 set nocompatible
 set hidden
-
+set runtimepath+=~/config/vim
 set t_Co=256
 
 " if has('termguicolors')
@@ -9,21 +9,45 @@ set t_Co=256
 
 " set term=xterm-256color
 " set shortmess=a
-source ~/.vim/binding.vim
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                    " open all config fiels in vim/cfg
   execute('source '.cfgfile)
 endfor
 
+" KOSTIL' to disable file changed warning spam - not working =(
+" autocmd FileChangedShell * echohl WarningMsg | echo "File changed shell." | echohl None
+" autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+
 " Install Plugins
 call plug#begin('~/.vim/plugged')
 
+  " Plug 'lyokha/vim-xkbswitch'
+    " let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
+    " let g:XkbSwitchEnabled = 1
+
+    " if has('macunix') " Might have another shell command on another oS
+    augroup xkbsw
+      autocmd!
+      " Change language to EN on insert leave
+      autocmd InsertLeave,BufEnter * silent exec "!xkbswitch -sn 0"
+    augroup END
+
+    imap ,. <C-o>:silent !xkbswitch -sn 2<cr>
+    imap бю <C-o>:silent !xkbswitch -sn 0<cr>
+    " let g:XkbSwitchIMappings = ['ru']
+    " let g:XkbSwitchNLayout = 'us'
+
   " Plug 'matze/vim-move' " Move lines here and there
 
+  Plug 'jiangmiao/auto-pairs'
+    " let g:AutoPairsFlyMode = 1
+
   """""""  peekaboo """""""
+
   Plug 'junegunn/vim-peekaboo'
-  let g:peekaboo_window = 'vertical botright 70new'
+    let g:peekaboo_window = 'vertical botright 70new'
+
   """"""" peekaboo """""""
 
   """"""" easyclip """""""
@@ -53,6 +77,28 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'        " Status\Tabline
 
   Plug 'scrooloose/nerdcommenter'                                               " comment stuff
+    " Toggle comments on Shift-/
+    nmap ? :call NERDComment("n", "toggle")<cr>
+    vmap ? :call NERDComment("n", "toggle")<cr>gv
+
+    " let NERDRemoveExtraSpaces=1
+    let NERDDefaultAlign='left'
+    let NERDCreateDefaultMappings=0
+
+  " Plug 'ervandew/supertab'
+    " if snippet can be expanded => expand;
+    " else if pumvisible? => move in pum;
+    " else if no input => usual tab;
+    " else => nothing
+    " make YCM compatible with UltiSnips (using supertab)
+    let g:ycm_key_list_select_completion = ['<c-n>', '<down>']
+    let g:ycm_key_list_previous_completion = ['<c-p>', '<up>']
+    " let g:supertabdefaultcompletiontype = '<c-n>'
+
+    " better key bindings for UltiSnipsExpandTrigger
+    " let g:UltiSnipsExpandTrigger = "<C-j>"
+    " let g:UltiSnipsJumpForwardTrigger = "<C-j>"
+    " let g:UltiSnipsJumpBackwardTrigger = "<C-k>>"
 
   " Plug 'chrisbra/NrrwRgn'                                                     " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
@@ -60,7 +106,9 @@ call plug#begin('~/.vim/plugged')
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }        " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
 
-  Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
+  Plug 'Valloric/YouCompleteMe'
+
+  " Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
 
   " Custom text objects creation (dependency for the latter)
   " Plug 'kana/vim-textobj-user'
@@ -77,13 +125,42 @@ call plug#begin('~/.vim/plugged')
   Plug 'neomake/neomake'                                                        " Async task maker
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
+    " TMUXLINE
+    let g:tmuxline_preset = {
+          \'a disabled' : '#S:#I',
+          \'b disabled' : '',
+          \'c disabled' : '',
+          \'win'        : [' #I:#W#F '],
+          \'cwin'       : ['☢  #I:#W#F '],
+          \'x'          : '#(~/config/bin/locale.sh)',
+          \'y'          : ['%R %d %b'],
+          \'z'          : ['#(~/config/bin/battery.sh)'],
+          \'options'    : {'status-justify': 'left'}}
+
   Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
 
   Plug 'godlygeek/tabular'                                                      " Align stuff nicely
   Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+    let g:ultisnips_python_style="google"
+    let g:UltiSnipsSnippetsDir= $HOME."/config/vim/UltiSnips"
+    " Configuration for custom snips
+    let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
+
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit='vertical'
+
+    " Use Python Version
+    let g:UltiSnipsUsePythonVersion = 2
+    let g:UltiSnipsExpandTrigger='<C-j>'
+    let g:UltiSnipsListSnippets='<C-s>'
+    let g:UltiSnipsJumpForwardTrigger='<C-j>'
+    let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['jade', 'ruby', 'slim', 'typescript', 'go', 'coffee', 'scss'] }
+    " call deoplete#custom#set('ultisnips', 'rank', 1000)
 
   Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   Plug 'mhinz/vim-sayonara'
@@ -120,32 +197,63 @@ call plug#begin('~/.vim/plugged')
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 
+    Plug 'elzr/vim-json', { 'for': ['cucumber', 'coffee', 'typescript'] }
+
     " TYPESCRIPT
       Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
       Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
-      Plug 'mhartington/deoplete-typescript', { 'for': ['typescript'] }
+      " Plug 'mhartington/deoplete-typescript', { 'for': ['typescript'] }
 
     " RUBY
-      Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins', 'for': ['ruby', 'slim'] }
+      augroup rb
+        autocmd!
+        set suffixesadd+=.rb,.rake
+      augroup END
+      " Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins', 'for': ['ruby', 'slim'] }
       " Plug 'osyo-manga/vim-monster' " deoplete ruby support
       " Plug 'nelstrom/vim-textobj-rubyblock'
       " Plug 'thoughtbot/vim-rspec'
+      Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
       Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
       Plug 'tpope/vim-endwise' , { 'for': ['ruby'] }         " Autoend ruby blocks
       Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
-
+      Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
     " COFFEE_SCRIPT
+      augroup coffee
+        autocmd!
+        autocmd Filetype coffee noremap <buffer> <C-]> "*yiw:call MoveToLibByName(@*)<cr>
+        set suffixesadd+=.coffee
+      augroup END
+
       Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
       Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
       " Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
       " Plug 'JSON.vim', { 'for': ['coffee'] }
 
+    " CUCUMBER
+      Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
+
     " CSS/HTML
       Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
       Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
+
       Plug 'mattn/emmet-vim', { 'for': ['css', 'scss'] }             " css\sass complete
+        let g:user_emmet_install_global = 0
+
+        augroup emmet
+          autocmd!
+          autocmd FileType sass, css EmmetInstall
+          autocmd Filetype sass, css imap <expr> <buffer> <tab> emmet#expandAbbrIntelligent("\<tab>")
+          set suffixesadd+=.css,.sass,.csss
+        augroup END
 
     " JADE
+      augroup jade
+        autocmd!
+        autocmd Filetype pug noremap <buffer> <C-]> "*yaw:call MoveToTagByHtmlName(@*)<cr>
+        set suffixesadd+=.jade,.pug
+      augroup END
+
       Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }         " JADE syntax
 
     " SLIM
@@ -153,24 +261,28 @@ call plug#begin('~/.vim/plugged')
 
     " GO
       Plug 'fatih/vim-go', { 'for': ['go'] }
+      Plug 'rjohnsondev/vim-compiler-go', { 'for': ['go'] }
+
+      augroup golang
+        autocmd!
+
+        autocmd FileType go compiler golang
+        au FileType go nmap <F12> <Plug>(go-run)
+        au FileType go let g:go_highlight_functions = 1
+        au FileType go let g:go_highlight_methods = 1
+        au FileType go let g:go_highlight_fields = 1
+        au FileType go let g:go_highlight_types = 1
+        au FileType go let g:go_highlight_operators = 1
+        au FileType go let g:go_highlight_build_constraints = 1
+        set suffixesadd+=.go
+      augroup END
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
-let g:user_emmet_install_global = 0
+source ~/.vim/binding.vim
+source ~/config/vim/os_specific_binding.vim
 
-augroup golang
-  autocmd!
-
-  au FileType go nmap <F12> <Plug>(go-run)
-  au FileType go let g:go_highlight_functions = 1
-  au FileType go let g:go_highlight_methods = 1
-  au FileType go let g:go_highlight_fields = 1
-  au FileType go let g:go_highlight_types = 1
-  au FileType go let g:go_highlight_operators = 1
-  au FileType go let g:go_highlight_build_constraints = 1
-  set suffixesadd+=.go
-augroup END
 
 function! MoveToControllerByShortHandName(shortName)
   " transform shorthand ctrl name "compNameCtrl" to real "compNameController"
@@ -205,29 +317,6 @@ function! MoveToLibByName(libName)
   endtry
 endfunc
 
-augroup coffee
-  autocmd!
-  autocmd Filetype coffee noremap <buffer> <C-]> "*yaw:call MoveToLibByName(@*)<cr>
-  set suffixesadd+=.coffee
-augroup END
-
-augroup jade
-  autocmd!
-  autocmd Filetype pug noremap <buffer> <C-]> "*yaw:call MoveToTagByHtmlName(@*)<cr>
-  set suffixesadd+=.jade,.pug
-augroup END
-
-augroup rb
-  autocmd!
-  set suffixesadd+=.rb,.rake
-augroup END
-
-augroup emmet
-  autocmd!
-  autocmd FileType sass, css EmmetInstall
-  autocmd Filetype sass, css imap <expr> <buffer> <tab> emmet#expandAbbrIntelligent("\<tab>")
-  set suffixesadd+=.css,.sass,.csss
-augroup END
 
 augroup rabl
   au!
@@ -239,40 +328,16 @@ augroup rabl
   set suffixesadd+=.rabl
 augroup END
 
-let g:python3_host_prog = '/usr/bin/python3'
-set background=dark
+if !has('macunix')
+  let g:python3_host_prog = '/usr/bin/python3'
+endif
+
 " Color scheme based on time {{{
+set background=dark
 let g:hybrid_custom_term_colors = 1
 colorscheme hybrid
 "}}}
 
-call deoplete#custom#set('ultisnips', 'rank', 1000)
-" Configuration for custom snips
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
-
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit='vertical'
-
-" Use Python Version
-" let g:UltiSnipsUsePythonVersion = 2
-
-" let g:ultisnips_python_style="google"
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger="<Right>"
-" let g:UltiSnipsJumpForwardTrigger = "<Right>"
-" let g:UltiSnipsJumpBackwardTrigger="<Left>"
-" let g:UltiSnipsListSnippets="<c-l>"
-"
-inoremap <C-x><C-k> <NOP>
-let g:UltiSnipsExpandTrigger='<C-j>'
-let g:UltiSnipsListSnippets='<C-s>'
-let g:UltiSnipsJumpForwardTrigger='<C-j>'
-let g:UltiSnipsJumpBackwardTrigger='<C-k>'
-
-set runtimepath+=~/config/vim
-
-let g:UltiSnipsSnippetsDir="~/config/vim/UltiSnips"
 
 set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
 
@@ -288,7 +353,7 @@ let g:neomake_ruby_enabled_makers = ['rubocopauto']
 
 " let g:neomake_typescript_enabled_makers = ['tsuquyomi']
 
-autocmd BufWritePost * call neomake#Make(1, [], function('s:Neomake_callback'))
+autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback')); normal :e!
 
 function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
   if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
@@ -328,9 +393,11 @@ set spelllang=ru_ru,en_us                                                       
 
 set nobackup
 set noswapfile
+set autoread " auto read file
 
 " Encoding
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+" set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
 
 if !has('nvim')
   set encoding=utf8
@@ -340,10 +407,16 @@ if !has('nvim')
 endif
 
 " Input
-set iminsert=0                                                                  " english as default keyboard layout
+" set iminsert=0                                                                  " english as default keyboard layout
 set expandtab                                                                   " convert tab to spaces
 set autoindent                                                                  " inherit indent from previous line
-set formatoptions-=o                                                            " dont continue comments when pushing o/O
+
+set shiftwidth=2
+set tabstop=2
+
+autocmd FileType pug,ruby,coffee setlocal shiftwidth=2 softtabstop=2 expandtab
+
+" set formatoptions-=o                                                            " dont continue comments when pushing o/O
 
 autocmd BufWritePre * :%s/\s\+$//e                                              " Delete spaces from end on lines
 autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$##                             " Delete trailing lines at the end of file
@@ -363,7 +436,7 @@ set lazyredraw                                                                  
 " set foldmethod=indent
 " set foldlevel=20
 
-set clipboard=unnamed,unnamedplus " Copy\paste from clipboard always. Test and think about if it needed.
+set clipboard=unnamed " Copy\paste from clipboard always. Test and think about if it needed.
 
 set timeoutlen=500 ttimeoutlen=0
 " autocmd Syntax slim,html,erb setlocal foldmethod=indent
@@ -386,20 +459,13 @@ endif
 set so=3                                                                        " display 3 tabs below\above cursor
 set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
 
-" TMUXLINE
-let g:tmuxline_preset = {
-      \'a'          : '#S:#I',
-      \'b'          : '',
-      \'c disabled' : '',
-      \'win'        : ['#I', '#W'],
-      \'cwin'       : ['☢', '#I', '#W'],
-      \'x disabled' : '',
-      \'y'          : ['%a', '%Y-%m-%d', '%l:%M%p'],
-      \'z'          : ['#(whoami)'],
-      \'options'    : {'status-justify': 'left'}}
 
 let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
+let g:ycm_key_list_select_completion = ['<C-n>']
+let g:ycm_key_list_previous_completion = ['<C-p>']
+let g:ycm_min_num_identifier_candidate_chars = 5
 
 
 " ---------------------------------------------------------------------------------------------------------------------
@@ -412,16 +478,16 @@ set listchars=tab:▸▸ "  ,nbsp:·,space:·
 " -----------------------------------------------------
 " Deoplete autocomplete settings {{{
 " -----------------------------------------------------
-let g:deoplete#enable_at_startup=1
-let g:deoplete#enable_refresh_always=0
-let g:deoplete#file#enable_buffer_path=1
-
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#auto_complete_start_length = 0
-let g:auto_complete_start_length = 0
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#auto_complete_delay = 20
-
+" let g:deoplete#enable_at_startup=1
+" let g:deoplete#enable_refresh_always=0
+" let g:deoplete#file#enable_buffer_path=1
+"
+" let g:deoplete#enable_ignore_case = 1
+" let g:deoplete#auto_complete_start_length = 0
+" let g:auto_complete_start_length = 0
+" let g:deoplete#enable_refresh_always = 1
+" let g:deoplete#auto_complete_delay = 20
+"
 " let g:deoplete#sources={}
 " let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
 " let g:deoplete#sources.ruby = ['buffer', 'member', 'file', 'ultisnips']
@@ -465,7 +531,7 @@ let g:ctrlsf_extra_backend_args = {
             \ --ignore "**/*.pyc"'
     \ }
 
-autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+" autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
 " Surround.vim settings {{{
 " -----------------------------------------------------
