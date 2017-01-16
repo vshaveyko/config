@@ -1,0 +1,47 @@
+{'type': 'V', 'text': ''}
+{'type': 'V', 'text': '#!/bin/sh## author: Vadim Shaveyko <@vshaveyko>## vim:set filetype=sh:#red=''\033[0;31m''green=''\033[0;32m''yellow=''\033[0;33m''NC=''\033[0m''## Can improve script to check for existancy of HEAD commit# if there is none we can use all files present or check againts empty tree## if git rev-parse --verify HEAD >/dev/null 2>&1# then#   against=HEAD# fi# Check if rubocop is installed for the current project# backend/bin/bundle exec rubocop -v >/dev/null || { echo >&2 "${red}[Ruby Style][Fatal]: Add rubocop to your Gemfile pwd is $(pwd)"; exit 1; }# backend/bin/bundle exec rubocop -v || { echo >&2 "${red}[Ruby Style][Fatal]: Add rubocop to your Gemfile pwd is $(pwd) path is $PATH home is $HOME"; exit 1; }# Get only the staged filesALL_FILES=`git diff-index --name-status --cached HEAD     | # Find all staged files            egrep -i ''^(A|M).+$''                          | # Only process certain files - A=added M=modified            sed -e ''s/^[AM][[:space:]]*//''                | # Remove leading git info            sort                                          | # Remove duplicates            uniq`if [ "$ALL_FILES" != "" ]then  # Check with ruby styleguide  if [ "$RUBY_FILES" != "" ]  then    echo "${green}[Ruby Style][Info]: Checking Ruby Style${NC}"    echo "${green}[Ruby Style][Info]: ${FILES}${NC}"    if [ ! -f ''.rubocop.yml'' ]; then      echo "${yellow}[Ruby Style][Warning]: No .rubocop.yml config file.${NC}"    fi    # Run rubocop on the staged files    backend/bin/bundle exec rubocop -a ${FILES}    if [ $? -ne 0 ]; then      echo "${red}[Ruby Style][Error]: Fix the issues and commit again${NC}"      exit 1    fi  else    echo "${green}[Ruby Style][Info]: No files to check${NC}"  fi  # Projectwide fixes  for FILE in $(echo $ALL_FILES | tr ''\n'' '' ''); do    # Replace multiple empty lines with one    sed -i '''' ''/^$/N;/^\n$/D'' "$FILE"    # Replace tabs with two spaces    sed -i '''' $''s/\t/  /g'' "$FILE"    # Strip trailing whitespace    sed -i '''' -E ''s/[[:space:]]*$//'' "$FILE"    # Add newline to the end of the file    sed -i '''' $''/^$/!s/$/\/'' "$FILE"    # Stage all changes    git add "$FILE"  donefiexit 0'}
+{'type': 'v', 'text': 'Switch to inspect mode.'}
+{'type': 'v', 'text': 'drotr'}
+{'type': 'v', 'text': '  volumes:    - .:/drotr'}
+{'type': 'V', 'text': 'app:  build: .  command: ./backend/script/start.sh  volumes_from:    - gems  ports:    - "3000:3000"  links:    - db'}
+{'type': 'V', 'text': 'db-data:  container_name: db-data  image: busybox:latest  volumes:    - /var/lib/mysql'}
+{'type': 'v', 'text': 'four'}
+{'type': 'V', 'text': 'RUBY_FILES="$(echo $ALL_FILES | grep "\.rb$" | tr ''\n'' '' '')"'}
+{'type': 'V', 'text': 'else  echo "$ALL_FILES"; exit 1'}
+{'type': 'V', 'text': '  echo "$ALL_FILES"; exit 1'}
+{'type': 'v', 'text': ' '}
+{'type': 'V', 'text': ''}
+{'type': 'V', 'text': 'echo "$ALL_FILES"; exit 1'}
+{'type': 'V', 'text': '      ,'}
+{'type': 'V', 'text': '  echo "$ALL_FILES"; exit 1;'}
+{'type': 'V', 'text': 'echo "$ALL_FILES"; exit 1;'}
+{'type': 'V', 'text': '    echo "$FILE"; exit 1;'}
+{'type': 'v', 'text': 'whitespace '}
+{'type': 'v', 'text': 'trailing '}
+{'type': 'v', 'text': 'Remove '}
+{'type': 'V', 'text': '  # Remove trailing whitespace projectwide'}
+{'type': 'v', 'text': 'S'}
+{'type': 'V', 'text': '  # Stage all changes  git add "$FILE"'}
+{'type': 'v', 'text': '$against'}
+{'type': 'V', 'text': '	     echo "${green}[Ruby Style][Info]: Checking Ruby Style${NC}"'}
+{'type': 'v', 'text': 'grep "\.rb$" | tr ''\n'' '' '''}
+{'type': 'v', 'text': '(\.rb|\.coffee|\.sh|)'}
+{'type': 'v', 'text': 'sed -i '''' $''s/\t/  /g'' "$FILE"'}
+{'type': 'V', 'text': '            # g -i ''^(A|M).+(\.rb|\.coffee|\.sh|)$''          | # Only process certain files'}
+{'type': 'v', 'text': 'egrep'}
+{'type': 'v', 'text': '.'}
+{'type': 'v', 'text': '/'}
+{'type': 'v', 'text': 'gems/ruby-2.3.3/bin'}
+{'type': 'v', 'text': '@global'}
+{'type': 'v', 'text': 'undefined method `activate_bin_path'}
+{'type': 'v', 'text': '2'}
+{'type': 'v', 'text': 'use '}
+{'type': 'v', 'text': 'rvm '}
+{'type': 'V', 'text': '# Extend SmartGit PATH to include brew / NVMpath=/usr/bin'}
+{'type': 'V', 'text': '/'}
+{'type': 'V', 'text': 'ME/.rvm/bin'}
+{'type': 'v', 'text': '$HOME/.rvm/bin'}
+{'type': 'v', 'text': 'smartgit.vmoptions'}
+{'type': 'v', 'text': 'local/'}
+{'type': 'v', 'text': '~/Library/Preferences/SmartGit/smartgit.vmoptions'}
+{'type': 'v', 'text': '&& '}
