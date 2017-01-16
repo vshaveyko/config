@@ -1,16 +1,13 @@
 " Shift-f Shift-t backwards repeat. Forward is mapped to ;
-nnoremap ' ,
-" nnoremap б ,
-" nnoremap Ж :
-" nnoremap ж ;
-" nnoremap бц :w!<cr>
-
-inoremap <C-x><C-k> <NOP>
-
-map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
 
 " Map leader key
 let mapleader=","
+
+map <leader>w :w!<CR>
+
+inoremap <C-x><C-k> <NOP>
+
+vnoremap <leader>jt :!json_reformat -u<CR>
 
 " file operations copy\paste
 map <Leader>v "+P
@@ -34,12 +31,9 @@ function! s:check_back_space() abort
 endfunction
 
 function! Tab() abort
-  " insert <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
-  " call UltiSnips#ExpandSnippet()
-  exec g:_uspy "UltiSnips_Manager.expand_or_jump()"
+  call UltiSnips#ExpandSnippetOrJump()
 
-  " if g:ulti_expand_or_jump_res
-  if g:ulti_expand_res
+  if g:ulti_expand_or_jump_res
     return ""
   endif
 
@@ -47,42 +41,48 @@ function! Tab() abort
     return "\<C-n>"
   endif
 
-  " <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
+  if getline('.')  =~ '^\s*$'
+    return "\<TAB>"
+  endif
 
-  " if !<SID>check_back_space()
-  "   return "\<TAB>"
-  " endif
-  "
-  return ""
-
-  " return "\<Space>"
+  return "\<Space>"
 endfunction
 
-function! Stab() abort
-  pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<S-TAB>" : "\<C-k>"
-endfunction
+function! STab() abort
+  call UltiSnips#JumpBackwards()
 
-function! Enter() abort
-  if pumvisible()
-    " UltiSnips#ExpandSnippetOrJump()
-    exec g:_uspy "UltiSnips_Manager.expand_or_jump()"
-  end
-
-  if g:ulti_expand_or_jump_res
-    " if g:ulti_expand_res == 1
+  if g:ulti_jump_backwards_res
     return ""
   endif
 
-  return "\<Enter>"
+  if pumvisible()
+    return "\<C-p>"
+  endif
+
+  if getline('.')  =~ '^\s*$'
+    return "\<S-TAB>"
+  endif
+
+  return ""
 endfunction
 
-inoremap <silent><expr> <Enter>
-inoremap <silent><expr> <TAB> "\<C-j>" . Tab()
-inoremap <silent><expr> <S-TAB>  "\<C-k>/"
+" function! Enter() abort
+"   if pumvisible()
+"     " UltiSnips#ExpandSnippetOrJump()
+"     exec g:_uspy "UltiSnips_Manager.expand_or_jump()"
+"   end
 "
-" au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
+"   if g:ulti_expand_or_jump_res
+"     " if g:ulti_expand_res == 1
+"     return ""
+"   endif
+"
+"   return "\<Enter>"
+" endfunction
+"
+" inoremap <silent><expr> <Enter>
+inoremap <TAB> <C-r>=Tab()<cr>
+inoremap <S-TAB> <C-r>=STab()<cr>
 
 nnoremap <leader>qa :qa!<CR>
 
@@ -200,8 +200,7 @@ noremap <ESC> <C-c>
 noremap ,<ESC> <ESC>
 
 " Quick save and close buffer
-map <leader>w :w!<CR>
-map <leader>ц :w!<CR>
+" map <leader>ц :w!<CR>
 nnoremap <silent> <leader>q :Sayonara!<CR>
 
 " Intelligent windows resizing using ctrl + arrow keys

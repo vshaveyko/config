@@ -130,3 +130,6 @@ bashcompinit
 source "$HOME/config/.bash/git-completion.sh"
 source "$HOME/config/.bash/aliases.git.sh"
 source ~/config/dot_files/.completion.zsh
+
+export LANG=C
+export h24=~/dev/health24

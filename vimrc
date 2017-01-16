@@ -1,6 +1,5 @@
 set nocompatible
 set hidden
-set runtimepath+=~/config/vim
 set t_Co=256
 
 " if has('termguicolors')
@@ -11,27 +10,34 @@ set t_Co=256
 " set shortmess=a
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
+source ~/.vim/binding.vim
+source ~/config/vim/os_specific_binding.vim
+
 for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                    " open all config fiels in vim/cfg
   execute('source '.cfgfile)
 endfor
 
+set runtimepath+=~/config/vim
+
 " KOSTIL' to disable file changed warning spam - not working =(
-" autocmd FileChangedShell * echohl WarningMsg | echo "File changed shell." | echohl None
+" autocmd FileChangedShell * echo "lawdowd"
 " autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+au FileChangedShell * echo "Warning: File changed on disk"
 
 " Install Plugins
 call plug#begin('~/.vim/plugged')
 
-  " Plug 'lyokha/vim-xkbswitch'
+  Plug 'lyokha/vim-xkbswitch'
     " let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
-    " let g:XkbSwitchEnabled = 1
+    let g:XkbSwitchEnabled = 1
+    let g:XkbSwitchIMappings = ['ru']
 
     " if has('macunix') " Might have another shell command on another oS
-    augroup xkbsw
-      autocmd!
-      " Change language to EN on insert leave
-      autocmd InsertLeave,BufEnter * silent exec "!xkbswitch -sn 0"
-    augroup END
+    " augroup xkbsw
+    "   autocmd!
+    "   " Change language to EN on insert leave
+    "   autocmd InsertLeave,BufEnter * silent exec "!(xkbswitch -sn 0 &) > /dev/null"
+    " augroup END
 
     imap ,. <C-o>:silent !xkbswitch -sn 2<cr>
     imap бю <C-o>:silent !xkbswitch -sn 0<cr>
@@ -40,7 +46,9 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'matze/vim-move' " Move lines here and there
 
-  Plug 'jiangmiao/auto-pairs'
+  Plug 'Raimondi/delimitMate'
+
+  " Plug 'jiangmiao/auto-pairs'
     " let g:AutoPairsFlyMode = 1
 
   """""""  peekaboo """""""
@@ -123,11 +131,32 @@ call plug#begin('~/.vim/plugged')
   " Ruby block text object (vir)
 
   Plug 'neomake/neomake'                                                        " Async task maker
+  " Neomake on write
+  " TODO: think about not counting corrected warnings to global warning count
+  let g:neomake_ruby_rubocopauto_maker = {
+        \ 'exe'        : 'rubocop',
+        \ 'args'        : ['--format', 'emacs', '-a'],
+        \ 'errorformat' : '%f:%l:%c: %t: %m',
+        \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
+        \ }
+  let g:neomake_ruby_enabled_makers = ['rubocopauto']
+
+  let g:neomake_typescript_enabled_makers = ['tsuquyomi']
+
+  autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback'))
+
+  function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
+    if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
+      edit
+    endif
+  endfunction
+
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
+
     " TMUXLINE
     let g:tmuxline_preset = {
-          \'a disabled' : '#S:#I',
+          \'a' : '#{battery_icon} #{battery_percentage} #{battery_remain}',
           \'b disabled' : '',
           \'c disabled' : '',
           \'win'        : [' #I:#W#F '],
@@ -137,7 +166,8 @@ call plug#begin('~/.vim/plugged')
           \'z'          : ['#(~/config/bin/battery.sh)'],
           \'options'    : {'status-justify': 'left'}}
 
-  Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
+   Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
+   " Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
 
   Plug 'godlygeek/tabular'                                                      " Align stuff nicely
   Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
@@ -197,7 +227,8 @@ call plug#begin('~/.vim/plugged')
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 
-    Plug 'elzr/vim-json', { 'for': ['cucumber', 'coffee', 'typescript'] }
+    Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript'] }
+    Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript'] }
 
     " TYPESCRIPT
       Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
@@ -216,7 +247,13 @@ call plug#begin('~/.vim/plugged')
       Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
       Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
       Plug 'tpope/vim-endwise' , { 'for': ['ruby'] }         " Autoend ruby blocks
+
+      augroup cucumber
+        autocmd!
+        au BufEnter *.feature let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb'
+      augroup END
       Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
+
       Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
     " COFFEE_SCRIPT
       augroup coffee
@@ -228,7 +265,6 @@ call plug#begin('~/.vim/plugged')
       Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
       Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
       " Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
-      " Plug 'JSON.vim', { 'for': ['coffee'] }
 
     " CUCUMBER
       Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
@@ -280,8 +316,6 @@ call plug#begin('~/.vim/plugged')
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
-source ~/.vim/binding.vim
-source ~/config/vim/os_specific_binding.vim
 
 
 function! MoveToControllerByShortHandName(shortName)
@@ -341,25 +375,6 @@ colorscheme hybrid
 
 set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
 
-" Neomake on write
-" TODO: think about not counting corrected warnings to global warning count
-let g:neomake_ruby_rubocopauto_maker = {
-      \ 'exe'        : 'rubocop',
-      \ 'args'        : ['--format', 'emacs', '-a'],
-      \ 'errorformat' : '%f:%l:%c: %t: %m',
-      \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
-      \ }
-let g:neomake_ruby_enabled_makers = ['rubocopauto']
-
-" let g:neomake_typescript_enabled_makers = ['tsuquyomi']
-
-autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback')); normal :e!
-
-function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
-  if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
-    edit
-  endif
-endfunction
 
 syntax on                                                                       " Enable syntax highlighting
 filetype indent plugin on                                                       " Enable filetype-specific indenting
@@ -393,7 +408,7 @@ set spelllang=ru_ru,en_us                                                       
 
 set nobackup
 set noswapfile
-set autoread " auto read file
+" set autoread " auto read file
 
 " Encoding
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
@@ -608,3 +623,7 @@ let g:EasyMotion_use_smartsign_us = 1 " Smartsign (type `3` and match `3`&`#`)
 
 let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ABCEGHILMNOPQRSTUVWXYZFD;JK'
+
+let completeopt="menu"
+set completeopt="menu"
+let confirm=0
