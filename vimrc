@@ -48,9 +48,6 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'Raimondi/delimitMate'
 
-  " Plug 'jiangmiao/auto-pairs'
-    " let g:AutoPairsFlyMode = 1
-
   """""""  peekaboo """""""
 
   Plug 'junegunn/vim-peekaboo'
@@ -167,7 +164,7 @@ call plug#begin('~/.vim/plugged')
           \'options'    : {'status-justify': 'left'}}
 
    Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
-   " Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
+   Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
 
   Plug 'godlygeek/tabular'                                                      " Align stuff nicely
   Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
@@ -188,9 +185,6 @@ call plug#begin('~/.vim/plugged')
     let g:UltiSnipsListSnippets='<C-s>'
     let g:UltiSnipsJumpForwardTrigger='<C-j>'
     let g:UltiSnipsJumpBackwardTrigger='<C-k>'
-
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['jade', 'ruby', 'slim', 'typescript', 'go', 'coffee', 'scss'] }
-    " call deoplete#custom#set('ultisnips', 'rank', 1000)
 
   Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   Plug 'mhinz/vim-sayonara'
@@ -233,16 +227,13 @@ call plug#begin('~/.vim/plugged')
     " TYPESCRIPT
       Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
       Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
-      " Plug 'mhartington/deoplete-typescript', { 'for': ['typescript'] }
 
     " RUBY
       augroup rb
         autocmd!
         set suffixesadd+=.rb,.rake
       augroup END
-      " Plug 'fishbullet/deoplete-ruby', { 'do': ':UpdateRemotePlugins', 'for': ['ruby', 'slim'] }
-      " Plug 'osyo-manga/vim-monster' " deoplete ruby support
-      " Plug 'nelstrom/vim-textobj-rubyblock'
+      Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
       " Plug 'thoughtbot/vim-rspec'
       Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
       Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
@@ -316,8 +307,6 @@ call plug#begin('~/.vim/plugged')
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
-
-
 function! MoveToControllerByShortHandName(shortName)
   " transform shorthand ctrl name "compNameCtrl" to real "compNameController"
   let s:b = substitute(a:shortName, '^\(.*\)Ctrl$', '\1Controller', '')
@@ -351,7 +340,6 @@ function! MoveToLibByName(libName)
   endtry
 endfunc
 
-
 augroup rabl
   au!
   au BufRead,BufNewFile *.rabl syn keyword rubyRabl node attribute object child collection attributes glue extends
@@ -372,9 +360,7 @@ let g:hybrid_custom_term_colors = 1
 colorscheme hybrid
 "}}}
 
-
 set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
-
 
 syntax on                                                                       " Enable syntax highlighting
 filetype indent plugin on                                                       " Enable filetype-specific indenting
@@ -451,7 +437,7 @@ set lazyredraw                                                                  
 " set foldmethod=indent
 " set foldlevel=20
 
-set clipboard=unnamed " Copy\paste from clipboard always. Test and think about if it needed.
+set clipboard=unnamed,unnamedplus " Copy\paste from clipboard always. Test and think about if it needed.
 
 set timeoutlen=500 ttimeoutlen=0
 " autocmd Syntax slim,html,erb setlocal foldmethod=indent
@@ -474,7 +460,6 @@ endif
 set so=3                                                                        " display 3 tabs below\above cursor
 set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
 
-
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
@@ -482,40 +467,11 @@ let g:ycm_key_list_select_completion = ['<C-n>']
 let g:ycm_key_list_previous_completion = ['<C-p>']
 let g:ycm_min_num_identifier_candidate_chars = 5
 
-
 " ---------------------------------------------------------------------------------------------------------------------
 " White characters settings {{{
 " ---------------------------------------------------------------------------------------------------------------------
 set list                                    " Show listchars by default
 set listchars=tab:▸▸ "  ,nbsp:·,space:·
-"}}}
-
-" -----------------------------------------------------
-" Deoplete autocomplete settings {{{
-" -----------------------------------------------------
-" let g:deoplete#enable_at_startup=1
-" let g:deoplete#enable_refresh_always=0
-" let g:deoplete#file#enable_buffer_path=1
-"
-" let g:deoplete#enable_ignore_case = 1
-" let g:deoplete#auto_complete_start_length = 0
-" let g:auto_complete_start_length = 0
-" let g:deoplete#enable_refresh_always = 1
-" let g:deoplete#auto_complete_delay = 20
-"
-" let g:deoplete#sources={}
-" let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
-" let g:deoplete#sources.ruby = ['buffer', 'member', 'file', 'ultisnips']
-" let g:deoplete#sources.vim  = ['buffer', 'member', 'file', 'ultisnips']
-" let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips', 'ternjs']
-" let g:deoplete#sources.css  = ['buffer', 'member', 'file', 'omni', 'ultisnips']
-" let g:deoplete#sources.scss = ['buffer', 'member', 'file', 'omni', 'ultisnips']
-" let g:deoplete#sources.html = ['buffer', 'member', 'file', 'omni', 'ultisnips']
-
-" let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" let g:deoplete#sources#omni#input_patterns = { "ruby" : '[^. *\t]\.\w*\|\h\w*::' }
-
-" let g:deoplete#auto_complete_start_length = 1
 "}}}
 
 " Ctrl-SF settings {{{
@@ -551,7 +507,7 @@ let g:ctrlsf_extra_backend_args = {
 " Surround.vim settings {{{
 " -----------------------------------------------------
 let g:surround_124 = "|\r|"
-let g:surround_58 = ":\r"
+let g:surround_58 = ":\r "
 
 " Remove 2 space margin after icons from devicons in nerdtree
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
@@ -624,6 +580,4 @@ let g:EasyMotion_use_smartsign_us = 1 " Smartsign (type `3` and match `3`&`#`)
 let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ABCEGHILMNOPQRSTUVWXYZFD;JK'
 
-let completeopt="menu"
-set completeopt="menu"
 let confirm=0

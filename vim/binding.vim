@@ -3,7 +3,7 @@
 " Map leader key
 let mapleader=","
 
-map <leader>w :w!<CR>
+map <nowait> <leader>w :w!<CR>
 
 inoremap <C-x><C-k> <NOP>
 
