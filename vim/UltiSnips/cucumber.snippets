@@ -1,0 +1,54 @@
+snippet "^(\s*)pry" "pry binding" rA
+`!p snip.rv += match.group(1)`And pry
+endsnippet
+
+snippet "^(\s*)all" "All data loaded" rA
+`!p snip.rv += match.group(1)`And all data loaded
+endsnippet
+
+snippet "^(\s*)ev" "I can see entered values" rw
+`!p snip.rv += match.group(1)`Then I can see entered values
+`!p snip.rv += match.group(1)`  | $0 |
+`!p snip.rv += match.group(1)`  |    |
+endsnippet
+
+snippet "json" "init json structure" w
+"""
+	{
+		"$0": [
+			{
+
+			}
+		]
+	}
+"""
+endsnippet
+
+snippet "feat" "init feature structure" w
+Feature: ${1:Title}
+	In order to ${2:value/benefit}
+	As a ${3:role}
+	I want ${4:feature}
+
+	Background:
+	  Given I am a doctor
+		And I logged in
+		And there are $0
+			| ${5:start} | ${6:eat} | ${7:left} |
+			|  ${8:12}   |  ${9:5}  |  ${10:7}   |
+
+	Scenario:
+	  When
+		Then
+endsnippet
+
+snippet "so" "Scenario outline" w
+Scenario Outline: ${1:eating}
+	Given ${2: there are <start> cucumbers}
+	When ${3: I eat <eat> cucumbers}
+	Then ${4: I should have <left> cucumbers}
+
+	Examples:
+	| ${5:start} | ${6:eat} | ${7:left} |
+	|  ${8:12}   |  ${9:5}  |  ${10:7}   |
+endsnippet

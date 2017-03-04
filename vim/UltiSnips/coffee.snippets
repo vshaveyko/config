@@ -114,9 +114,17 @@ endsnippet
 
 snippet comp "angular component" w
 `!p
-path_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)
 
-template_url = path_data.group(1) + 'template'
+def camelCase(st):
+	output = ''.join(x for x in st.title() if x.isalpha())
+	return output[0].lower() + output[1:]
+
+path_data = re.search("(?:src/js/|js/)?(.*?)/([^/]*)/(?:[^/]*).coffee", path)
+
+folder_name = path_data.group(2)
+template_url = 'src/js/' + path_data.group(1) + '/' + folder_name + '/' + 'template'
+
+t[1] = camelCase(folder_name)
 
 `angular.module('app').component '${1}',
 

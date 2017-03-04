@@ -4,10 +4,8 @@ pry binding
 endsnippet
 
 snippet /^#a/ "file start comments" Awr
-##########
-#
-# author: Vadim Shaveiko <@vshaveyko>
 # frozen_string_literal: true
+# author: Vadim Shaveiko <@vshaveyko>
 # encoding: utf-8
 #
 ##########
@@ -91,25 +89,30 @@ snippet "^(m|c)" "define correct rails class" br
 result = "# :nodoc:\n"
 result += prefix(match.group(1))
 
-m = re.search("(clonners|policies|controllers|models|jobs|printers|services|lib)\/(.*).rb", path)
+m = re.search("(clonners|helpers|policies|controllers|models|jobs|printers|services|query_objects)\/(.*).rb", path)
 
 result += classify(m.group(2))
 
-if m.group(1) == 'controllers':
-  if 'api' in path:
-    result += ' < Api::ApplicationController'
-  else:
-    result += ' < ApplicationController'
-elif m.group(1) == 'policies':
-	result += ' < ApplicationPolicy'
-elif m.group(1) == 'models':
-  result += ' < ApplicationRecord'
-elif m.group(1) == 'clonners':
-	result += ' < ApplicationClonner'
-elif m.group(1) == 'job':
-	result += ' < ActiveJob::Base'
-else:
-  result += "\n\n  def initialize\n    \n  end"
+if match.group(1) == 'c':
+	if m:
+		if m.group(1) == 'controllers':
+			if 'api' in path:
+				result += ' < Api::ApplicationController'
+			else:
+				result += ' < ApplicationController'
+		elif m.group(1) == 'policies':
+			result += ' < ApplicationPolicy'
+		elif m.group(1) == 'models':
+			result += ' < ApplicationRecord'
+		elif m.group(1) == 'clonners':
+			result += ' < ApplicationClonner'
+		elif m.group(1) == 'jobs':
+			result += ' < ActiveJob::Base'
+		elif m.group(1) == 'printers':
+			result += ' < ApplicationPrinter'
+
+	result += "\n\n  def initialize\n    \n  end"
+
 snip.rv += result`
   ${0:${VISUAL}}
 end

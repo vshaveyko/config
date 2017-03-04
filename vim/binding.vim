@@ -3,7 +3,7 @@
 " Map leader key
 let mapleader=","
 
-map <nowait> <leader>w :w!<CR>
+map <leader>w :w!<CR>
 
 inoremap <C-x><C-k> <NOP>
 
@@ -115,7 +115,7 @@ noremap > >gv
 " for tab split navigation
 
 " move by virtual lines without count and by physical with count
-noremap <silent> <expr> j (v:count == -1 ? 'gj' : 'j')
+noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Visual linewise up and down by default (and use gj gk to go quicker)
@@ -151,19 +151,19 @@ nnoremap <leader>o O<Esc>
 noremap <leader>p :pu<CR>
 noremap <leader><S-p> :pu!<CR>
 
-function! NumberToggle()
-  if &rnu == 1
-    set nornu
-  else
-    set rnu
-  endif
-endfunc
+" function! NumberToggle()
+"   if &rnu == 1
+"     set nornu
+"   else
+"     set rnu
+"   endif
+" endfunc
 
 " nnoremap <C-n> :call NumberToggle()<cr>
 inoremap <C-e> <C-o>$
 
-nnoremap <Leader>rc :%s/\<<C-r><C-w>\>/
-vnoremap <Leader>rc y:%s/<C-r>"/
+nnoremap <Leader>r :%s/\<<C-r><C-w>\>/ge<left><left><left>
+vnoremap <Leader>r y:%s/<C-r>"/ge<left><left><left>
 
 nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
 vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
@@ -196,12 +196,12 @@ vnoremap <F5> :'<.'>Tabularize /<Bar><CR>
 " let g:UltiSnipsExpandTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-noremap <ESC> <C-c>
+" noremap <ESC> <C-c>
 noremap ,<ESC> <ESC>
 
 " Quick save and close buffer
 " map <leader>ц :w!<CR>
-nnoremap <silent> <leader>q :Sayonara!<CR>
+" nnoremap <silent> <leader>q :Sayonara!<CR>
 
 " Intelligent windows resizing using ctrl + arrow keys
 nnoremap <silent> <C-Up> :resize +1<CR>
@@ -219,3 +219,13 @@ noremap   <Up>     <NOP>
 noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
+
+inoremap <Right> <C-o>:cnext<CR>
+inoremap <Left> <C-o>:cprevious<CR>
+nnoremap <Right> :cnext<CR>
+nnoremap <Left> :cprevious<CR>
+
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
+noremap <C-k> <C-w>k
+noremap <C-j> <C-w>j

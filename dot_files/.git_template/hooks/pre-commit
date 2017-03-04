@@ -22,11 +22,13 @@ NC='\033[0m'
 # backend/bin/bundle exec rubocop -v || { echo >&2 "${red}[Ruby Style][Fatal]: Add rubocop to your Gemfile pwd is $(pwd) path is $PATH home is $HOME"; exit 1; }
 
 # Get only the staged files
-ALL_FILES=`git diff-index --name-status --cached HEAD     | # Find all staged files
-            egrep -i '^(A|M).+$'                          | # Only process certain files - A=added M=modified
-            sed -e 's/^[AM][[:space:]]*//'                | # Remove leading git info
-            sort                                          | # Remove duplicates
+ALL_FILES=`git diff-index --name-status --cached HEAD | # Find all staged files
+            egrep -i '^(A|M).+$'                      | # Only process certain files - A=added M=modified
+            sed -e 's/^[AM][[:space:]]*//'            | # Remove leading git info
+            sort                                      | # Remove duplicates
             uniq`
+
+RUBY_FILES="$(echo $ALL_FILES | grep \.rb$)"
 
 if [ "$ALL_FILES" != "" ]
 then
@@ -36,14 +38,14 @@ then
   then
     echo "${green}[Ruby Style][Info]: Checking Ruby Style${NC}"
 
-    echo "${green}[Ruby Style][Info]: ${FILES}${NC}"
+    echo "${green}[Ruby Style][Info]: ${RUBY_FILES}${NC}"
 
     if [ ! -f '.rubocop.yml' ]; then
       echo "${yellow}[Ruby Style][Warning]: No .rubocop.yml config file.${NC}"
     fi
 
     # Run rubocop on the staged files
-    backend/bin/bundle exec rubocop -a ${FILES}
+    backend/bin/bundle exec rubocop -a ${RUBY_FILES}
 
     if [ $? -ne 0 ]; then
       echo "${red}[Ruby Style][Error]: Fix the issues and commit again${NC}"
@@ -56,16 +58,16 @@ then
   # Projectwide fixes
   for FILE in $(echo $ALL_FILES | tr '\n' ' '); do
     # Replace multiple empty lines with one
-    sed -i '' '/^$/N;/^\n$/D' "$FILE"
+    sed -i -e '/^$/N;/^\n$/D' "$FILE"
 
     # Replace tabs with two spaces
-    sed -i '' $'s/\t/  /g' "$FILE"
+    sed -i -e $'s/\t/  /g' "$FILE"
 
     # Strip trailing whitespace
-    sed -i '' -E 's/[[:space:]]*$//' "$FILE"
+    sed -i -e -E 's/[[:space:]]*$//' "$FILE"
 
     # Add newline to the end of the file
-    sed -i '' $'/^$/!s/$/\/' "$FILE"
+    sed -i -e $'/^$/!s/$/\/' "$FILE"
 
     # Stage all changes
     git add "$FILE"

@@ -8,10 +8,10 @@ set t_Co=256
 
 " set term=xterm-256color
 " set shortmess=a
+
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 source ~/.vim/binding.vim
-source ~/config/vim/os_specific_binding.vim
 
 for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                    " open all config fiels in vim/cfg
   execute('source '.cfgfile)
@@ -19,13 +19,10 @@ endfor
 
 set runtimepath+=~/config/vim
 
-" KOSTIL' to disable file changed warning spam - not working =(
-" autocmd FileChangedShell * echo "lawdowd"
-" autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
-au FileChangedShell * echo "Warning: File changed on disk"
-
 " Install Plugins
 call plug#begin('~/.vim/plugged')
+
+  Plug 'djoshea/vim-autoread'
 
   Plug 'lyokha/vim-xkbswitch'
     " let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
@@ -34,13 +31,13 @@ call plug#begin('~/.vim/plugged')
 
     " if has('macunix') " Might have another shell command on another oS
     " augroup xkbsw
-    "   autocmd!
-    "   " Change language to EN on insert leave
-    "   autocmd InsertLeave,BufEnter * silent exec "!(xkbswitch -sn 0 &) > /dev/null"
+      " autocmd!
+  "   " Change language to EN on insert leave
+      " autocmd InsertLeave,BufEnter * silent exec "!(xkbswitch -sn 0 &) > /dev/null"
     " augroup END
 
-    imap ,. <C-o>:silent !xkbswitch -sn 2<cr>
-    imap бю <C-o>:silent !xkbswitch -sn 0<cr>
+    " imap ,. <C-o>:silent !xkbswitch -sn 2<cr>
+    " imap бю <C-o>:silent !xkbswitch -sn 0<cr>
     " let g:XkbSwitchIMappings = ['ru']
     " let g:XkbSwitchNLayout = 'us'
 
@@ -50,32 +47,32 @@ call plug#begin('~/.vim/plugged')
 
   """""""  peekaboo """""""
 
-  Plug 'junegunn/vim-peekaboo'
-    let g:peekaboo_window = 'vertical botright 70new'
+  " Plug 'junegunn/vim-peekaboo'
+  "   let g:peekaboo_window = 'vertical botright 70new'
 
   """"""" peekaboo """""""
 
   """"""" easyclip """""""
 
-    Plug 'tpope/vim-repeat' " dependency
-    Plug 'svermeulen/vim-easyclip'
-
-    let g:EasyClipAutoFormat = 1
-    let g:EasyClipCopyExplicitRegisterToDefault = 1
-    let g:EasyClipAlwaysMoveCursorToEndOfPaste = 1
-    " let g:EasyClipPreserveCursorPositionAfterYank = 1
-    let g:EasyClipShareYanks = 1
-    let g:EasyClipEnableBlackHoleRedirect = 0
-    " let g:EasyClipUseYankDefaults = 0
-
-    let g:EasyClipUseCutDefaults = 0
-    nmap d <Plug>MoveMotionPlug
-    xmap d <Plug>MoveMotionXPlug
-    nmap dd <Plug>MoveMotionLinePlug
-
-    let g:EasyClipUsePasteToggleDefaults = 0
-    nmap <c-g> <plug>EasyClipSwapPasteForward
-    nmap <c-f> <plug>EasyClipSwapPasteBackwards
+    " Plug 'tpope/vim-repeat' " dependency
+    " Plug 'svermeulen/vim-easyclip'
+    "
+    " let g:EasyClipAutoFormat = 1
+    " let g:EasyClipCopyExplicitRegisterToDefault = 1
+    " let g:EasyClipAlwaysMoveCursorToEndOfPaste = 1
+    " " let g:EasyClipPreserveCursorPositionAfterYank = 1
+    " let g:EasyClipShareYanks = 1
+    " let g:EasyClipEnableBlackHoleRedirect = 0
+    " " let g:EasyClipUseYankDefaults = 0
+    "
+    " let g:EasyClipUseCutDefaults = 0
+    " nmap d <Plug>MoveMotionPlug
+    " xmap d <Plug>MoveMotionXPlug
+    " nmap dd <Plug>MoveMotionLinePlug
+    "
+    " let g:EasyClipUsePasteToggleDefaults = 0
+    " nmap <c-g> <plug>EasyClipSwapPasteForward
+    " nmap <c-f> <plug>EasyClipSwapPasteBackwards
 
   """"""" easyclip """""""
 
@@ -140,20 +137,20 @@ call plug#begin('~/.vim/plugged')
 
   let g:neomake_typescript_enabled_makers = ['tsuquyomi']
 
-  autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback'))
-
   function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
-    if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
-      edit
-    endif
+    " if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
+    checktime
+    " endif
   endfunction
+
+  autocmd BufWritePost * silent! call neomake#Make(1, [], 1, function('s:Neomake_callback'))
 
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
 
     " TMUXLINE
     let g:tmuxline_preset = {
-          \'a' : '#{battery_icon} #{battery_percentage} #{battery_remain}',
+          \'a disabled' : '#{battery_icon} #{battery_percentage} #{battery_remain}',
           \'b disabled' : '',
           \'c disabled' : '',
           \'win'        : [' #I:#W#F '],
@@ -164,10 +161,10 @@ call plug#begin('~/.vim/plugged')
           \'options'    : {'status-justify': 'left'}}
 
    Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
-   Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
+   " Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
 
-  Plug 'godlygeek/tabular'                                                      " Align stuff nicely
-  Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
+  Plug 'godlygeek/tabular', { 'for': ['cucumber'], 'on': ['Tabularize'] } " Align stuff nicely
+  " Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
 
@@ -186,8 +183,8 @@ call plug#begin('~/.vim/plugged')
     let g:UltiSnipsJumpForwardTrigger='<C-j>'
     let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-  Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-  Plug 'mhinz/vim-sayonara'
+  " Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+  " Plug 'mhinz/vim-sayonara'
 
   Plug 'easymotion/vim-easymotion'
 
@@ -206,8 +203,8 @@ call plug#begin('~/.vim/plugged')
 
   """"""""""        GIT        """""""""""""
 
-    Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
-    Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+    Plug 'tpope/vim-fugitive', { 'on': ['Gdiff', 'Gadd'] }                  " Git wrapper. Adds bindings for using Git inside vim.
+    " Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
 
   """"""""""        GIT        """""""""""""
 
@@ -221,30 +218,23 @@ call plug#begin('~/.vim/plugged')
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 
-    Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript'] }
-    Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript'] }
+    " Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
+    Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
 
     " TYPESCRIPT
-      Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
-      Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
+
+    " Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
+    "   Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
 
     " RUBY
       augroup rb
         autocmd!
         set suffixesadd+=.rb,.rake
       augroup END
-      Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
+      " Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
       " Plug 'thoughtbot/vim-rspec'
-      Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
       Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
       Plug 'tpope/vim-endwise' , { 'for': ['ruby'] }         " Autoend ruby blocks
-
-      augroup cucumber
-        autocmd!
-        au BufEnter *.feature let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb'
-      augroup END
-      Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
-
       Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
     " COFFEE_SCRIPT
       augroup coffee
@@ -253,27 +243,32 @@ call plug#begin('~/.vim/plugged')
         set suffixesadd+=.coffee
       augroup END
 
-      Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
+      " Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
       Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
       " Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
 
     " CUCUMBER
       Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
 
+      augroup cucumber
+        autocmd!
+        au BufEnter *.feature let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb'
+      augroup END
+
     " CSS/HTML
-      Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
-      Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
-
-      Plug 'mattn/emmet-vim', { 'for': ['css', 'scss'] }             " css\sass complete
-        let g:user_emmet_install_global = 0
-
-        augroup emmet
-          autocmd!
-          autocmd FileType sass, css EmmetInstall
-          autocmd Filetype sass, css imap <expr> <buffer> <tab> emmet#expandAbbrIntelligent("\<tab>")
-          set suffixesadd+=.css,.sass,.csss
-        augroup END
-
+      " Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
+      " Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
+      "
+      " Plug 'mattn/emmet-vim', { 'for': ['css', 'scss'] }             " css\sass complete
+      "   let g:user_emmet_install_global = 0
+      "
+      "   augroup emmet
+      "     autocmd!
+      "     autocmd FileType sass, css EmmetInstall
+      "     autocmd Filetype sass, css imap <expr> <buffer> <tab> emmet#expandAbbrIntelligent("\<tab>")
+      "     set suffixesadd+=.css,.sass,.csss
+      "   augroup END
+      "
     " JADE
       augroup jade
         autocmd!
@@ -356,8 +351,8 @@ endif
 
 " Color scheme based on time {{{
 set background=dark
-let g:hybrid_custom_term_colors = 1
-colorscheme hybrid
+" let g:hybrid_custom_term_colors = 1
+colorscheme iceberg
 "}}}
 
 set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
@@ -439,7 +434,7 @@ set lazyredraw                                                                  
 
 set clipboard=unnamed,unnamedplus " Copy\paste from clipboard always. Test and think about if it needed.
 
-set timeoutlen=500 ttimeoutlen=0
+set timeoutlen=300 ttimeoutlen=0
 " autocmd Syntax slim,html,erb setlocal foldmethod=indent
 " autocmd Syntax slim,html,erb normal zR
 
@@ -581,3 +576,4 @@ let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ABCEGHILMNOPQRSTUVWXYZFD;JK'
 
 let confirm=0
+set nofoldenable
