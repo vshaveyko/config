@@ -1,4 +1,4 @@
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+autocmd FileType cucumber inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'

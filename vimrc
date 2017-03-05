@@ -9,8 +9,6 @@ set t_Co=256
 " set term=xterm-256color
 " set shortmess=a
 
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
 source ~/.vim/binding.vim
 
 for cfgfile in split(globpath("~/.vim/cfg", "*.vim" ), '\n')                    " open all config fiels in vim/cfg
@@ -22,7 +20,7 @@ set runtimepath+=~/config/vim
 " Install Plugins
 call plug#begin('~/.vim/plugged')
 
-  Plug 'djoshea/vim-autoread'
+  " Plug 'djoshea/vim-autoread'
 
   Plug 'lyokha/vim-xkbswitch'
     " let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
@@ -105,10 +103,22 @@ call plug#begin('~/.vim/plugged')
   " Plug 'chrisbra/NrrwRgn'                                                     " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
 
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
+    " Surround.vim settings {{{
+    " -----------------------------------------------------
+    let g:surround_124 = "|\r|"
+    let g:surround_58 = ":\r "
+
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }        " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
 
   Plug 'Valloric/YouCompleteMe'
+
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_seed_identifiers_with_syntax = 1
+    let g:ycm_complete_in_comments = 1
+    let g:ycm_key_list_select_completion = ['<C-n>']
+    let g:ycm_key_list_previous_completion = ['<C-p>']
+    let g:ycm_min_num_identifier_candidate_chars = 5
 
   " Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
 
@@ -127,23 +137,26 @@ call plug#begin('~/.vim/plugged')
   Plug 'neomake/neomake'                                                        " Async task maker
   " Neomake on write
   " TODO: think about not counting corrected warnings to global warning count
-  let g:neomake_ruby_rubocopauto_maker = {
-        \ 'exe'        : 'rubocop',
-        \ 'args'        : ['--format', 'emacs', '-a'],
-        \ 'errorformat' : '%f:%l:%c: %t: %m',
-        \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
-        \ }
-  let g:neomake_ruby_enabled_makers = ['rubocopauto']
+    let g:neomake_ruby_rubocopauto_maker = {
+          \ 'exe'        : 'rubocop',
+          \ 'args'        : ['--format', 'emacs', '-a'],
+          \ 'errorformat' : '%f:%l:%c: %t: %m',
+          \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
+          \ }
+    let g:neomake_ruby_enabled_makers = ['rubocopauto']
 
-  let g:neomake_typescript_enabled_makers = ['tsuquyomi']
+    let g:neomake_typescript_enabled_makers = ['tsuquyomi']
 
-  function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
-    " if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
-    checktime
-    " endif
-  endfunction
+    function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
+      if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
+        edit
+      endif
+    endfunction
 
-  autocmd BufWritePost * silent! call neomake#Make(1, [], 1, function('s:Neomake_callback'))
+    augroup neomake
+      autocmd!
+      autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback'))
+    augroup END
 
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
@@ -160,7 +173,7 @@ call plug#begin('~/.vim/plugged')
           \'z'          : ['#(~/config/bin/battery.sh)'],
           \'options'    : {'status-justify': 'left'}}
 
-   Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
+  Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
    " Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
 
   Plug 'godlygeek/tabular', { 'for': ['cucumber'], 'on': ['Tabularize'] } " Align stuff nicely
@@ -188,6 +201,44 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'easymotion/vim-easymotion'
 
+    " Easymotion binding config
+      let g:EasyMotion_do_mapping = 0 " Disable default mappings
+      map <Space> <Plug>(easymotion-prefix)
+      let g:EasyMotion_smartcase = 1
+      nmap <Space>t <Plug>(easymotion-bd-t)
+      nmap <Space>f <Plug>(easymotion-overwin-f)
+
+      nmap <Space>T <Plug>(easymotion-bd-tl)
+      nmap <Space>F <Plug>(easymotion-bd-f)
+
+      nmap <Space>w <Plug>(easymotion-overwin-w)
+      nmap <Space>W <Plug>(easymotion-bd-w)
+      nmap <Space>E <Plug>(easymotion-bd-e)
+
+      nmap <Space>s <Plug>(easymotion-s)
+      nmap <Space>S <Plug>(easymotion-s2)
+      " Gif config
+      map <Space>l <Plug>(easymotion-overwin-line)
+      map <Space>j <Plug>(easymotion-jk)
+      map <Space>k <Plug>(easymotion-jk)
+      map <Space>h <Plug>(easymotion-linebackward)
+      map <Space><Space> <Plug>(easymotion-jumptoanywhere)
+
+    " search with easymotion
+      map / <Plug>(easymotion-sn)
+      omap / <Plug>(easymotion-tn)
+
+    " These mappings just provide different highlight method and have some other features
+      map n <Plug>(easymotion-next)
+      map N <Plug>(easymotion-prev)
+
+      let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+      let g:EasyMotion_smartcase = 1
+      let g:EasyMotion_use_smartsign_us = 1 " Smartsign (type `3` and match `3`&`#`)
+
+      let g:EasyMotion_use_upper = 1
+      let g:EasyMotion_keys = 'ABCEGHILMNOPQRSTUVWXYZFD;JK'
+
   Plug 'vim-scripts/BufOnly.vim' " :BufOnly will close all buffers except current one
 
 
@@ -198,6 +249,33 @@ call plug#begin('~/.vim/plugged')
     " Plug 'vim-ctrlspace/vim-ctrlspace'
     " Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
     " Ag wrapper (Unite grep alternative) search and edit
+      " Ctrl-SF settings {{{
+      " -----------------------------------------------------
+      let g:ctrlsf_default_root='project'
+      let g:ctrlsf_populate_qflist=0
+      let g:ctrlsf_position='bottom'
+      " let g:ctrlsf_winsize = '100%'
+      " let g:ctrlsf_auto_close=0
+      let g:ctrlsf_regex_pattern=0
+
+      let g:ctrlsf_extra_backend_args = {
+          \ 'ag': ' -i
+                  \ --ignore .git
+                  \ --ignore tags
+                  \ --ignore .svn
+                  \ --ignore .hg
+                  \ --ignore node_modules
+                  \ --ignore bower_components
+                  \ --ignore www
+                  \ --ignore images
+                  \ --ignore fonts
+                  \ --ignore gulp_tasks
+                  \ --ignore log
+                  \ --ignore tmp
+                  \ --ignore bin
+                  \ --ignore .DS_Store
+                  \ --ignore "**/*.pyc"'
+          \ }
 
   """"""""""       SEARCH      """""""""""""
 
@@ -211,7 +289,14 @@ call plug#begin('~/.vim/plugged')
   """"""""""     FILE TREE     """""""""""""
 
     Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin' " File Tree
+      " Force Vim to not lag with nerd tree
+      let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions
+
     Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
+      " Remove 2 space margin after icons from devicons in nerdtree
+      let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+      set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11 " Font with cool icons for devicons
+
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
 
   """"""""""     FILE TREE     """""""""""""
@@ -219,7 +304,8 @@ call plug#begin('~/.vim/plugged')
   """""""""" LANGUAGE SPECIFIC """"""""""
 
     " Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
-    Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
+    " JSON
+      Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
 
     " TYPESCRIPT
 
@@ -236,18 +322,59 @@ call plug#begin('~/.vim/plugged')
       Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
       Plug 'tpope/vim-endwise' , { 'for': ['ruby'] }         " Autoend ruby blocks
       Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
+
     " COFFEE_SCRIPT
-      augroup coffee
-        autocmd!
-        autocmd Filetype coffee noremap <buffer> <C-]> "*yiw:call MoveToLibByName(@*)<cr>
-        set suffixesadd+=.coffee
-      augroup END
+
+        " Hack for nice movement through angular components
+        " i.e. use C-] on component call => go to definition
+        "
+        " use C-] on angular service|comp|fact|etc call => go to definition
+
+          function! MoveToControllerByShortHandName(shortName)
+            " transform shorthand ctrl name "compNameCtrl" to real "compNameController"
+            let s:b = substitute(a:shortName, '^\(.*\)Ctrl$', '\1Controller', '')
+
+            " try redirecting to Controller
+            exe ':tag coffee'.s:b
+          endfunc
+
+          function! MoveToComponentByTemplateName(templateName)
+            " transform component name "comp-name" to  real name "compName"
+            let s:a = substitute(a:templateName, '-\(\l\)', '\u\1', 'g')
+
+            " catch and try redirecting to component if shorthand name was broken
+            exe ':tag coffee'.s:a
+          endfunc
+
+          function! MoveToTagByHtmlName(tagName)
+            try
+              call MoveToControllerByShortHandName(a:tagName)
+            catch " Tag no found
+              call MoveToComponentByTemplateName(a:tagName)
+            endtry
+          endfunc
+
+          function! MoveToLibByName(libName)
+            try
+              call MoveToControllerByShortHandName(a:libName)
+            catch " Tag no found
+                " else redirect the way it were
+              exe ':tag coffee'.a:libName
+            endtry
+          endfunc
+
+        augroup coffee
+          autocmd!
+          autocmd Filetype coffee noremap <buffer> <C-]> "*yiw:call MoveToLibByName(@*)<cr>
+          set suffixesadd+=.coffee
+        augroup END
 
       " Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
-      Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
+        Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
       " Plug 'mustache/vim-mustache-handlebars', { 'for': ['coffee'] } " angular blocks({{  }}) text object
 
     " CUCUMBER
+
       Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
 
       augroup cucumber
@@ -255,7 +382,25 @@ call plug#begin('~/.vim/plugged')
         au BufEnter *.feature let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb'
       augroup END
 
+    " RABL
+      augroup rabl
+        au!
+        au BufRead,BufNewFile *.rabl syn keyword rubyRabl node attribute object child collection attributes glue extends
+        au BufRead,BufNewFile *.rabl hi def link rubyRabl Function
+
+        " Rabl
+        au BufRead,BufNewFile *.rabl setf ruby
+        set suffixesadd+=.rabl
+      augroup END
+
     " CSS/HTML
+
+      " Sass properties correct highlight(highlight properties with -, hightlight
+      " moz\webkit ...)
+        set iskeyword+=-
+        highlight VendorPrefix guifg=#00ffff gui=bold
+        match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
+        au BufRead,BufNewFile *.sass set filetype=scss.css
       " Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
       " Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
       "
@@ -283,7 +428,12 @@ call plug#begin('~/.vim/plugged')
 
     " GO
       Plug 'fatih/vim-go', { 'for': ['go'] }
+        let g:go_fmt_command = "goimports" " Manage also imports on save: Add missing, remove redundant
+        " let $PATH = "/gorename/path:".$PATH
+        let $GOPATH = "/Users/vadim/dev/golang/"
+
       Plug 'rjohnsondev/vim-compiler-go', { 'for': ['go'] }
+        let g:golang_goroot = "/usr/local/Cellar/go/1.7.4_1/libexec"
 
       augroup golang
         autocmd!
@@ -302,57 +452,30 @@ call plug#begin('~/.vim/plugged')
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
-function! MoveToControllerByShortHandName(shortName)
-  " transform shorthand ctrl name "compNameCtrl" to real "compNameController"
-  let s:b = substitute(a:shortName, '^\(.*\)Ctrl$', '\1Controller', '')
-
-  " try redirecting to Controller
-  exe ':tag coffee'.s:b
-endfunc
-
-function! MoveToComponentByTemplateName(templateName)
-  " transform component name "comp-name" to  real name "compName"
-  let s:a = substitute(a:templateName, '-\(\l\)', '\u\1', 'g')
-
-  " catch and try redirecting to component if shorthand name was broken
-  exe ':tag coffee'.s:a
-endfunc
-
-function! MoveToTagByHtmlName(tagName)
-  try
-    call MoveToControllerByShortHandName(a:tagName)
-  catch " Tag no found
-    call MoveToComponentByTemplateName(a:tagName)
-  endtry
-endfunc
-
-function! MoveToLibByName(libName)
-  try
-    call MoveToControllerByShortHandName(a:libName)
-  catch " Tag no found
-      " else redirect the way it were
-    exe ':tag coffee'.a:libName
-  endtry
-endfunc
-
-augroup rabl
-  au!
-  au BufRead,BufNewFile *.rabl syn keyword rubyRabl node attribute object child collection attributes glue extends
-  au BufRead,BufNewFile *.rabl hi def link rubyRabl Function
-
-  " Rabl
-  au BufRead,BufNewFile *.rabl setf ruby
-  set suffixesadd+=.rabl
-augroup END
-
 if !has('macunix')
   let g:python3_host_prog = '/usr/bin/python3'
 endif
 
-" Color scheme based on time {{{
-set background=dark
+" Color scheme {{{
 " let g:hybrid_custom_term_colors = 1
-colorscheme iceberg
+  set background=dark
+  colorscheme iceberg
+
+  " hi CursorLineNR ctermfg=118
+  " hi LineNr ctermfg=12
+  " Quick fix entries colors | Search colors
+  hi QuickFixLine ctermbg=Black ctermfg=Blue
+  hi Search ctermfg=Black ctermbg=White
+
+  " lhi link CtrlSpaceNormal   PMenu
+  hi link CtrlSpaceSelected Title
+  hi link CtrlSpaceSearch   String
+  hi link CtrlSpaceStatus   PreProc
+
+  hi link CtrlPMode1 Title
+  hi link CtrlPMode2 String
+  hi link CtrlPStats PreProc
+  hi link CtrlPPrtBase PreProc
 "}}}
 
 set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
@@ -360,7 +483,6 @@ set mouse=hr                                                                    
 syntax on                                                                       " Enable syntax highlighting
 filetype indent plugin on                                                       " Enable filetype-specific indenting
 
-set ar
 set linebreak
 " set ch=2
 
@@ -370,16 +492,9 @@ set ignorecase
 set incsearch
 set smartcase
 
-" Quick fix entries colors | Search colors
-hi QuickFixLine ctermbg=Black ctermfg=Blue
-hi Search ctermfg=Black ctermbg=White
-
 " Line numbers
 set relativenumber
 set number
-
-hi CursorLineNR ctermfg=118
-hi LineNr ctermfg=12
 
 set tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -392,9 +507,6 @@ set noswapfile
 " set autoread " auto read file
 
 " Encoding
-" set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
-
 if !has('nvim')
   set encoding=utf8
   set fileencoding=utf8
@@ -410,12 +522,21 @@ set autoindent                                                                  
 set shiftwidth=2
 set tabstop=2
 
-autocmd FileType pug,ruby,coffee setlocal shiftwidth=2 softtabstop=2 expandtab
+function! ProcessFileChangedShell()
+  let v:fcs_choice = '' " Do nothing on FileChangedShell
+endfunction
 
-" set formatoptions-=o                                                            " dont continue comments when pushing o/O
+augroup miscenary
+  autocmd!
+  autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
 
-autocmd BufWritePre * :%s/\s\+$//e                                              " Delete spaces from end on lines
-autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$##                             " Delete trailing lines at the end of file
+  autocmd FileType pug,ruby,coffee setlocal shiftwidth=2 softtabstop=2 expandtab
+
+  " set formatoptions-=o                                                            " dont continue comments when pushing o/O
+
+  autocmd BufWritePre * :%s/\s\+$//e                                              " Delete spaces from end on lines
+  autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$##                             " Delete trailing lines at the end of file
+augroup END
 
 " autocmd FocusLost * silent! wh                                                " Auto save files when focus is lost
 " autocmd BufLeave * silent! :w                                                 " or leave buffer
@@ -452,15 +573,8 @@ if has('persistent_undo')
   set undofile
 endif
 
-set so=3                                                                        " display 3 tabs below\above cursor
+set so=3                                                                        " display 3 lines below\above cursor
 set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
-
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_complete_in_comments = 1
-let g:ycm_key_list_select_completion = ['<C-n>']
-let g:ycm_key_list_previous_completion = ['<C-p>']
-let g:ycm_min_num_identifier_candidate_chars = 5
 
 " ---------------------------------------------------------------------------------------------------------------------
 " White characters settings {{{
@@ -469,111 +583,11 @@ set list                                    " Show listchars by default
 set listchars=tab:▸▸ "  ,nbsp:·,space:·
 "}}}
 
-" Ctrl-SF settings {{{
-" -----------------------------------------------------
-let g:ctrlsf_default_root='project'
-let g:ctrlsf_populate_qflist=0
-let g:ctrlsf_position='bottom'
-" let g:ctrlsf_winsize = '100%'
-" let g:ctrlsf_auto_close=0
-let g:ctrlsf_regex_pattern=0
-
-let g:ctrlsf_extra_backend_args = {
-    \ 'ag': ' -i
-            \ --ignore .git
-            \ --ignore tags
-            \ --ignore .svn
-            \ --ignore .hg
-            \ --ignore node_modules
-            \ --ignore bower_components
-            \ --ignore www
-            \ --ignore images
-            \ --ignore fonts
-            \ --ignore gulp_tasks
-            \ --ignore log
-            \ --ignore tmp
-            \ --ignore bin
-            \ --ignore .DS_Store
-            \ --ignore "**/*.pyc"'
-    \ }
-
 " autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
-" Surround.vim settings {{{
-" -----------------------------------------------------
-let g:surround_124 = "|\r|"
-let g:surround_58 = ":\r "
-
-" Remove 2 space margin after icons from devicons in nerdtree
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
-
-" Force Vim to not lag with nerd tree
-let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions
-
-" Sass properties correct highlight(highlight properties with -, hightlight
-" moz\webkit ...)
-set iskeyword+=-
-highlight VendorPrefix guifg=#00ffff gui=bold
-match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
-au BufRead,BufNewFile *.sass set filetype=scss.css
-
 " Ctrlspace config
-" lhi link CtrlSpaceNormal   PMenu
-hi link CtrlSpaceSelected Title
-hi link CtrlSpaceSearch   String
-hi link CtrlSpaceStatus   PreProc
 
-hi link CtrlPMode1 Title
-hi link CtrlPMode2 String
-hi link CtrlPStats PreProc
-hi link CtrlPPrtBase PreProc
-
-let g:CtrlSpaceSearchTiming = 500
-
-" Vim command line as bash command line shortcuts
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-h> <Left>
-cnoremap <C-l> <Right>
-cnoremap <C-d> <Delete>
-
-"Easymotion binding config
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-map <Space> <Plug>(easymotion-prefix)
-let g:EasyMotion_smartcase = 1
-nmap <Space>t <Plug>(easymotion-bd-t)
-nmap <Space>f <Plug>(easymotion-overwin-f)
-
-nmap <Space>T <Plug>(easymotion-bd-tl)
-nmap <Space>F <Plug>(easymotion-bd-f)
-
-nmap <Space>w <Plug>(easymotion-overwin-w)
-nmap <Space>W <Plug>(easymotion-bd-w)
-nmap <Space>E <Plug>(easymotion-bd-e)
-
-nmap <Space>s <Plug>(easymotion-s)
-nmap <Space>S <Plug>(easymotion-s2)
-" Gif config
-map <Space>l <Plug>(easymotion-overwin-line)
-map <Space>j <Plug>(easymotion-jk)
-map <Space>k <Plug>(easymotion-jk)
-map <Space>h <Plug>(easymotion-linebackward)
-map <Space><Space> <Plug>(easymotion-jumptoanywhere)
-
-"search with easymotion
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-
-"These mappings just provide different highlight method and have some other features
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
-
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_smartsign_us = 1 " Smartsign (type `3` and match `3`&`#`)
-
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ABCEGHILMNOPQRSTUVWXYZFD;JK'
+" let g:CtrlSpaceSearchTiming = 500
 
 let confirm=0
 set nofoldenable

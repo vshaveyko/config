@@ -229,3 +229,10 @@ noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 noremap <C-k> <C-w>k
 noremap <C-j> <C-w>j
+
+" Vim command line as bash command line shortcuts
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+cnoremap <C-d> <Delete>

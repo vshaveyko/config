@@ -88,7 +88,11 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # TODO: export config path and reuse in in script
 export TERM=screen-256color
 export EDITOR=nvim
-export GOPATH=$HOME/dev
+
+export GOPATH=$HOME/dev/golang
+export GOBIN=$HOME/dev/golang/bin
+export PATH=$PATH:$HOME/dev/golang/bin
+
 export GIT_ACC=vshaveyko
 
 init_health24() {
