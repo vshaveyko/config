@@ -540,8 +540,18 @@ augroup miscenary
 
   " set formatoptions-=o                                                            " dont continue comments when pushing o/O
 
-  autocmd BufWritePre * :%s/\s\+$//e                                              " Delete spaces from end on lines
-  autocmd BufWritePre * silent! :%s#\($\n\s*\)\+\%$##                             " Delete trailing lines at the end of file
+  fun! KeepAll(normal_mode_command)
+    let l:save = winsaveview()
+
+    keepjumps keeppatterns execute a:normal_mode_command
+
+    call winrestview(l:save)
+  endfun
+
+  autocmd FileType md let b:noStripWhitespace=1
+  autocmd BufWritePre * if !exists('b:noStripWhitespace') | :call KeepAll(':%s/\s\+$//e')                                    " Delete spaces from end on lines
+  autocmd BufWritePre * if !exists('b:noStripWhitespace') | silent! :call KeepAll(':%s#\($\n\s*\)\+\%$##')                             " Delete trailing lines at the end of file
+
 augroup END
 
 " autocmd FocusLost * silent! wh                                                " Auto save files when focus is lost
