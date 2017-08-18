@@ -1,5 +1,5 @@
 set nocompatible
-set hidden
+set nohidden
 set t_Co=256
 
 " if has('termguicolors')
@@ -7,7 +7,7 @@ set t_Co=256
 " endif
 
 " set term=xterm-256color
-" set shortmess=a
+set shortmess=at
 
 source ~/.vim/binding.vim
 
@@ -91,8 +91,8 @@ call plug#begin('~/.vim/plugged')
     " else if no input => usual tab;
     " else => nothing
     " make YCM compatible with UltiSnips (using supertab)
-    let g:ycm_key_list_select_completion = ['<c-n>', '<down>']
-    let g:ycm_key_list_previous_completion = ['<c-p>', '<up>']
+    " let g:ycm_key_list_select_completion = ['<c-n>', '<down>']
+    " let g:ycm_key_list_previous_completion = ['<c-p>', '<up>']
     " let g:supertabdefaultcompletiontype = '<c-n>'
 
     " better key bindings for UltiSnipsExpandTrigger
@@ -111,7 +111,9 @@ call plug#begin('~/.vim/plugged')
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }        " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
 
-  Plug 'Valloric/YouCompleteMe'
+  Plug 'Valloric/YouCompleteMe', { 'frozen': 1 } " Frozen: fixed typescript completion in import statements, force_semantic was needed
+
+    let g:ycm_add_preview_to_completeopt = 1
 
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_seed_identifiers_with_syntax = 1
@@ -120,7 +122,7 @@ call plug#begin('~/.vim/plugged')
     let g:ycm_key_list_previous_completion = ['<C-p>']
     let g:ycm_min_num_identifier_candidate_chars = 5
 
-  " Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings
+  " Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings - xkbswitch makes it useless
 
   " Custom text objects creation (dependency for the latter)
   " Plug 'kana/vim-textobj-user'
@@ -137,26 +139,26 @@ call plug#begin('~/.vim/plugged')
   Plug 'neomake/neomake'                                                        " Async task maker
   " Neomake on write
   " TODO: think about not counting corrected warnings to global warning count
-    let g:neomake_ruby_rubocopauto_maker = {
-          \ 'exe'        : 'rubocop',
-          \ 'args'        : ['--format', 'emacs', '-a'],
-          \ 'errorformat' : '%f:%l:%c: %t: %m',
-          \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
-          \ }
-    let g:neomake_ruby_enabled_makers = ['rubocopauto']
+    " let g:neomake_ruby_rubocopauto_maker = {
+    "       \ 'exe'        : 'rubocop',
+    "       \ 'args'        : ['--format', 'emacs', '-a'],
+    "       \ 'errorformat' : '%f:%l:%c: %t: %m',
+    "       \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
+    "       \ }
+    " let g:neomake_ruby_enabled_makers = ['rubocopauto']
 
-    let g:neomake_typescript_enabled_makers = ['tsuquyomi']
+    " let g:neomake_typescript_enabled_makers = ['tsuquyomi']
 
-    function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
-      if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
-        edit
-      endif
-    endfunction
-
-    augroup neomake
-      autocmd!
-      autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback'))
-    augroup END
+    " function! s:Neomake_callback(options)                                           " Callback for reloading file in buffer when finished autofix
+    "   if (a:options.name ==? 'rubocopauto') && (a:options.status == 0)
+    "     edit
+    "   endif
+    " endfunction
+    "
+    " augroup neomake
+    "   autocmd!
+    "   autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback'))
+    " augroup END
 
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
   Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
@@ -196,33 +198,32 @@ call plug#begin('~/.vim/plugged')
     let g:UltiSnipsJumpForwardTrigger='<C-j>'
     let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-  " Plug 'Shougo/vimproc.vim', { 'do': 'make' }
   " Plug 'mhinz/vim-sayonara'
 
   Plug 'easymotion/vim-easymotion'
 
     " Easymotion binding config
       let g:EasyMotion_do_mapping = 0 " Disable default mappings
-      map <Space> <Plug>(easymotion-prefix)
-      let g:EasyMotion_smartcase = 1
-      nmap <Space>t <Plug>(easymotion-bd-t)
-      nmap <Space>f <Plug>(easymotion-overwin-f)
-
-      nmap <Space>T <Plug>(easymotion-bd-tl)
-      nmap <Space>F <Plug>(easymotion-bd-f)
-
-      nmap <Space>w <Plug>(easymotion-overwin-w)
-      nmap <Space>W <Plug>(easymotion-bd-w)
-      nmap <Space>E <Plug>(easymotion-bd-e)
-
-      nmap <Space>s <Plug>(easymotion-s)
-      nmap <Space>S <Plug>(easymotion-s2)
-      " Gif config
-      map <Space>l <Plug>(easymotion-overwin-line)
-      map <Space>j <Plug>(easymotion-jk)
-      map <Space>k <Plug>(easymotion-jk)
-      map <Space>h <Plug>(easymotion-linebackward)
-      map <Space><Space> <Plug>(easymotion-jumptoanywhere)
+      " map <Space> <Plug>(easymotion-prefix)
+      " let g:EasyMotion_smartcase = 1
+      " nmap <Space>t <Plug>(easymotion-bd-t)
+      " nmap <Space>f <Plug>(easymotion-overwin-f)
+      "
+      " nmap <Space>T <Plug>(easymotion-bd-tl)
+      " nmap <Space>F <Plug>(easymotion-bd-f)
+      "
+      " nmap <Space>w <Plug>(easymotion-overwin-w)
+      " nmap <Space>W <Plug>(easymotion-bd-w)
+      " nmap <Space>E <Plug>(easymotion-bd-e)
+      "
+      " nmap <Space>s <Plug>(easymotion-s)
+      " nmap <Space>S <Plug>(easymotion-s2)
+      " " Gif config
+      " map <Space>l <Plug>(easymotion-overwin-line)
+      " map <Space>j <Plug>(easymotion-jk)
+      " map <Space>k <Plug>(easymotion-jk)
+      " map <Space>h <Plug>(easymotion-linebackward)
+      " map <Space><Space> <Plug>(easymotion-jumptoanywhere)
 
     " search with easymotion
       map / <Plug>(easymotion-sn)
@@ -281,7 +282,8 @@ call plug#begin('~/.vim/plugged')
 
   """"""""""        GIT        """""""""""""
 
-    Plug 'tpope/vim-fugitive', { 'on': ['Gdiff', 'Gadd'] }                  " Git wrapper. Adds bindings for using Git inside vim.
+    " Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
+    " Plug 'tpope/vim-rhubarb'                   " Open files in github + omni complition for github stuff
     " Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
 
   """"""""""        GIT        """""""""""""
@@ -293,8 +295,7 @@ call plug#begin('~/.vim/plugged')
       let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions
 
     Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
-      " Remove 2 space margin after icons from devicons in nerdtree
-      let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+      let g:WebDevIconsNerdTreeAfterGlyphPadding = '' " Remove 2 space margin after icons from devicons in nerdtree
       set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11 " Font with cool icons for devicons
 
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Cool icons for devicons
@@ -309,8 +310,27 @@ call plug#begin('~/.vim/plugged')
 
     " TYPESCRIPT
 
-    " Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] } " Typesciprt omni completion \ compiler
-    "   Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
+    Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': ['typescript'] } " Dependency of tsuquyomi
+
+    Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1 } " forked for typescript_types
+                                                            " Frozen: added argument type display on typescript complete
+      let g:complete_parameter_use_ultisnips_mapping = 0
+      let g:allow_typescript_types = 1
+      inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+
+    Plug 'Quramy/tsuquyomi', { 'for': ['typescript'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
+                                                                    " Frozen: fixed TsuImport - errors on first run (exists [0].spans), duplicate file path on import
+      augroup typescript
+        autocmd!
+        autocmd Filetype typescript nmap <buffer> + :TsuImport<CR>
+        set suffixesadd+=.ts
+      augroup END
+
+      let g:tsuquyomi_single_quote_import = 1
+      let g:tsuquyomi_shortest_import_path = 1
+      let g:tsuquyomi_completion_detail = 1
+
+    Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
 
     " RUBY
       augroup rb
@@ -428,17 +448,17 @@ call plug#begin('~/.vim/plugged')
 
     " GO
       Plug 'fatih/vim-go', { 'for': ['go'] }
-        let g:go_fmt_command = "goimports" " Manage also imports on save: Add missing, remove redundant
+        let g:go_fmt_command = "gofmt" " Manage also imports on save: Add missing, remove redundant
         " let $PATH = "/gorename/path:".$PATH
         let $GOPATH = "/Users/vadim/dev/golang/"
 
-      Plug 'rjohnsondev/vim-compiler-go', { 'for': ['go'] }
-        let g:golang_goroot = "/usr/local/Cellar/go/1.7.4_1/libexec"
+      " Plug 'rjohnsondev/vim-compiler-go', { 'for': ['go'] }
+      "   let g:golang_goroot = "/usr/local/Cellar/go/1.7.4_1/libexec"
 
       augroup golang
         autocmd!
 
-        autocmd FileType go compiler golang
+        " autocmd FileType go compiler golang
         au FileType go nmap <F12> <Plug>(go-run)
         au FileType go let g:go_highlight_functions = 1
         au FileType go let g:go_highlight_methods = 1
@@ -456,16 +476,19 @@ if !has('macunix')
   let g:python3_host_prog = '/usr/bin/python3'
 endif
 
-" Color scheme {{{
-" let g:hybrid_custom_term_colors = 1
-  set background=dark
-  colorscheme iceberg
+" Line numbers
+set relativenumber
+set number
 
-  " hi CursorLineNR ctermfg=118
-  " hi LineNr ctermfg=12
+" Color scheme {{{
+  let g:hybrid_custom_term_colors = 1
+  set background=dark
+  colorscheme hybrid
+
+  " colorscheme iceberg
   " Quick fix entries colors | Search colors
   hi QuickFixLine ctermbg=Black ctermfg=Blue
-  hi Search ctermfg=Black ctermbg=White
+  " hi Search ctermfg=Black ctermbg=White
 
   " lhi link CtrlSpaceNormal   PMenu
   hi link CtrlSpaceSelected Title
@@ -476,25 +499,21 @@ endif
   hi link CtrlPMode2 String
   hi link CtrlPStats PreProc
   hi link CtrlPPrtBase PreProc
+  "
+  " hi CursorLineNR ctermfg=118
+  " hi! LineNr ctermfg=12
 "}}}
-
-set mouse=hr                                                                    " mouse enabled in help and in 'PRESS ENTER' window
 
 syntax on                                                                       " Enable syntax highlighting
 filetype indent plugin on                                                       " Enable filetype-specific indenting
 
 set linebreak
-" set ch=2
 
 " Search
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
-
-" Line numbers
-set relativenumber
-set number
 
 set tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -504,15 +523,6 @@ set spelllang=ru_ru,en_us                                                       
 
 set nobackup
 set noswapfile
-" set autoread " auto read file
-
-" Encoding
-if !has('nvim')
-  set encoding=utf8
-  set fileencoding=utf8
-  set termencoding=utf-8
-  set fileencodings=utf8,cp1251
-endif
 
 " Input
 " set iminsert=0                                                                  " english as default keyboard layout
@@ -522,13 +532,9 @@ set autoindent                                                                  
 set shiftwidth=2
 set tabstop=2
 
-function! ProcessFileChangedShell()
-  let v:fcs_choice = '' " Do nothing on FileChangedShell
-endfunction
-
 augroup miscenary
   autocmd!
-  autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
+  " autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
 
   autocmd FileType pug,ruby,coffee setlocal shiftwidth=2 softtabstop=2 expandtab
 
@@ -567,7 +573,7 @@ runtime macros/matchit.vim
 " enable autowrite and persistent undo
 if has('persistent_undo')
   set aw
-  set undolevels=5000
+  set undolevels=1000
   set undodir=$HOME/.vim/undo-files/
   silent call system('mkdir -p ' . &undodir)
   set undofile
@@ -582,12 +588,6 @@ set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
 set list                                    " Show listchars by default
 set listchars=tab:▸▸ "  ,nbsp:·,space:·
 "}}}
-
-" autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
-
-" Ctrlspace config
-
-" let g:CtrlSpaceSearchTiming = 500
 
 let confirm=0
 set nofoldenable

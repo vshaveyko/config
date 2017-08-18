@@ -84,27 +84,27 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # TODO: export config path and reuse in in script
 export TERM=screen-256color
 export EDITOR=nvim
 
 export GOPATH=$HOME/dev/golang
 export GOBIN=$HOME/dev/golang/bin
-export PATH=$PATH:$HOME/dev/golang/bin
+
+#### PATH ####
+#
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH=$PATH:$HOME/dev/golang/bin # extend golang bins to PATH
+export PATH="./bin:$PATH" # Add project ./bin executables as real commands. magicly applies spring to all commands ?
+#
+#### PATH ####
 
 export GIT_ACC=vshaveyko
 
-init_health24() {
-  guake -n 'zeus' -e 'cd $GOPATH/health24-backend && zeus start' guake -r 'zeus start'
-  guake -n 'backend' -e 'cd $GOPATH/health24-backend' guake -r 'backend'
-  guake -n 'frontend' -e 'cd $GOPATH/health24-frontend' guake -r 'frontend'
-  guake -n 'BACKEND_EDIT' -e 'cd $GOPATH/health24-backend && vim' guake -r 'BACKEND_EDITOR'
-}
-
-alias "init=guake -t -e 'init_health24 && exit 0'"
-
 alias nvm="nvim"
+alias vm="nvim"
+alias nm="nvim"
+alias nim="nvim"
 
 alias t="tmux"
 
@@ -128,6 +128,12 @@ alias ctags="`brew --prefix`/bin/ctags"
 
 alias gi="git init && chmod +x .git/hooks/*"
 
+function chromekill() {
+  echo $(ps aux | awk '/chrom/ { print $2}')
+
+  kill -s QUIT $(ps aux | awk '/chrom/ { print $2}')
+}
+
 autoload bashcompinit
 bashcompinit
 
@@ -136,4 +142,3 @@ source "$HOME/config/.bash/aliases.git.sh"
 source ~/config/dot_files/.completion.zsh
 
 export LANG=C
-export h24=~/dev/health24

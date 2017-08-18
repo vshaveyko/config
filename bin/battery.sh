@@ -10,7 +10,7 @@ else
   total_charge=$(echo $battery_info | grep -o '"MaxCapacity" = [0-9]\+' | awk '{print $3}')
 fi
 
-charged_slots=$(echo "((($current_charge/$total_charge)*10)/3)+1" | bc -l | cut -d '.' -f 1)
+charged_slots=$(echo "((($current_charge/$total_charge)*10)/3)" | bc -l | cut -d '.' -f 1)
 if [[ $charged_slots -gt 3 ]]; then
   charged_slots=3
 fi

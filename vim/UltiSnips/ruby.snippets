@@ -134,7 +134,7 @@ snip.rv += 'module '
 `!p snip.rv += match.group(1)`end
 endsnippet
 
-snippet "^(\s+)anaf" "accepts_nested_attributes_for"
+snippet "^(\s+)anaf" "accepts_nested_attributes_for" br
 `!p snip.rv = match.group(1)`accepts_nested_attributes_for :${1:association_name}${2:${3:, allow_destroy: true}${4:, reject_if: proc \{ |obj| ${5:obj.blank?} \}}}
 endsnippet
 

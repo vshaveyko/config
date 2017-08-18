@@ -47,7 +47,11 @@ snippet /(templateUrl: ['|"]|url)/ "templateUrl" r
 `!p
 path_data = re.search("(src/(.*?)/)(?:[^/]*).coffee", path)
 
-template_url = path_data.group(1) + 'template'
+path_data = re.search("(?:src/js/|js/)?(.*?)/([^/]*)/(?:[^/]*).coffee", path)
+
+folder_name = path_data.group(2)
+template_url = 'src/js/' + path_data.group(1) + '/' + folder_name + '/' + 'template'
+
 `templateUrl: '`!p snip.rv += template_url`'
 $0
 endsnippet
@@ -124,7 +128,7 @@ path_data = re.search("(?:src/js/|js/)?(.*?)/([^/]*)/(?:[^/]*).coffee", path)
 folder_name = path_data.group(2)
 template_url = 'src/js/' + path_data.group(1) + '/' + folder_name + '/' + 'template'
 
-t[1] = camelCase(folder_name)
+# t[1] = camelCase(folder_name)
 
 `angular.module('app').component '${1}',
 

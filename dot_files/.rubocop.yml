@@ -1,0 +1,32 @@
+# Metrics/LineLength:
+#   Max: 150
+#
+# Style/EmptyLinesAroundBlockBody:
+#   EnforcedStyle: no_empty_lines
+#
+# Style/EmptyLinesAroundClassBody:
+#   EnforcedStyle: empty_lines
+#
+# Style/EmptyLinesAroundModuleBody:
+#   Enabled: false
+#
+# Style/ClassAndModuleChildren:
+#   EnforcedStyle: compact
+#
+# Style/Encoding:
+#   EnforcedStyle: always
+#
+# Rails:
+#   Enabled: true
+#
+# Style/BlockComments:
+#   Description: 'Do not use block comments.'
+#   StyleGuide: '#no-block-comments'
+#   Enabled: true
+
+Style/Copyright:
+  Enabled: true
+  Notice: '^# [A|a]uthor: (.*) <(.*)>$'
+  AutocorrectNotice: '# author: Vadim Shaveiko <@vshaveyko>'
+  Include:
+    - 'backend/app/services/**/*'

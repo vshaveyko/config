@@ -1,4 +1,15 @@
-
+[mergetool]
+  prompt = true
+[difftool]
+  prompt = false
+[mergetool "vimmerge"]
+  cmd = nvim -S ~/config/vim/merge_bindings.vim -c "Gdiff" "$MERGED"
+[mergetool "vimdiff"]
+  cmd = nvim -S ~/config/vim/diff_bindings.vim -c "Gdiff" $MERGED
+[diff]
+  tool = vimdiff
+[merge]
+	tool = vimmerge
 [user]
   name = vs
   email = vshaveyko@gmail.com

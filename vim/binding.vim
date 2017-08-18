@@ -1,6 +1,14 @@
 " Shift-f Shift-t backwards repeat. Forward is mapped to ;
 
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
+nmap <C-k> <C-w>k
+nmap <C-j> <C-w>j
+
 " Map leader key
+nnoremap ' ,
+vnoremap ' ,
+
 let mapleader=","
 
 map <leader>w :w!<CR>
@@ -30,18 +38,69 @@ function! s:check_back_space() abort
   return !l:col || getline('.')[l:col - 1]  =~ '\s'
 endfunction
 
-function! Tab() abort
-  call UltiSnips#ExpandSnippetOrJump()
+function! s:jump_prev_if_possible() abort
+  if !exists('g:complete_parameter_version')
+    return 0
+  endif
 
-  if g:ulti_expand_or_jump_res
+  if complete_parameter#jumpable(1)
+    call complete_parameter#goto_next_param(0)
+    return 1
+  endif
+
+  return 0
+endfunction
+
+function! s:jump_next_if_possible() abort
+  if !exists('g:complete_parameter_version')
+    return 0
+  endif
+
+  if complete_parameter#jumpable(0)
+    call complete_parameter#goto_next_param(1)
+    return 1
+  endif
+
+  return 0
+endfunction
+
+function! s:jump_if_possible_with_reselect(direction) abort
+  if a:direction == 1
+    let jump_result = s:jump_next_if_possible()
+  else
+    let jump_result = s:jump_prev_if_possible()
+  endif
+
+  if jump_result
+    return
+  endif
+
+  execute "normal! gv\<C-g>"
+
+  return
+endfunction
+
+smap <TAB> <ESC>:call <SID>jump_if_possible_with_reselect(1)<cr>
+smap <S-TAB> <ESC>:call <SID>jump_if_possible_with_reselect(-1)<cr>
+
+function! Tab() abort
+  if <SID>jump_next_if_possible()
     return ""
+  endif
+
+  if exists('b:did_autoload_ultisnips')
+    call UltiSnips#ExpandSnippetOrJump()
+
+    if g:ulti_expand_or_jump_res
+      return ""
+    endif
   endif
 
   if pumvisible()
     return "\<C-n>"
   endif
 
-  if getline('.')  =~ '^\s*$'
+  if getline('.') =~ '^\s*$'
     return "\<TAB>"
   endif
 
@@ -49,17 +108,23 @@ function! Tab() abort
 endfunction
 
 function! STab() abort
-  call UltiSnips#JumpBackwards()
-
-  if g:ulti_jump_backwards_res
+  if <SID>jump_prev_if_possible()
     return ""
+  endif
+
+  if exists('did_plugin_ultisnips')
+    call UltiSnips#JumpBackwards()
+
+    if g:ulti_jump_backwards_res
+      return ""
+    endif
   endif
 
   if pumvisible()
     return "\<C-p>"
   endif
 
-  if getline('.')  =~ '^\s*$'
+  if getline('.') =~ '^\s*$'
     return "\<S-TAB>"
   endif
 
@@ -83,6 +148,7 @@ endfunction
 " inoremap <silent><expr> <Enter>
 inoremap <TAB> <C-r>=Tab()<cr>
 inoremap <S-TAB> <C-r>=STab()<cr>
+
 
 nnoremap <leader>qa :qa!<CR>
 
@@ -108,8 +174,8 @@ vnoremap <C-p> y<Esc><C-p><C-v><CR>
 " noremap <leader>5 5gt
 noremap <leader>` <C-W>T
 
-noremap < <gv
-noremap > >gv
+map < <gv
+map > >gv
 
 " Split navigation using arrows. On change do NOT forget to change tmux.conf
 " for tab split navigation
@@ -224,11 +290,6 @@ inoremap <Right> <C-o>:cnext<CR>
 inoremap <Left> <C-o>:cprevious<CR>
 nnoremap <Right> :cnext<CR>
 nnoremap <Left> :cprevious<CR>
-
-noremap <C-h> <C-w>h
-noremap <C-l> <C-w>l
-noremap <C-k> <C-w>k
-noremap <C-j> <C-w>j
 
 " Vim command line as bash command line shortcuts
 cnoremap <C-a> <Home>
