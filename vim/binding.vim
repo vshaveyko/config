@@ -84,10 +84,6 @@ smap <TAB> <ESC>:call <SID>jump_if_possible_with_reselect(1)<cr>
 smap <S-TAB> <ESC>:call <SID>jump_if_possible_with_reselect(-1)<cr>
 
 function! Tab() abort
-  if <SID>jump_next_if_possible()
-    return ""
-  endif
-
   if exists('b:did_autoload_ultisnips')
     call UltiSnips#ExpandSnippetOrJump()
 
@@ -100,6 +96,10 @@ function! Tab() abort
     return "\<C-n>"
   endif
 
+  if <SID>jump_next_if_possible()
+    return ""
+  endif
+
   if getline('.') =~ '^\s*$'
     return "\<TAB>"
   endif
@@ -108,10 +108,6 @@ function! Tab() abort
 endfunction
 
 function! STab() abort
-  if <SID>jump_prev_if_possible()
-    return ""
-  endif
-
   if exists('did_plugin_ultisnips')
     call UltiSnips#JumpBackwards()
 
@@ -122,6 +118,10 @@ function! STab() abort
 
   if pumvisible()
     return "\<C-p>"
+  endif
+
+  if <SID>jump_prev_if_possible()
+    return ""
   endif
 
   if getline('.') =~ '^\s*$'

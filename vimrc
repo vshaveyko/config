@@ -469,6 +469,17 @@ call plug#begin('~/.vim/plugged')
         set suffixesadd+=.go
       augroup END
 
+    " MARKDOWN
+      Plug 'shime/vim-livedown', { 'for': ['markdown'] }
+      let g:livedown_open = 1
+
+      augroup markdown
+        autocmd!
+
+        au FileType markdown nmap gm :LivedownToggle<CR>
+        set suffixesadd+=.md
+      augroup END
+
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
 
@@ -533,6 +544,7 @@ set shiftwidth=2
 set tabstop=2
 
 augroup miscenary
+
   autocmd!
   " autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
 
@@ -548,7 +560,7 @@ augroup miscenary
     call winrestview(l:save)
   endfun
 
-  autocmd FileType md let b:noStripWhitespace=1
+  autocmd FileType markdown let b:noStripWhitespace=1
   autocmd BufWritePre * if !exists('b:noStripWhitespace') | :call KeepAll(':%s/\s\+$//e')                                    " Delete spaces from end on lines
   autocmd BufWritePre * if !exists('b:noStripWhitespace') | silent! :call KeepAll(':%s#\($\n\s*\)\+\%$##')                             " Delete trailing lines at the end of file
 
@@ -596,8 +608,3 @@ set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
 " White characters settings {{{
 " ---------------------------------------------------------------------------------------------------------------------
 set list                                    " Show listchars by default
-set listchars=tab:▸▸ "  ,nbsp:·,space:·
-"}}}
-
-let confirm=0
-set nofoldenable
