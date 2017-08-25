@@ -246,37 +246,10 @@ call plug#begin('~/.vim/plugged')
   """"""""""       SEARCH      """""""""""""
 
     Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
-    Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
-    " Plug 'vim-ctrlspace/vim-ctrlspace'
-    " Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
-    " Ag wrapper (Unite grep alternative) search and edit
-      " Ctrl-SF settings {{{
-      " -----------------------------------------------------
-      let g:ctrlsf_default_root='project'
-      let g:ctrlsf_populate_qflist=0
-      let g:ctrlsf_position='bottom'
-      " let g:ctrlsf_winsize = '100%'
-      " let g:ctrlsf_auto_close=0
-      let g:ctrlsf_regex_pattern=0
+    Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }                  " Ag wrapper (Unite grep alternative) search and edit
 
-      let g:ctrlsf_extra_backend_args = {
-          \ 'ag': ' -i
-                  \ --ignore .git
-                  \ --ignore tags
-                  \ --ignore .svn
-                  \ --ignore .hg
-                  \ --ignore node_modules
-                  \ --ignore bower_components
-                  \ --ignore www
-                  \ --ignore images
-                  \ --ignore fonts
-                  \ --ignore gulp_tasks
-                  \ --ignore log
-                  \ --ignore tmp
-                  \ --ignore bin
-                  \ --ignore .DS_Store
-                  \ --ignore "**/*.pyc"'
-          \ }
+	" Plug 'vim-ctrlspace/vim-ctrlspace'
+	" Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
 
   """"""""""       SEARCH      """""""""""""
 
@@ -312,8 +285,8 @@ call plug#begin('~/.vim/plugged')
 
     Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': ['typescript'] } " Dependency of tsuquyomi
 
-    Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1 } " forked for typescript_types
-                                                            " Frozen: added argument type display on typescript complete
+    Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1, 'for': ['typescript'] } " forked for typescript_types
+                                                                                   " Frozen: added argument type display on typescript complete
       let g:complete_parameter_use_ultisnips_mapping = 0
       let g:allow_typescript_types = 1
       inoremap <silent><expr> ( complete_parameter#pre_complete("()")
@@ -488,8 +461,8 @@ if !has('macunix')
 endif
 
 " Line numbers
-set relativenumber
-set number
+set relativenumber " Display realtive numbers
+set number         " Display current line original number
 
 " Color scheme {{{
   let g:hybrid_custom_term_colors = 1
@@ -573,10 +546,10 @@ augroup END
 set ruler                                                                       " show cursor position
 set mousehide                                                                   " hide mouser corse in typing
 set cursorline                                                                  " highlight current position of cursor line
-set cuc cul"                                                                    " highlight current position column
+set cursorcolumn                                                                " highlight current position column
 set wildmenu                                                                    " Autocomplete menu commands
 set lazyredraw                                                                  " redraw only when we need to
-" set ttyfast
+" set ttyfast " nvim default
 
 " set foldmethod=indent
 " set foldlevel=20
