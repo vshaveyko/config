@@ -55,6 +55,8 @@ alias zrt4="zeus rails s webrick -e test -p 4000"
 alias rdbn="rails db:migrate"
 
 # GIT
+autoload bashcompinit
+bashcompinit # required for git-completion.sh, aliases.git.sh
 
 source "$HOME/config/.bash/git-completion.sh"
 source "$HOME/config/.bash/aliases.git.sh"
@@ -67,9 +69,6 @@ function chromekill() {
 
   kill -s QUIT $(ps aux | awk '/chrom/ { print $2}')
 }
-
-autoload bashcompinit
-bashcompinit
 
 export LANG=C
 
