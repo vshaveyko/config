@@ -248,8 +248,16 @@ call plug#begin('~/.vim/plugged')
     Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
     Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }                  " Ag wrapper (Unite grep alternative) search and edit
 
-	" Plug 'vim-ctrlspace/vim-ctrlspace'
-	" Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
+    " Plug 'vim-ctrlspace/vim-ctrlspace'
+    Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
+
+      let g:incsearch#auto_nohlsearch = 1
+      map n  <Plug>(incsearch-nohl-n)
+      map N  <Plug>(incsearch-nohl-N)
+      map *  <Plug>(incsearch-nohl-*)
+      map #  <Plug>(incsearch-nohl-#)
+      map g* <Plug>(incsearch-nohl-g*)
+      map g# <Plug>(incsearch-nohl-g#)
 
   """"""""""       SEARCH      """""""""""""
 
@@ -257,7 +265,8 @@ call plug#begin('~/.vim/plugged')
 
     " Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
     " Plug 'tpope/vim-rhubarb'                   " Open files in github + omni complition for github stuff
-    " Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+    Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+     let g:gitgutter_map_keys = 0
 
   """"""""""        GIT        """""""""""""
 

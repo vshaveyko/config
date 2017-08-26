@@ -18,15 +18,32 @@ nmap <leader>9 :execute "normal <Plug>AirlineSelectTab9"<cr>
 
 let g:airline_powerline_fonts = 1 " use font for triangles
 set laststatus=2
+
 let g:airline_detect_paste=1
 let g:airline#extensions#hunks#enabled=0
-let g:airline_theme='wombat'
+let g:airline#extensions#xkblayout#enabled = 0
 let g:airline#extensions#ycm#enabled = 1
+
+let g:airline_theme='wombat'
 
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
+function! XkblayoutStatus()
+  let keyboard_layout = libcall(g:XkbSwitchLib, 'Xkb_Switch_getXkbLayout', '')
+
+  let short_codes = {'0': 'EN', '2': 'RU'}
+
+  if has_key(short_codes, keyboard_layout)
+    let keyboard_layout = short_codes[keyboard_layout]
+  endif
+
+  return keyboard_layout
+endfunction
+
 function! AirlineInit()
-  let g:airline_section_x = ''
+  call airline#parts#define_function('xkblayout', 'XkblayoutStatus')
+
+  let g:airline_section_x = airline#section#create(['xkblayout'])
   let g:airline_section_y = ''
   let g:airline_section_warning = airline#section#create(['whitespace'])
   " let g:airline_section_error = ''
