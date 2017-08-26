@@ -1,13 +1,77 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH
+export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+# ENV
+# TODO: export config path and reuse in in script
+export TERM=screen-256color
+export EDITOR=nvim
+
+export GOPATH=$HOME/dev/golang
+export GOBIN=$HOME/dev/golang/bin
+
+export GIT_ACC=vshaveyko
+
+#### PATH ####
+#
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH=$PATH:$HOME/dev/golang/bin # extend golang bins to PATH
+export PATH="./bin:$PATH" # Add project ./bin executables as real commands. magicly applies spring to all commands ?
+#
+#### PATH ####
+
+### ALIASES
+#
+# VIM
+alias nvm="nvim"
+alias vm="nvim"
+alias nm="nvim"
+alias nim="nvim"
+
+function gu() {
+  kill -9 $(pgrep node)
+  gulp
+}
+
+# TMUX
+alias t="tmux"
+alias tks="tmux kill-server"
+
+alias mux="tmuxinator"
+
+# RAILS
+alias r4="rails s webrick -p 4000"
+alias r3="rails s webrick -p 3000"
+alias rt="rails s webrick -e test"
+alias zr="zeus rails s webrick"
+
+alias r4t="rails s webrick -e test -p 4000"
+alias zr4="zeus rails s webrick -p 4000"
+alias zrt="zeus rails s webrick -e test"
+
+alias zrt4="zeus rails s webrick -e test -p 4000"
+alias rdbn="rails db:migrate"
+
+# GIT
+
+source "$HOME/config/.bash/git-completion.sh"
+source "$HOME/config/.bash/aliases.git.sh"
+source ~/config/dot_files/.completion.zsh
+
+# OTHER
+alias ctags="`brew --prefix`/bin/ctags"
+function chromekill() {
+  echo $(ps aux | awk '/chrom/ { print $2}')
+
+  kill -s QUIT $(ps aux | awk '/chrom/ { print $2}')
+}
+
+autoload bashcompinit
+bashcompinit
+
+export LANG=C
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -46,15 +110,6 @@ ZSH_THEME="robbyrussell"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -79,66 +134,3 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# TODO: export config path and reuse in in script
-export TERM=screen-256color
-export EDITOR=nvim
-
-export GOPATH=$HOME/dev/golang
-export GOBIN=$HOME/dev/golang/bin
-
-#### PATH ####
-#
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH=$PATH:$HOME/dev/golang/bin # extend golang bins to PATH
-export PATH="./bin:$PATH" # Add project ./bin executables as real commands. magicly applies spring to all commands ?
-#
-#### PATH ####
-
-export GIT_ACC=vshaveyko
-
-alias nvm="nvim"
-alias vm="nvim"
-alias nm="nvim"
-alias nim="nvim"
-
-alias t="tmux"
-
-function gu() {
-  kill -9 $(pgrep node)
-  gulp
-}
-
-alias r4="rails s webrick -p 4000"
-alias r3="rails s webrick -p 3000"
-alias rt="rails s webrick -e test"
-alias zr="zeus rails s webrick"
-
-alias r4t="rails s webrick -e test -p 4000"
-alias zr4="zeus rails s webrick -p 4000"
-alias zrt="zeus rails s webrick -e test"
-
-alias zrt4="zeus rails s webrick -e test -p 4000"
-alias rdbn="rails db:migrate"
-alias ctags="`brew --prefix`/bin/ctags"
-
-alias gi="git init && chmod +x .git/hooks/*"
-
-function chromekill() {
-  echo $(ps aux | awk '/chrom/ { print $2}')
-
-  kill -s QUIT $(ps aux | awk '/chrom/ { print $2}')
-}
-
-autoload bashcompinit
-bashcompinit
-
-source "$HOME/config/.bash/git-completion.sh"
-source "$HOME/config/.bash/aliases.git.sh"
-source ~/config/dot_files/.completion.zsh
-
-export LANG=C

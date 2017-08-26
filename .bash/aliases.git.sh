@@ -1,5 +1,7 @@
 # git aliases (based on TJ Holowaychuk's aliases)
 
+# GIT
+alias gi="git init && chmod +x .git/hooks/*"
 alias gs="git status"
 alias gst="git stash"
 alias gstp="git stash pop"

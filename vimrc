@@ -288,31 +288,34 @@ call plug#begin('~/.vim/plugged')
 
     " Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
     " JSON
-      Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
+      Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb', 'javascript'] }
+
+    " JAVASCRIPT
+      Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
 
     " TYPESCRIPT
 
-    Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': ['typescript'] } " Dependency of tsuquyomi
+      Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': ['typescript'] } " Dependency of tsuquyomi
 
-    Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1, 'for': ['typescript'] } " forked for typescript_types
-                                                                                   " Frozen: added argument type display on typescript complete
-      let g:complete_parameter_use_ultisnips_mapping = 0
-      let g:allow_typescript_types = 1
-      inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+      Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1, 'for': ['typescript'] } " forked for typescript_types
+                                                                                     " Frozen: added argument type display on typescript complete
+        let g:complete_parameter_use_ultisnips_mapping = 0
+        let g:allow_typescript_types = 1
+        inoremap <silent><expr> ( complete_parameter#pre_complete("()")
 
-    Plug 'Quramy/tsuquyomi', { 'for': ['typescript'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
-                                                                    " Frozen: fixed TsuImport - errors on first run (exists [0].spans), duplicate file path on import
-      augroup typescript
-        autocmd!
-        autocmd Filetype typescript nmap <buffer> + :TsuImport<CR>
-        set suffixesadd+=.ts
-      augroup END
+      Plug 'Quramy/tsuquyomi', { 'for': ['typescript'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
+                                                                      " Frozen: fixed TsuImport - errors on first run (exists [0].spans), duplicate file path on import
+        augroup typescript
+          autocmd!
+          autocmd Filetype typescript nmap <buffer> + :TsuImport<CR>
+          set suffixesadd+=.ts
+        augroup END
 
-      let g:tsuquyomi_single_quote_import = 1
-      let g:tsuquyomi_shortest_import_path = 1
-      let g:tsuquyomi_completion_detail = 1
+        let g:tsuquyomi_single_quote_import = 1
+        let g:tsuquyomi_shortest_import_path = 1
+        let g:tsuquyomi_completion_detail = 1
 
-    Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
+      Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
 
     " RUBY
       augroup rb
