@@ -89,12 +89,12 @@ snippet "^(m|c)" "define correct rails class" br
 result = "# :nodoc:\n"
 result += prefix(match.group(1))
 
-m = re.search("(clonners|helpers|policies|controllers|models|jobs|printers|services|query_objects)\/(.*).rb", path)
+m = re.search("(clonners|helpers|policies|controllers|models|jobs|printers|services|query_objects|app/[^/]*|lib/[^/]*)/(.*).rb", path)
 
-result += classify(m.group(2))
+if m:
+	result += classify(m.group(2))
 
-if match.group(1) == 'c':
-	if m:
+	if match.group(1) == 'c':
 		if m.group(1) == 'controllers':
 			if 'api' in path:
 				result += ' < Api::ApplicationController'
@@ -111,10 +111,7 @@ if match.group(1) == 'c':
 		elif m.group(1) == 'printers':
 			result += ' < ApplicationPrinter'
 
-	result += "\n\n  def initialize\n    \n  end"
-
-snip.rv += result`
-  ${0:${VISUAL}}
+snip.rv += result`${0:${VISUAL}}
 end
 endsnippet
 

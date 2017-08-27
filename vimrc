@@ -301,13 +301,15 @@ call plug#begin('~/.vim/plugged')
                                                                                      " Frozen: added argument type display on typescript complete
         let g:complete_parameter_use_ultisnips_mapping = 0
         let g:allow_typescript_types = 1
-        inoremap <silent><expr> ( complete_parameter#pre_complete("()")
 
       Plug 'Quramy/tsuquyomi', { 'for': ['typescript'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
                                                                       " Frozen: fixed TsuImport - errors on first run (exists [0].spans), duplicate file path on import
         augroup typescript
           autocmd!
           autocmd Filetype typescript nmap <buffer> + :TsuImport<CR>
+
+          autocmd Filetype typescript inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+
           set suffixesadd+=.ts
         augroup END
 
