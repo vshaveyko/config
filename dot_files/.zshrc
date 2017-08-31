@@ -4,6 +4,54 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
+#
+# Plug-ins
+#
+
+plugins=(rails git ruby bower bundler capistrano docker gem npm rvm tmuxinator zeus zsh-autosuggestions)
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=0'
+
+#
+# History
+#
+
+export HISTSIZE=100000
+export HISTFILE="$HOME/.history"
+export SAVEHIST=$HISTSIZE
+#
+# Options
+#
+
+setopt autocd               # .. is shortcut for cd .. (etc)
+setopt autoparamslash       # tab completing directory appends a slash
+setopt autopushd            # cd automatically pushes old dir onto dir stack
+setopt clobber              # allow clobbering with >, no need to use >!
+setopt correct              # command auto-correction
+setopt correctall           # argument auto-correction
+setopt noflowcontrol        # disable start (C-s) and stop (C-q) characters
+setopt nonomatch            # unmatched patterns are left unchanged
+setopt histignorealldups    # filter duplicates from history
+setopt histignorespace      # don't record commands starting with a space
+setopt histverify           # confirm history expansion (!$, !!, !foo)
+setopt ignoreeof            # prevent accidental C-d from exiting shell
+setopt interactivecomments  # allow comments, even in interactive shells
+setopt printexitvalue       # for non-zero exit status
+setopt pushdignoredups      # don't push multiple copies of same dir onto stack
+setopt pushdsilent          # don't print dir stack after pushing/popping
+setopt sharehistory         # share history across shells
+
+# Make CTRL-Z background things and unbackground them.
+function fg-bg() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    fg
+  else
+    zle push-input
+  fi
+}
+zle -N fg-bg
+bindkey '^Z' fg-bg
+
 # ENV
 # TODO: export config path and reuse in in script
 export TERM=screen-256color

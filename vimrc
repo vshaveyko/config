@@ -161,24 +161,33 @@ call plug#begin('~/.vim/plugged')
     " augroup END
 
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
-  Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
 
-    " TMUXLINE
-    let g:tmuxline_preset = {
-          \'a disabled' : '#{battery_icon} #{battery_percentage} #{battery_remain}',
-          \'b disabled' : '',
-          \'c disabled' : '',
-          \'win'        : [' #I:#W#F '],
-          \'cwin'       : ['☢  #I:#W#F '],
-          \'x'          : '#(~/config/bin/locale.sh)',
-          \'y'          : ['%R %d %b'],
-          \'z'          : ['#(~/config/bin/battery.sh)'],
-          \'options'    : {'status-justify': 'left'}}
+  """"""" TMUX """""""
+    Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
 
-  Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
-   " Plug 'tpope/vim-obsession' " Remember tmux session to restore after system reboot
+      " TMUXLINE
+      let g:tmuxline_preset = {
+            \'a disabled' : '#{battery_icon} #{battery_percentage} #{battery_remain}',
+            \'b disabled' : '',
+            \'c disabled' : '',
+            \'win'        : [' #I:#W#F '],
+            \'cwin'       : ['☢  #I:#W#F '],
+            \'x'          : '#(~/config/bin/locale.sh)',
+            \'y'          : ['%R %d %b'],
+            \'z'          : ['#(~/config/bin/battery.sh)'],
+            \'options'    : {'status-justify': 'left'}}
 
-  Plug 'godlygeek/tabular', { 'for': ['cucumber'], 'on': ['Tabularize'] } " Align stuff nicely
+    Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
+      let g:tmux_navigator_disable_when_zoomed = 1                                " Disable when zoomed tmux window
+    Plug 'benmills/vimux'                                                         " tmux command wrapper
+    Plug 'skalnik/vim-vroom'                                                      " run current test file with <leader>r
+      let g:vroom_use_vimux=1
+      let g:vroom_use_spring=1
+      let g:vroom_clear_screen=1
+      let g:vroom_cucumber_path='cucumber'
+    " Plug 'tpope/vim-obsession'                                                  " Remember tmux session to restore after system reboot
+
+  Plug 'godlygeek/tabular', { 'for': ['cucumber'], 'on': ['Tabularize'] }         " Align stuff nicely
   " Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
@@ -223,7 +232,6 @@ call plug#begin('~/.vim/plugged')
       " map <Space>j <Plug>(easymotion-jk)
       " map <Space>k <Plug>(easymotion-jk)
       " map <Space>h <Plug>(easymotion-linebackward)
-      " map <Space><Space> <Plug>(easymotion-jumptoanywhere)
 
     " search with easymotion
       map / <Plug>(easymotion-sn)
@@ -267,6 +275,8 @@ call plug#begin('~/.vim/plugged')
     " Plug 'tpope/vim-rhubarb'                   " Open files in github + omni complition for github stuff
     Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
      let g:gitgutter_map_keys = 0
+     set signcolumn=yes " Always show changes column
+     let g:gitgutter_diff_args = '-w' " Ignore whitespace
 
   """"""""""        GIT        """""""""""""
 
@@ -396,7 +406,8 @@ call plug#begin('~/.vim/plugged')
         au BufRead,BufNewFile *.rabl hi def link rubyRabl Function
 
         " Rabl
-        au BufRead,BufNewFile *.rabl setf ruby
+        au BufRead,BufNewFile *.rabl  setf ruby
+        au BufRead,BufNewFile *.axlsx setf ruby
         set suffixesadd+=.rabl
       augroup END
 

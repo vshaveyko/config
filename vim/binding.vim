@@ -147,6 +147,9 @@ inoremap <S-TAB> <C-r>=STab()<cr>
 
 
 nnoremap <leader>qa :qa!<CR>
+nnoremap <leader>q :xit<CR>
+
+noremap <leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 
 " inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 
@@ -159,32 +162,22 @@ vnoremap <C-r> <Esc><C-r>v
 " noremap <C-C> <esc><right>
 
 " search for visually selected file with CtrlP plugin
-vnoremap <C-p> y<Esc><C-p><C-v><CR>
+" vnoremap <C-p> y<Esc><C-p><C-v><CR>
 
-" switch between tabs
-" Currently remapped by airline(airline.vim).
-" noremap <leader>1 1gt
-" noremap <leader>2 2gt
-" noremap <leader>3 3gt
-" noremap <leader>4 4gt
-" noremap <leader>5 5gt
+" Open in new tab current file
 noremap <leader>` <C-W>T
 
-map < <gv
-map > >gv
+"
+" Indent && reselect last selection
+nmap < gv<gv
+nmap > gv>gv
+vmap < <gv
+vmap > >gv
 
-" Split navigation using arrows. On change do NOT forget to change tmux.conf
-" for tab split navigation
-
-" move by virtual lines without count and by physical with count
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-
-" Visual linewise up and down by default (and use gj gk to go quicker)
-" nnoremap gj 5j
-" nnoremap gk 5k
-vnoremap j gj
-vnoremap k gk
+" 1. If moved more than 5 lines - add this to jump list
+" 2. Move by virtual lines without count and by physical with count
+noremap <silent> <expr> k (v:count == 0 ? 'g' : (v:count > 5 ? "m'" . v:count : '')) . 'k'
+noremap <silent> <expr> j (v:count == 0 ? 'g' : (v:count > 5 ? "m'" . v:count : '')) . 'j'
 
 " When jump to next match also center screen
 " Note: Use :norm! to make it count as one command. (i.e. for i_CTRL-o)
@@ -194,54 +187,50 @@ vnoremap <silent> n :norm! nzz<CR>
 vnoremap <silent> N :norm! Nzz<CR>
 
 " Tab configuration
-map <leader>t :tabnew<cr>
-map <leader>te :tabedit<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove<cr>
+" map <leader>t :tabnew<cr>
+" map <leader>te :tabedit<cr>
+" map <leader>tc :tabclose<cr>
+" map <leader>tm :tabmove<cr>
 
 " Replace
 nnoremap <leader>s :%s//ge<left><left><left>
-vnoremap <leader>s :s//ge<left><left><left>
-nnoremap <S-K> :nohl \| redraw!<CR>
+" vnoremap <leader>s :s//ge<left><left><left>
+noremap <S-K> :nohl \| redraw!<CR>
 
 " REALLY delete with m
 nnoremap m "_d
+nnoremap M "_d$
+nnoremap mm "_dd
+
 vnoremap m "_d
 
-nnoremap <leader>l o<Esc>
-nnoremap <leader>o O<Esc>
-noremap <leader>p :pu<CR>
-noremap <leader><S-p> :pu!<CR>
-
-" function! NumberToggle()
-"   if &rnu == 1
-"     set nornu
-"   else
-"     set rnu
-"   endif
-" endfunc
-
-" nnoremap <C-n> :call NumberToggle()<cr>
-inoremap <C-e> <C-o>$
-
-nnoremap <Leader>r :%s/\<<C-r><C-w>\>/ge<left><left><left>
-vnoremap <Leader>r y:%s/<C-r>"/ge<left><left><left>
-
-nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
-vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
-
-nnoremap <Leader>rts :%s/	/ /g<CR>
-
-nnoremap <silent> <leader>a :ArgWrap<CR>
-
 noremap Y y$
+
+" fix accident moves to EX mode
+noremap Q q
+
+" inoremap <C-e> <C-o>$
+
+" nnoremap <Leader>r :%s/\<<C-r><C-w>\>/ge<left><left><left>
+" vnoremap <Leader>r y:%s/<C-r>"/ge<left><left><left>
+
+" nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
+" vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
+
+" nnoremap <Leader>rts :%s/	/ /g<CR>
+
+" nnoremap <silent> <leader>a :ArgWrap<CR>
+
 
 " convert strings to symbols in current line
 " map <silent> <F4> :let _s=@/<Bar>:s/["']\([^ '"]\)["']/:\1/ge<Bar>:let @/=_s<Bar>:nohl<CR><C-o>
 " %s/[^ ]\+\zs\(  \+\)/ /g - remove double whitespace in a row
 
 " open and close folds
-nnoremap <space> za
+
+nnoremap <Space><Space> <C-^>
+" <Bar> :Clip<CR> :echo expand('%')<CR>
+nnoremap <space> :let @+=expand('%') <Bar> echo expand('%')<CR>
 
 inoremap <C-a> <C-o>^
 nnoremap <C-a> ^
@@ -251,9 +240,10 @@ nnoremap <F5> :so $HOME/.vimrc<CR>
 
 " Tabularize bindings
 vnoremap <F2> :'<,'>Tabularize /^[^=]*\zs=\ze/<CR>
-vnoremap <F3> :'<,'>Tabularize /^[^:]*\zs:\ze/<CR>
+vnoremap <F3> :'<,'>Tabularize /^[^:]*:\zs[^\s]\ze/<CR>
 vnoremap <F4> :'<,'>Tabularize /[^ ]\+\(.*\)\zs"\ze[^"]*$/<CR>
 vnoremap <F5> :'<.'>Tabularize /<Bar><CR>
+vnoremap <F6> :'<,'>Tabularize /,[^,]*<CR>
 
 " let g:UltiSnipsExpandTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
