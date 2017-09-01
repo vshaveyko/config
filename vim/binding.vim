@@ -200,9 +200,13 @@ noremap <S-K> :nohl \| redraw!<CR>
 " REALLY delete with m
 nnoremap m "_d
 nnoremap M "_d$
-nnoremap mm "_dd
 
-vnoremap m "_d
+" mm in nerdtree is move/rename file
+augroup BindBufferless
+  autocmd!
+
+  autocmd BufNew * if (&ft !=# 'nerdtree') | noremap <buffer> mm "_dd
+augroup END
 
 noremap Y y$
 
