@@ -27,23 +27,23 @@ let g:airline#extensions#ycm#enabled = 1
 let g:airline_theme='wombat'
 
 let g:airline#extensions#tabline#buffer_nr_show = 1
-
-function! XkblayoutStatus()
-  let keyboard_layout = libcall(g:XkbSwitchLib, 'Xkb_Switch_getXkbLayout', '')
-
-  let short_codes = {'0': 'EN', '2': 'RU'}
-
-  if has_key(short_codes, keyboard_layout)
-    let keyboard_layout = short_codes[keyboard_layout]
-  endif
-
-  return keyboard_layout
-endfunction
+"
+" function! xkblayoutstatus()
+"   let keyboard_layout = libcall(g:xkbswitchlib, 'xkb_switch_getxkblayout', '')
+"
+"   let short_codes = {'0': 'en', '2': 'ru'}
+"
+"   if has_key(short_codes, keyboard_layout)
+"     let keyboard_layout = short_codes[keyboard_layout]
+"   endif
+"
+"   return keyboard_layout
+" endfunction
 
 function! AirlineInit()
-  call airline#parts#define_function('xkblayout', 'XkblayoutStatus')
+  " call airline#parts#define_function('xkblayout', 'XkblayoutStatus')
 
-  let g:airline_section_x = airline#section#create(['xkblayout'])
+  " let g:airline_section_x = airline#section#create(['xkblayout'])
   let g:airline_section_y = ''
   let g:airline_section_warning = airline#section#create(['whitespace'])
   " let g:airline_section_error = ''

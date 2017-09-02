@@ -136,7 +136,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'kana/vim-textobj-entire'
   " Ruby block text object (vir)
 
-  Plug 'neomake/neomake'                                                        " Async task maker
+  " Plug 'neomake/neomake'                                                        " Async task maker
   " Neomake on write
   " TODO: think about not counting corrected warnings to global warning count
     " let g:neomake_ruby_rubocopauto_maker = {
@@ -238,8 +238,8 @@ call plug#begin('~/.vim/plugged')
       omap / <Plug>(easymotion-tn)
 
     " These mappings just provide different highlight method and have some other features
-      map n <Plug>(easymotion-next)
-      map N <Plug>(easymotion-prev)
+      " map n <Plug>(easymotion-next)
+      " map N <Plug>(easymotion-prev)
 
       let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
       let g:EasyMotion_smartcase = 1
@@ -257,26 +257,26 @@ call plug#begin('~/.vim/plugged')
     Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }                  " Ag wrapper (Unite grep alternative) search and edit
 
     " Plug 'vim-ctrlspace/vim-ctrlspace'
-    Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
-
-      let g:incsearch#auto_nohlsearch = 1
-      map n  <Plug>(incsearch-nohl-n)
-      map N  <Plug>(incsearch-nohl-N)
-      map *  <Plug>(incsearch-nohl-*)
-      map #  <Plug>(incsearch-nohl-#)
-      map g* <Plug>(incsearch-nohl-g*)
-      map g# <Plug>(incsearch-nohl-g#)
-
+    " Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
+    "
+    "   let g:incsearch#auto_nohlsearch = 1
+    "   map n  <Plug>(incsearch-nohl-n)
+    "   map N  <Plug>(incsearch-nohl-N)
+    "   map *  <Plug>(incsearch-nohl-*)
+    "   map #  <Plug>(incsearch-nohl-#)
+    "   map g* <Plug>(incsearch-nohl-g*)
+    "   map g# <Plug>(incsearch-nohl-g#)
+    "
   """"""""""       SEARCH      """""""""""""
 
   """"""""""        GIT        """""""""""""
 
     " Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
     " Plug 'tpope/vim-rhubarb'                   " Open files in github + omni complition for github stuff
-    Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
-     let g:gitgutter_map_keys = 0
-     set signcolumn=yes " Always show changes column
-     let g:gitgutter_diff_args = '-w' " Ignore whitespace
+    " Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+    "  let g:gitgutter_map_keys = 0
+    "  set signcolumn=yes " Always show changes column
+    "  let g:gitgutter_diff_args = '-w' " Ignore whitespace
 
   """"""""""        GIT        """""""""""""
 
@@ -304,24 +304,18 @@ call plug#begin('~/.vim/plugged')
       Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
 
     " TYPESCRIPT
+      set suffixesadd+=.ts
 
       Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': ['typescript'] } " Dependency of tsuquyomi
 
-      Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1, 'for': ['typescript'] } " forked for typescript_types
-                                                                                     " Frozen: added argument type display on typescript complete
-        let g:complete_parameter_use_ultisnips_mapping = 0
-        let g:allow_typescript_types = 1
+      " Plug 'vshaveyko/CompleteParameter.vim', { 'frozen': 1, 'for': ['typescript'] } " forked for typescript_types
+      "                                                                                " Frozen: added argument type display on typescript complete
+      "   let g:complete_parameter_use_ultisnips_mapping = 0
+      "   let g:allow_typescript_types = 1
 
-      Plug 'Quramy/tsuquyomi', { 'for': ['typescript'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
+      Plug 'Quramy/tsuquyomi', { 'for': ['typescript', 'pug'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
                                                                       " Frozen: fixed TsuImport - errors on first run (exists [0].spans), duplicate file path on import
-        augroup typescript
-          autocmd!
-          autocmd Filetype typescript nmap <buffer> + :TsuImport<CR>
-
-          autocmd Filetype typescript inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-
-          set suffixesadd+=.ts
-        augroup END
+                                                                      "
 
         let g:tsuquyomi_single_quote_import = 1
         let g:tsuquyomi_shortest_import_path = 1
@@ -330,10 +324,7 @@ call plug#begin('~/.vim/plugged')
       Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " Typescript highlight \ indent
 
     " RUBY
-      augroup rb
-        autocmd!
-        set suffixesadd+=.rb,.rake
-      augroup END
+      set suffixesadd+=.rb,.rake
       " Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
       " Plug 'thoughtbot/vim-rspec'
       Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
@@ -342,49 +333,7 @@ call plug#begin('~/.vim/plugged')
 
     " COFFEE_SCRIPT
 
-        " Hack for nice movement through angular components
-        " i.e. use C-] on component call => go to definition
-        "
-        " use C-] on angular service|comp|fact|etc call => go to definition
-
-          function! MoveToControllerByShortHandName(shortName)
-            " transform shorthand ctrl name "compNameCtrl" to real "compNameController"
-            let s:b = substitute(a:shortName, '^\(.*\)Ctrl$', '\1Controller', '')
-
-            " try redirecting to Controller
-            exe ':tag coffee'.s:b
-          endfunc
-
-          function! MoveToComponentByTemplateName(templateName)
-            " transform component name "comp-name" to  real name "compName"
-            let s:a = substitute(a:templateName, '-\(\l\)', '\u\1', 'g')
-
-            " catch and try redirecting to component if shorthand name was broken
-            exe ':tag coffee'.s:a
-          endfunc
-
-          function! MoveToTagByHtmlName(tagName)
-            try
-              call MoveToControllerByShortHandName(a:tagName)
-            catch " Tag no found
-              call MoveToComponentByTemplateName(a:tagName)
-            endtry
-          endfunc
-
-          function! MoveToLibByName(libName)
-            try
-              call MoveToControllerByShortHandName(a:libName)
-            catch " Tag no found
-                " else redirect the way it were
-              exe ':tag coffee'.a:libName
-            endtry
-          endfunc
-
-        augroup coffee
-          autocmd!
-          autocmd Filetype coffee noremap <buffer> <C-]> "*yiw:call MoveToLibByName(@*)<cr>
-          set suffixesadd+=.coffee
-        augroup END
+        set suffixesadd+=.coffee
 
       " Plug 'lukaszkorecki/CoffeeTags', { 'for': ['coffee'] }         " Coffeescript tags support
         Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
@@ -394,22 +343,8 @@ call plug#begin('~/.vim/plugged')
 
       Plug 'tpope/vim-cucumber', { 'for': ['cucumber'] }
 
-      augroup cucumber
-        autocmd!
-        au BufEnter *.feature let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb'
-      augroup END
-
     " RABL
-      augroup rabl
-        au!
-        au BufRead,BufNewFile *.rabl syn keyword rubyRabl node attribute object child collection attributes glue extends
-        au BufRead,BufNewFile *.rabl hi def link rubyRabl Function
-
-        " Rabl
-        au BufRead,BufNewFile *.rabl  setf ruby
-        au BufRead,BufNewFile *.axlsx setf ruby
-        set suffixesadd+=.rabl
-      augroup END
+      set suffixesadd+=.rabl
 
     " CSS/HTML
 
@@ -433,11 +368,8 @@ call plug#begin('~/.vim/plugged')
       "   augroup END
       "
     " JADE
-      augroup jade
-        autocmd!
-        autocmd Filetype pug noremap <buffer> <C-]> "*yaw:call MoveToTagByHtmlName(@*)<cr>
-        set suffixesadd+=.jade,.pug
-      augroup END
+
+      set suffixesadd+=.jade,.pug
 
       Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }         " JADE syntax
 
@@ -445,38 +377,32 @@ call plug#begin('~/.vim/plugged')
       Plug 'slim-template/vim-slim', { 'for': ['slim'] }             " SLIM syntax
 
     " GO
+       set suffixesadd+=.go
+
       Plug 'fatih/vim-go', { 'for': ['go'] }
         let g:go_fmt_command = "gofmt" " Manage also imports on save: Add missing, remove redundant
+        nmap <F12> <Plug>(go-run)
+        let g:go_highlight_functions = 1
+        let g:go_highlight_methods = 1
+        let g:go_highlight_fields = 1
+        let g:go_highlight_types = 1
+        let g:go_highlight_operators = 1
+        let g:go_highlight_build_constraints = 1
+
         " let $PATH = "/gorename/path:".$PATH
         let $GOPATH = "/Users/vadim/dev/golang/"
 
       " Plug 'rjohnsondev/vim-compiler-go', { 'for': ['go'] }
       "   let g:golang_goroot = "/usr/local/Cellar/go/1.7.4_1/libexec"
 
-      augroup golang
-        autocmd!
 
         " autocmd FileType go compiler golang
-        au FileType go nmap <F12> <Plug>(go-run)
-        au FileType go let g:go_highlight_functions = 1
-        au FileType go let g:go_highlight_methods = 1
-        au FileType go let g:go_highlight_fields = 1
-        au FileType go let g:go_highlight_types = 1
-        au FileType go let g:go_highlight_operators = 1
-        au FileType go let g:go_highlight_build_constraints = 1
-        set suffixesadd+=.go
-      augroup END
 
     " MARKDOWN
+      set suffixesadd+=.md
+
       Plug 'shime/vim-livedown', { 'for': ['markdown'] }
       let g:livedown_open = 1
-
-      augroup markdown
-        autocmd!
-
-        au FileType markdown nmap gm :LivedownToggle<CR>
-        set suffixesadd+=.md
-      augroup END
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
@@ -541,31 +467,7 @@ set autoindent                                                                  
 set shiftwidth=2
 set tabstop=2
 
-augroup miscenary
-
-  autocmd!
-  " autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
-
-  autocmd FileType pug,ruby,coffee setlocal shiftwidth=2 softtabstop=2 expandtab
-
-  " set formatoptions-=o                                                            " dont continue comments when pushing o/O
-
-  fun! KeepAll(normal_mode_command)
-    let l:save = winsaveview()
-
-    keepjumps keeppatterns execute a:normal_mode_command
-
-    call winrestview(l:save)
-  endfun
-
-  autocmd FileType markdown let b:noStripWhitespace=1
-  autocmd BufWritePre * if !exists('b:noStripWhitespace') | :call KeepAll(':%s/\s\+$//e')                                    " Delete spaces from end on lines
-  autocmd BufWritePre * if !exists('b:noStripWhitespace') | silent! :call KeepAll(':%s#\($\n\s*\)\+\%$##')                             " Delete trailing lines at the end of file
-
-augroup END
-
-" autocmd FocusLost * silent! wh                                                " Auto save files when focus is lost
-" autocmd BufLeave * silent! :w                                                 " or leave buffer
+" set formatoptions-=o                                                            " dont continue comments when pushing o/O
 
 " View
 set ruler                                                                       " show cursor position

@@ -7,7 +7,7 @@ source $ZSH/oh-my-zsh.sh
 # Plug-ins
 #
 
-plugins=(rails git ruby bower bundler capistrano docker gem npm rvm tmuxinator zeus zsh-autosuggestions)
+plugins=(rails git ruby bower bundler capistrano docker gem npm rvm tmuxinator zeus)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=0'
 
@@ -35,7 +35,7 @@ setopt histignorespace      # don't record commands starting with a space
 setopt histverify           # confirm history expansion (!$, !!, !foo)
 setopt ignoreeof            # prevent accidental C-d from exiting shell
 setopt interactivecomments  # allow comments, even in interactive shells
-setopt printexitvalue       # for non-zero exit status
+# setopt printexitvalue       # for non-zero exit status
 setopt pushdignoredups      # don't push multiple copies of same dir onto stack
 setopt pushdsilent          # don't print dir stack after pushing/popping
 setopt sharehistory         # share history across shells
@@ -181,4 +181,4 @@ export LANG=C
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

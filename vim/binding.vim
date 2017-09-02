@@ -1,10 +1,3 @@
-" Shift-f Shift-t backwards repeat. Forward is mapped to ;
-
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
-nmap <C-k> <C-w>k
-nmap <C-j> <C-w>j
-
 " Map leader key
 nnoremap ' ,
 vnoremap ' ,
@@ -13,19 +6,24 @@ let mapleader=","
 
 map <leader>w :w!<CR>
 
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
+nmap <C-k> <C-w>k
+nmap <C-j> <C-w>j
+
 inoremap <C-x><C-k> <NOP>
 
 vnoremap <leader>jt :!json_reformat -u<CR>
 
 " file operations copy\paste
-map <Leader>v "+P
+" map <Leader>v "+P
 
-nnoremap <Leader>c "+yy
-vnoremap <Leader>c "+y
+" nnoremap <Leader>c "+yy
+" vnoremap <Leader>c "+y
 
 " Enter in normal mode to add line
-nnoremap <Enter> i<Enter><Esc>
-nmap <S-Enter> O<Esc>
+" nnoremap <Enter> i<Enter><Esc>
+" nmap <S-Enter> O<Esc>
 
 " bind \ (backward slash) to grep shortcut
 nmap <Bslash> <Plug>CtrlSFPwordPath
@@ -33,118 +31,8 @@ vmap <Bslash> <Plug>CtrlSFVwordExec
 
 noremap <silent> <Bar> :NERDTreeFind<CR>
 
-function! s:check_back_space() abort
-  let l:col = col('.') - 1
-  return !l:col || getline('.')[l:col - 1]  =~ '\s'
-endfunction
-
-function! s:jump_prev_if_possible() abort
-  if !exists('g:complete_parameter_version')
-    return 0
-  endif
-
-  if complete_parameter#jumpable(1)
-    call complete_parameter#goto_next_param(0)
-    return 1
-  endif
-
-  return 0
-endfunction
-
-function! s:jump_next_if_possible() abort
-  if !exists('g:complete_parameter_version')
-    return 0
-  endif
-
-  if complete_parameter#jumpable(0)
-    call complete_parameter#goto_next_param(1)
-    return 1
-  endif
-
-  return 0
-endfunction
-
-function! s:jump_if_possible_with_reselect(direction) abort
-  if a:direction == 1
-    let jump_result = s:jump_next_if_possible()
-  else
-    let jump_result = s:jump_prev_if_possible()
-  endif
-
-  if jump_result
-    return
-  endif
-
-  execute "normal! gv\<C-g>"
-
-  return
-endfunction
-
-smap <TAB> <ESC>:call <SID>jump_if_possible_with_reselect(1)<cr>
-smap <S-TAB> <ESC>:call <SID>jump_if_possible_with_reselect(-1)<cr>
-
-function! Tab() abort
-  call UltiSnips#ExpandSnippetOrJump()
-
-  if g:ulti_expand_or_jump_res
-    return ""
-  endif
-
-  if pumvisible()
-    return "\<C-n>"
-  endif
-
-  if <SID>jump_next_if_possible()
-    return ""
-  endif
-
-  if getline('.') =~ '^\s*$'
-    return "\<TAB>"
-  endif
-
-  return "\<Space>"
-endfunction
-
-function! STab() abort
-  call UltiSnips#JumpBackwards()
-
-  if g:ulti_jump_backwards_res
-    return ""
-  endif
-
-  if pumvisible()
-    return "\<C-p>"
-  endif
-
-  if <SID>jump_prev_if_possible()
-    return ""
-  endif
-
-  if getline('.') =~ '^\s*$'
-    return "\<S-TAB>"
-  endif
-
-  return ""
-endfunction
-
-" function! Enter() abort
-"   if pumvisible()
-"     " UltiSnips#ExpandSnippetOrJump()
-"     exec g:_uspy "UltiSnips_Manager.expand_or_jump()"
-"   end
-"
-"   if g:ulti_expand_or_jump_res
-"     " if g:ulti_expand_res == 1
-"     return ""
-"   endif
-"
-"   return "\<Enter>"
-" endfunction
-"
-" inoremap <silent><expr> <Enter>
-inoremap <TAB> <C-r>=Tab()<cr>
-inoremap <S-TAB> <C-r>=STab()<cr>
-
+inoremap <TAB> <C-r>=utils#tab()<cr>
+inoremap <S-TAB> <C-r>=utils#s_tab()<cr>
 
 nnoremap <leader>qa :qa!<CR>
 nnoremap <leader>q :xit<CR>
@@ -194,7 +82,7 @@ vnoremap <silent> N :norm! Nzz<CR>
 
 " Replace
 nnoremap <leader>s :%s//ge<left><left><left>
-" vnoremap <leader>s :s//ge<left><left><left>
+vnoremap <leader>s :s//ge<left><left><left>
 noremap <S-K> :nohl \| redraw!<CR>
 
 " REALLY delete with m

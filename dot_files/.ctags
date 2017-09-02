@@ -13,9 +13,13 @@
 --regex-ruby=/(^|;)[ \t]*def ([a-z][[:alnum:]_\.]+)/\2/f,function/
 --regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,function,named_scope/
 
+--langdef=ng2
+--langmap=ng2:.ts
+--regex-ng2=/\s*selector *: *['|"]\[?([[:alnum:]\-]+)\]?['|"]/ng2\-\1/,class/
+
 --langdef=coffee
 --langmap=coffee:.coffee
---regex-coffee=/\.*controller *\(?[\s]*['|"]([A-Za-z0-9_$]+)["|']/coffee\1/,class/
+--regex-coffee=/\.*[^\$]controller *\(?[\s]*['|"]([A-Za-z0-9_$]+)["|']/coffee\1/,class/
 --regex-coffee=/\.*filter *\(?[\s]*['|"]([A-Za-z0-9_$]+)["|']/coffee\1/,class/
 --regex-coffee=/\.*factory *\(?[\s]*['|"]([A-Za-z0-9_$]+)["|']/coffee\1/,class/
 --regex-coffee=/\.*service *\(?[\s]*['|"]([A-Za-z0-9_$]+)["|']/coffee\1/,class/
@@ -23,6 +27,7 @@
 --regex-coffee=/\.*component *\(?[\s]*['|"]([A-Za-z0-9_$]+)["|']/coffee\1/,class/
 --regex-coffee=/\.*as ([A-Za-z0-9_$]+)["|']/coffee\1/,class/
 --regex-coffee=/\.*controllerAs *: *["|']([A-Za-z0-9_$]+)["|']/coffee\1/,class/
+
 
 --exclude=log
 --exclude=backend/db
