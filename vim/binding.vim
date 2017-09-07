@@ -22,7 +22,7 @@ vnoremap <leader>jt :!json_reformat -u<CR>
 " vnoremap <Leader>c "+y
 
 " Enter in normal mode to add line
-" nnoremap <Enter> i<Enter><Esc>
+nnoremap <Enter> i<Enter><Esc>
 " nmap <S-Enter> O<Esc>
 
 " bind \ (backward slash) to grep shortcut
@@ -31,6 +31,7 @@ vmap <Bslash> <Plug>CtrlSFVwordExec
 
 noremap <silent> <Bar> :NERDTreeFind<CR>
 
+vnoremap <TAB> <C-j>
 inoremap <TAB> <C-r>=utils#tab()<cr>
 inoremap <S-TAB> <C-r>=utils#s_tab()<cr>
 
@@ -89,13 +90,6 @@ noremap <S-K> :nohl \| redraw!<CR>
 nnoremap m "_d
 nnoremap M "_d$
 
-" mm in nerdtree is move/rename file
-augroup BindBufferless
-  autocmd!
-
-  autocmd BufNew * if (&ft !=# 'nerdtree') | noremap <buffer> mm "_dd
-augroup END
-
 noremap Y y$
 
 " fix accident moves to EX mode
@@ -122,7 +116,7 @@ noremap Q q
 
 nnoremap <Space><Space> <C-^>
 " <Bar> :Clip<CR> :echo expand('%')<CR>
-nnoremap <space> :let @+=expand('%') <Bar> echo expand('%')<CR>
+nnoremap <silent> <space> :let @+=expand('%:p') <Bar> echo "Copied to buffer: " . @+<CR>
 
 inoremap <C-a> <C-o>^
 nnoremap <C-a> ^

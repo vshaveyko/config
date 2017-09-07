@@ -3,6 +3,8 @@ let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_tabs = 1
 
+let g:airline#extensions#wordcount#enabled=0
+
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -22,7 +24,7 @@ set laststatus=2
 let g:airline_detect_paste=1
 let g:airline#extensions#hunks#enabled=0
 let g:airline#extensions#xkblayout#enabled = 0
-let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ycm#enabled = 0
 
 let g:airline_theme='wombat'
 
@@ -49,4 +51,7 @@ function! AirlineInit()
   " let g:airline_section_error = ''
 endfunction
 
+" autocmd! UltiSnips_AutoTrigger
+
+autocmd! User AirlineAfterInit
 autocmd User AirlineAfterInit call AirlineInit()

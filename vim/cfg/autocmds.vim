@@ -35,4 +35,11 @@ augroup ALL_AUTO_CMDS
 
 " autocmd FocusLost * silent! wh                                                " Auto save files when focus is lost
 " autocmd BufLeave * silent! :w                                                 " or leave buffer
+
+  " mm in nerdtree is move/rename file
+  autocmd BufNewFile,BufRead * if (&ft !=# 'nerdtree') | noremap <buffer> mm "_dd
+
+  " CSS
+  au BufRead,BufNewFile *.sass set filetype=scss.css
+
 augroup END

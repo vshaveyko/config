@@ -8,6 +8,8 @@ set t_Co=256
 
 " set term=xterm-256color
 set shortmess=at
+set regexpengine=1
+let g:ruby_path = system('rvm current')
 
 source ~/.vim/binding.vim
 
@@ -111,7 +113,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }        " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
 
-  Plug 'Valloric/YouCompleteMe', { 'frozen': 1 } " Frozen: fixed typescript completion in import statements, force_semantic was needed
+  Plug 'Valloric/YouCompleteMe' " Frozen: fixed typescript completion in import statements, force_semantic was needed
 
     let g:ycm_add_preview_to_completeopt = 1
 
@@ -187,7 +189,7 @@ call plug#begin('~/.vim/plugged')
       let g:vroom_cucumber_path='cucumber'
     " Plug 'tpope/vim-obsession'                                                  " Remember tmux session to restore after system reboot
 
-  Plug 'godlygeek/tabular', { 'for': ['cucumber'], 'on': ['Tabularize'] }         " Align stuff nicely
+  Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }                              " Align stuff nicely
   " Plug 'ludovicchabant/vim-gutentags'                                           " Dynamically regenerate tags
 
   Plug 'SirVer/ultisnips'
@@ -229,8 +231,8 @@ call plug#begin('~/.vim/plugged')
       " nmap <Space>S <Plug>(easymotion-s2)
       " " Gif config
       " map <Space>l <Plug>(easymotion-overwin-line)
-      " map <Space>j <Plug>(easymotion-jk)
-      " map <Space>k <Plug>(easymotion-jk)
+      map <Right><Right> <Plug>(easymotion-j)
+      map <Left><Left>   <Plug>(easymotion-k)
       " map <Space>h <Plug>(easymotion-linebackward)
 
     " search with easymotion
@@ -238,8 +240,8 @@ call plug#begin('~/.vim/plugged')
       omap / <Plug>(easymotion-tn)
 
     " These mappings just provide different highlight method and have some other features
-      " map n <Plug>(easymotion-next)
-      " map N <Plug>(easymotion-prev)
+      map n <Plug>(easymotion-next)
+      map N <Plug>(easymotion-prev)
 
       let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
       let g:EasyMotion_smartcase = 1
@@ -353,7 +355,6 @@ call plug#begin('~/.vim/plugged')
         set iskeyword+=-
         highlight VendorPrefix guifg=#00ffff gui=bold
         match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
-        au BufRead,BufNewFile *.sass set filetype=scss.css
       " Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
       " Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
       "
@@ -368,7 +369,6 @@ call plug#begin('~/.vim/plugged')
       "   augroup END
       "
     " JADE
-
       set suffixesadd+=.jade,.pug
 
       Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }         " JADE syntax
@@ -476,7 +476,7 @@ set cursorline                                                                  
 set cursorcolumn                                                                " highlight current position column
 set wildmenu                                                                    " Autocomplete menu commands
 set lazyredraw                                                                  " redraw only when we need to
-" set ttyfast " nvim default
+set ttyfast " nvim default
 
 " set foldmethod=indent
 " set foldlevel=20

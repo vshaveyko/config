@@ -11,6 +11,28 @@ snippet /^#a/ "file start comments" Awr
 ##########
 endsnippet
 
+snippet "(def|class|module)\+" "expand method|class|module from visual selection + variable on current line" r
+${1}
+${0}
+`!p
+snip.rv += match.group(1)
+` $1
+
+	${0:${VISUAL}}
+
+end
+endsnippet
+
+snippet "(def|class|module)" "expand method|class|module from visual selection" r
+`!p
+snip.rv += match.group(1)
+` ${1}
+
+	${0:${VISUAL}}
+
+end
+endsnippet
+
 snippet cdef "define function by selected text"
 ${1:method_name}(${2:args})
 endsnippet
@@ -89,7 +111,7 @@ snippet "^(m|c)" "define correct rails class" br
 result = "# :nodoc:\n"
 result += prefix(match.group(1))
 
-m = re.search("(clonners|helpers|policies|controllers|models|jobs|printers|services|query_objects|app/[^/]*|lib/[^/]*)/(.*).rb", path)
+m = re.search("(clonners|helpers|policies|controllers|models|jobs|printers|services|query_objects)/(.*).rb", path)
 
 if m:
 	result += classify(m.group(2))
@@ -110,6 +132,11 @@ if m:
 			result += ' < ActiveJob::Base'
 		elif m.group(1) == 'printers':
 			result += ' < ApplicationPrinter'
+else:
+  m2 = re.search("(|app/[^/]*|lib/[^/]*)/(.*).rb", path)
+
+	if m2:
+		result += classify(m2.group(2))
 
 snip.rv += result`${0:${VISUAL}}
 end

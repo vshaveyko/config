@@ -1,23 +1,29 @@
 # ZSH
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
-plugins=(git)
 source $ZSH/oh-my-zsh.sh
+
+if [[ -n "$TMUX" ]]; then
+  # Note use a non-breaking space at the end of the prompt because we can use it as
+  # a find pattern to jump back in tmux.
+  local NBSP=''
+  export PS1="${PS1}${NBSP}"
+  export ZLE_RPROMPT_INDENT=0
+fi
+
 #
 # Plug-ins
 #
 
 plugins=(rails git ruby bower bundler capistrano docker gem npm rvm tmuxinator zeus)
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=0'
-
 #
 # History
 #
 
-export HISTSIZE=100000
-export HISTFILE="$HOME/.history"
-export SAVEHIST=$HISTSIZE
+# export HISTSIZE=100000
+# export HISTFILE="$HOME/.history"
+# export SAVEHIST=$HISTSIZE
 #
 # Options
 #
@@ -25,14 +31,14 @@ export SAVEHIST=$HISTSIZE
 setopt autocd               # .. is shortcut for cd .. (etc)
 setopt autoparamslash       # tab completing directory appends a slash
 setopt autopushd            # cd automatically pushes old dir onto dir stack
-setopt clobber              # allow clobbering with >, no need to use >!
-setopt correct              # command auto-correction
-setopt correctall           # argument auto-correction
+# setopt clobber              # allow clobbering with >, no need to use >!
+# setopt correct              # command auto-correction
+# setopt correctall           # argument auto-correction
 setopt noflowcontrol        # disable start (C-s) and stop (C-q) characters
-setopt nonomatch            # unmatched patterns are left unchanged
+# setopt nonomatch            # unmatched patterns are left unchanged
 setopt histignorealldups    # filter duplicates from history
 setopt histignorespace      # don't record commands starting with a space
-setopt histverify           # confirm history expansion (!$, !!, !foo)
+# setopt histverify           # confirm history expansion (!$, !!, !foo)
 setopt ignoreeof            # prevent accidental C-d from exiting shell
 setopt interactivecomments  # allow comments, even in interactive shells
 # setopt printexitvalue       # for non-zero exit status
