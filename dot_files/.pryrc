@@ -16,7 +16,8 @@ Pry.config.prompt = proc do |obj, _level, _|
   prompt = "\e[1;36m"
   prompt += "#{Rails.version} @ " if defined?(Rails)
   prompt += RUBY_VERSION.to_s
-  "#{prompt} (#{(obj.to_s || '')[0..10]})>\e[0m "
+  # '' # For jump back in tmux.
+  "\e[92m➜ \e[0m#{prompt}(#{(obj.to_s || '')[0..10]})> "
 end
 
 # use awesome print for all objects in pry

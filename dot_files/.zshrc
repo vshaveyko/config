@@ -3,14 +3,6 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 
-if [[ -n "$TMUX" ]]; then
-  # Note use a non-breaking space at the end of the prompt because we can use it as
-  # a find pattern to jump back in tmux.
-  local NBSP=''
-  export PS1="${PS1}${NBSP}"
-  export ZLE_RPROMPT_INDENT=0
-fi
-
 #
 # Plug-ins
 #
@@ -60,7 +52,14 @@ bindkey '^Z' fg-bg
 # ENV
 # TODO: export config path and reuse in in script
 export TERM=screen-256color
-export EDITOR=nvim
+export SSH_KEY_PATH="~/.ssh/id_rsa.pub"
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 export GOPATH=$HOME/dev/golang
 export GOBIN=$HOME/dev/golang/bin
@@ -113,6 +112,7 @@ bashcompinit # required for git-completion.sh, aliases.git.sh
 
 source "$HOME/config/.bash/git-completion.sh"
 source "$HOME/config/.bash/aliases.git.sh"
+source "$HOME/config/bin/terminal_chrome.sh"
 source ~/config/dot_files/.completion.zsh
 
 # OTHER
@@ -145,7 +145,7 @@ export LANG=C
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -165,22 +165,6 @@ export LANG=C
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh

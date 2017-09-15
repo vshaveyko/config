@@ -103,17 +103,17 @@ call plug#begin('~/.vim/plugged')
     " let g:UltiSnipsJumpBackwardTrigger = "<C-k>>"
 
   " Plug 'chrisbra/NrrwRgn'                                                     " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
-
+  Plug 'tpope/vim-repeat'                                                       " vim-surround repeated
+  Plug 'tpope/vim-unimpaired'                                                   " Nice helper commands with ] and [
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
     " Surround.vim settings {{{
     " -----------------------------------------------------
     let g:surround_124 = "|\r|"
     let g:surround_58 = ":\r "
 
-  " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }        " Rails integration: moves, abbrevs, etc.
   " Plug 'tpope/vim-dispatch'
 
-  Plug 'Valloric/YouCompleteMe' " Frozen: fixed typescript completion in import statements, force_semantic was needed
+  Plug 'Valloric/YouCompleteMe'
 
     let g:ycm_add_preview_to_completeopt = 1
 
@@ -127,16 +127,15 @@ call plug#begin('~/.vim/plugged')
   " Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings - xkbswitch makes it useless
 
   " Custom text objects creation (dependency for the latter)
-  " Plug 'kana/vim-textobj-user'
+  Plug 'kana/vim-textobj-user'
   " Argument text object (via, >a)
   " Plug 'PeterRincker/vim-argumentative'
   " Indent text object (vii)
-  " Plug 'kana/vim-textobj-indent'
+  Plug 'kana/vim-textobj-indent'
   " Line text object (vil)
-  " Plug 'kana/vim-textobj-line'
+  Plug 'kana/vim-textobj-line'
   " Entire buffer text object (vae)
-  " Plug 'kana/vim-textobj-entire'
-  " Ruby block text object (vir)
+  Plug 'kana/vim-textobj-entire'
 
   " Plug 'neomake/neomake'                                                        " Async task maker
   " Neomake on write
@@ -184,9 +183,24 @@ call plug#begin('~/.vim/plugged')
     Plug 'benmills/vimux'                                                         " tmux command wrapper
     Plug 'skalnik/vim-vroom'                                                      " run current test file with <leader>r
       let g:vroom_use_vimux=1
-      let g:vroom_use_spring=1
+
+      let g:vroom_map_key=0 " Remap run keys to \d
+      nnoremap <leader>d :VroomRunTestFile
+      nnoremap <leader><S-d> :VroomRunNearestTest
+
+      " let g:vroom_use_spring=1
       let g:vroom_clear_screen=1
+      " Load formatted info to quickfix
+      nnoremap <S-Right> :cfile tmp/quickfix <Bar> cnext<CR>
+      nnoremap <S-Left> :cfile tmp/quickfix <Bar> cprev<CR>
+
+      nnoremap <Right> :cnext<CR>
+      nnoremap <Left> :cprevious<CR>
+
       let g:vroom_cucumber_path='cucumber'
+      let g:vroom_use_zeus=1
+      let g:vroom_spec_command='rspec -r ~/config/formatter/rspec -f RSpec::Core::Formatters::VimFormatter --out tmp/quickfix -f RSpec::Core::Formatters::VimFormatter'
+
     " Plug 'tpope/vim-obsession'                                                  " Remember tmux session to restore after system reboot
 
   Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }                              " Align stuff nicely
@@ -210,6 +224,14 @@ call plug#begin('~/.vim/plugged')
     let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
   " Plug 'mhinz/vim-sayonara'
+  Plug 'gavinbeatty/dragvisuals.vim'
+    vnoremap  <expr>  <LEFT>   DVB_Drag('left')
+    vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
+    vnoremap  <expr>  <DOWN>   DVB_Drag('down')
+    vnoremap  <expr>  <UP>     DVB_Drag('up')
+
+  " Verbs
+   Plug 'christoomey/vim-sort-motion' " ??
 
   Plug 'easymotion/vim-easymotion'
 
@@ -218,12 +240,12 @@ call plug#begin('~/.vim/plugged')
       " map <Space> <Plug>(easymotion-prefix)
       " let g:EasyMotion_smartcase = 1
       " nmap <Space>t <Plug>(easymotion-bd-t)
-      " nmap <Space>f <Plug>(easymotion-overwin-f)
+      nmap <Space>f <Plug>(easymotion-overwin-f)
       "
       " nmap <Space>T <Plug>(easymotion-bd-tl)
       " nmap <Space>F <Plug>(easymotion-bd-f)
       "
-      " nmap <Space>w <Plug>(easymotion-overwin-w)
+      nmap <Space>w <Plug>(easymotion-overwin-w)
       " nmap <Space>W <Plug>(easymotion-bd-w)
       " nmap <Space>E <Plug>(easymotion-bd-e)
       "
@@ -231,8 +253,8 @@ call plug#begin('~/.vim/plugged')
       " nmap <Space>S <Plug>(easymotion-s2)
       " " Gif config
       " map <Space>l <Plug>(easymotion-overwin-line)
-      map <Right><Right> <Plug>(easymotion-j)
-      map <Left><Left>   <Plug>(easymotion-k)
+      " map <Right><Right> <Plug>(easymotion-j)
+      " map <Left><Left>   <Plug>(easymotion-k)
       " map <Space>h <Plug>(easymotion-linebackward)
 
     " search with easymotion
@@ -255,8 +277,9 @@ call plug#begin('~/.vim/plugged')
 
   """"""""""       SEARCH      """""""""""""
 
-    Plug 'kien/ctrlp.vim'                                                         " CtrlP sublime search
+    Plug 'ctrlpvim/ctrlp.vim'                                                     " CtrlP sublime search
     Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }                  " Ag wrapper (Unite grep alternative) search and edit
+      let g:ctrlsf_populate_qflist = 1
 
     " Plug 'vim-ctrlspace/vim-ctrlspace'
     " Plug 'haya14busa/incsearch.vim' " better inc search. Jump to result while not finished search
@@ -273,9 +296,9 @@ call plug#begin('~/.vim/plugged')
 
   """"""""""        GIT        """""""""""""
 
-    " Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
+    Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
     " Plug 'tpope/vim-rhubarb'                   " Open files in github + omni complition for github stuff
-    " Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+    Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
     "  let g:gitgutter_map_keys = 0
     "  set signcolumn=yes " Always show changes column
     "  let g:gitgutter_diff_args = '-w' " Ignore whitespace
@@ -315,10 +338,10 @@ call plug#begin('~/.vim/plugged')
       "   let g:complete_parameter_use_ultisnips_mapping = 0
       "   let g:allow_typescript_types = 1
 
-      Plug 'Quramy/tsuquyomi', { 'for': ['typescript', 'pug'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
+      Plug 'Quramy/tsuquyomi', { 'for': ['typescript'], 'frozen': 1 } " Typesciprt omni completion \ compiler.
                                                                       " Frozen: fixed TsuImport - errors on first run (exists [0].spans), duplicate file path on import
                                                                       "
-
+        let g:tsuquyomi_project_source_dir='src/app/'
         let g:tsuquyomi_single_quote_import = 1
         let g:tsuquyomi_shortest_import_path = 1
         let g:tsuquyomi_completion_detail = 1
@@ -327,11 +350,23 @@ call plug#begin('~/.vim/plugged')
 
     " RUBY
       set suffixesadd+=.rb,.rake
-      " Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
-      " Plug 'thoughtbot/vim-rspec'
-      Plug 'vim-ruby/vim-ruby', { 'for': ['ruby'] }
-      Plug 'tpope/vim-endwise' , { 'for': ['ruby'] }         " Autoend ruby blocks
-      Plug 'p0deje/vim-ruby-interpolation', { 'for': ['ruby'] }
+      Plug 'vim-ruby/vim-ruby'              , { 'for': ['ruby'] }
+        let g:ruby_indent_access_modifier_style = 'outdent'
+        let g:ruby_indent_block_style = 'do'
+        let ruby_no_expensive = 1
+        let g:rubycomplete_buffer_loading = 1
+        let g:rubycomplete_classes_in_global = 1
+        let g:rubycomplete_rails = 1
+      Plug 'tpope/vim-endwise'              , { 'for': ['ruby'] } " Autoend ruby blocks
+      Plug 'p0deje/vim-ruby-interpolation'  , { 'for': ['ruby'] }
+      Plug 'aliou/sql-heredoc.vim'          , { 'for': ['ruby'] } " Syntax highlighting for sql inside heredocs
+      Plug 'AndrewRadev/splitjoin.vim'      , { 'for': ['ruby'] } " Convert to one-liners with gS and gJ
+        let g:splitjoin_split_mapping = 'gs'
+        let g:splitjoin_join_mapping  = 'gj'
+
+      Plug 'nelstrom/vim-textobj-rubyblock' , { 'for': ['ruby'] } " r is ruby-block textobject
+      Plug 'tpope/vim-rails'               "  , { 'for': ['ruby'] }
+      Plug 'tmhedberg/matchit'              , { 'for': ['ruby'] } " Refactoring commands
 
     " COFFEE_SCRIPT
 
@@ -353,6 +388,7 @@ call plug#begin('~/.vim/plugged')
       " Sass properties correct highlight(highlight properties with -, hightlight
       " moz\webkit ...)
         set iskeyword+=-
+        " set iskeyword+=:
         highlight VendorPrefix guifg=#00ffff gui=bold
         match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
       " Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
@@ -371,7 +407,7 @@ call plug#begin('~/.vim/plugged')
     " JADE
       set suffixesadd+=.jade,.pug
 
-      Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }         " JADE syntax
+      Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'], 'frozen': 1 } " JADE syntax, Frozen: update indent
 
     " SLIM
       Plug 'slim-template/vim-slim', { 'for': ['slim'] }             " SLIM syntax
@@ -455,8 +491,12 @@ set tabstop=2 shiftwidth=2 softtabstop=2
 set path=$PWD/**                                                                " path for finders
 
 set spelllang=ru_ru,en_us                                                       " spellchecker for english and russian
+" set spellfile=~/.vim/spell/en.utf-8.add
+set dictionary+=/usr/share/dict/words " for spell checking"
+set cmdheight=1
+set laststatus=2    " Always show status line
 
-set nobackup
+set backup
 set noswapfile
 
 " Input
@@ -478,8 +518,10 @@ set wildmenu                                                                    
 set lazyredraw                                                                  " redraw only when we need to
 set ttyfast " nvim default
 
-" set foldmethod=indent
-" set foldlevel=20
+set foldmethod=indent
+set foldlevel=20
+" set foldmethod=marker
+set foldopen+=jump
 
 set clipboard=unnamed,unnamedplus " Copy\paste from clipboard always. Test and think about if it needed.
 
@@ -508,3 +550,6 @@ set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
 " White characters settings {{{
 " ---------------------------------------------------------------------------------------------------------------------
 set list                                    " Show listchars by default
+
+let &listchars = "tab:\u21e5\u00b7,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
+let &fillchars = "vert:\u259a,fold:\u00b7"

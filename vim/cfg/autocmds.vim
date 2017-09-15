@@ -11,7 +11,7 @@ augroup ALL_AUTO_CMDS
   autocmd Filetype coffee noremap <buffer> <C-]> "*yiw:call utils#MoveToLibByName(@*)<cr>
 
   " CUCUMBER
-  au BufEnter *.feature let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb'
+  autocmd FileType cucumber let b:cucumber_steps_glob = expand('%:p:h:s?.\{-}[\/]\%(features\|stories\)\zs[\/].*??').'/**/*.rb' | let b:dispatch = 'cucumber %' | imap <buffer><expr> <Tab> pumvisible() ? "\<C-N>" : (CucumberComplete(1,'') >= 0 ? "\<C-X>\<C-O>" : (getline('.') =~ '\S' ? ' ' : "\<C-I>"))
 
   " RABL
   au BufRead,BufNewFile *.rabl syn keyword rubyRabl node attribute object child collection attributes glue extends
@@ -41,5 +41,17 @@ augroup ALL_AUTO_CMDS
 
   " CSS
   au BufRead,BufNewFile *.sass set filetype=scss.css
+
+  if isdirectory(expand("~/.trash"))
+    autocmd BufWritePre,BufWritePost * if exists("s:backupdir") | set backupext=~ | let &backupdir = s:backupdir | unlet s:backupdir | endif
+    autocmd BufWritePre ~/*
+          \ let s:path = expand("~/.trash").strpart(expand("<afile>:p:~:h"),1) |
+          \ if !isdirectory(s:path) | call mkdir(s:path,"p") | endif |
+          \ let s:backupdir = &backupdir |
+          \ let &backupdir = escape(s:path,'\,').','.&backupdir |
+          \ let &backupext = strftime(".%Y%m%d%H%M%S~",getftime(expand("<afile>:p")))
+  endif
+
+  autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
 
 augroup END

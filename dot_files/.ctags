@@ -9,7 +9,7 @@
 --langmap=ruby:
 --langdef=ruby
 --langmap=ruby:.rb.rake
---regex-ruby=/(^|;)[ \t]*(class|module)[ \t]+([A-Z][[:alnum:]_]+([A-Z][[:alnum:]_]+::)*([A-Z][[:alnum:]_]+))/\5/c,class,constant/
+--regex-ruby=/(^|;)[ \t]*(class|module)[ \t]+([A-Z][[:alnum:]_]+([A-Z][[:alnum:]_]+::)*([A-Z][[:alnum:]_]+))/\3/c,class,constant/
 --regex-ruby=/(^|;)[ \t]*def ([a-z][[:alnum:]_\.]+)/\2/f,function/
 --regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,function,named_scope/
 
