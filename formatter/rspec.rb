@@ -4,9 +4,11 @@
 #
 # Rspec 3+ syntax
 #
-class RSpec::Core::Formatters::VimFormatter
+require 'rspec/core/formatters/progress_formatter'
 
-  RSpec::Core::Formatters.register self, :example_failed, :dump_summary
+class RSpec::Core::Formatters::VimFormatter < RSpec::Core::Formatters::ProgressFormatter
+
+  RSpec::Core::Formatters.register self, :example_failed, :dump_summary, :dump_failures
 
   attr_reader :output
 
@@ -34,11 +36,13 @@ class RSpec::Core::Formatters::VimFormatter
     @output << output
   end
 
+  def dump_failures(*); end
+
   private
 
   def format(notification)
-    path         = notification.example.location
-    message      = notification.exception.message[0, 100]
+    path         = notification.formatted_backtrace.first
+    message      = notification.exception.message.lines[0..1].join(' => ')
     fail_message = "[FAIL] #{message}".gsub("\n", ' ').red
 
     "#{path}: #{fail_message}"
