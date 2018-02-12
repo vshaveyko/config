@@ -17,15 +17,20 @@ Pry.config.prompt = proc do |obj, _level, _|
   prompt += "#{Rails.version} @ " if defined?(Rails)
   prompt += RUBY_VERSION.to_s
   # '' # For jump back in tmux.
-  "\e[92m➜ \e[0m#{prompt}(#{(obj.to_s || '')[0..10]})> "
+  "\e[92m➜ #{prompt}> "
 end
 
 # use awesome print for all objects in pry
 begin
   require 'awesome_print'
+
   Pry.config.print = proc { |output, value| output.puts "=> #{ap value}" }
-  require 'hirb'
-  Hirb.enable
 rescue
   puts "=> Unable to load awesome_print, please type 'gem install awesome_print' or 'sudo gem install awesome_print'."
 end
+
+# begin
+#   require 'hirb'
+#   Hirb.enable
+# rescue
+# end

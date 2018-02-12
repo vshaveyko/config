@@ -24,6 +24,9 @@ augroup ALL_AUTO_CMDS
   autocmd BufNewFile,BufRead *.pug noremap <buffer> <C-]> "*yaw:call utils#MoveToTagByHtmlNameAngular2(@*)<cr>
   autocmd BufNewFile,BufRead *.jade noremap <buffer> <C-]> "*yaw:call utils#MoveToTagByHtmlName(@*)<cr>
 
+  " RUBY
+  autocmd BufWritePost *.rb silent! :Neomake
+
   " MARKDOWN
   au FileType markdown nmap gm :LivedownToggle<CR>
 
@@ -53,5 +56,7 @@ augroup ALL_AUTO_CMDS
   endif
 
   autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
+
+  autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 
 augroup END

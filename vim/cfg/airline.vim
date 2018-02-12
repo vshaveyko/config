@@ -1,4 +1,4 @@
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_tabs = 1

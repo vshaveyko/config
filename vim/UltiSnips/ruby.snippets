@@ -3,7 +3,7 @@ snippet pry "pry binding" wA
 pry binding
 endsnippet
 
-snippet /^#a/ "file start comments" Awr
+snippet /^#a/ "file start comments" wr
 # frozen_string_literal: true
 # author: Vadim Shaveiko <@vshaveyko>
 # encoding: utf-8
@@ -11,75 +11,19 @@ snippet /^#a/ "file start comments" Awr
 ##########
 endsnippet
 
-snippet "(def|class|module)\+" "expand method|class|module from visual selection + variable on current line" r
-${1}
-${0}
+snippet d "def func" b
 `!p
-snip.rv += match.group(1)
-` $1
-
-	${0:${VISUAL}}
-
-end
-endsnippet
-
-snippet "(def|class|module)" "expand method|class|module from visual selection" r
-`!p
-snip.rv += match.group(1)
-` ${1}
-
-	${0:${VISUAL}}
-
-end
-endsnippet
-
-snippet cdef "define function by selected text"
-${1:method_name}(${2:args})
-endsnippet
-
-snippet col "Migration Remove and Add Column (mrac)" w
-remove_column :${1:table}, :${2:column}${3: [press tab twice to generate add_column]}
-endsnippet
-
-snippet bto "belongs_to (bt)" w
-belongs_to :${1:object}${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}", foreign_key: "${4:${1}_id}"}
-endsnippet
-
-snippet habtm "has_and_belongs_to_many (habtm)" w
-has_and_belongs_to_many :${1:object}${2:, join_table: "${3:table_name}", foreign_key: "${4:${1}_id}"}
-endsnippet
-
-snippet hm "has_many (hm)" w
-has_many :${1:object}s${2:, class_name: "${1}", foreign_key: "${4:reference}_id"}
-endsnippet
-
-snippet hmt "has_many (through)" w
-has_many :${1:objects}, through: :${2:join_association}${3:, source: :${4:${2}_table_foreign_key_to_${1}_table}}
-endsnippet
-
-snippet hmd "has_many dependent: :destroy" w
-has_many :${1:object}s${2:, class_name: "${1}", foreign_key: "${4:reference}_id"}, dependent: :destroy$0
-endsnippet
-
-snippet ho "has_one (ho)" w
-has_one :${1:object}${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}", foreign_key: "${4:${1}_id}"}
-endsnippet
-
-snippet "^(\s*)case" "case" Awr
-case ${1:object}
-`!p snip.rv += match.group(1)`when ${2:condition}
-`!p snip.rv += match.group(1)`  ${0}
-`!p snip.rv += match.group(1)`end
-endsnippet
-
-snippet "^(\s*)de" "def func" rb
-`!p
-indent = match.group(1)
+# indent = match.group(1)
 def formatTag(argument):
-  return indent + "# @{0} -".format(argument)
+  return "# @{0} -".format(argument)
 
-arguments = t[2].split(',')
-arguments = [argument.strip() for argument in arguments if argument]
+args_matches = re.search(".*\((.+)\)", t[1])
+
+if args_matches:
+	arguments = args_matches.group(1).split(',')
+	arguments = [argument.strip() for argument in arguments if argument]
+else:
+	arguments = []
 
 if len(arguments):
   tags = map(formatTag, arguments)
@@ -88,10 +32,30 @@ if len(arguments):
   snip += ''
 else:
   snip.rv = ''
-``!p snip.rv += indent`def ${1:method_name}(${2})
-`!p snip.rv += indent`  ${0:${VISUAL}}
-`!p snip.rv += indent`end
+`def $1
+	${0:${VISUAL}}
+end
 
+endsnippet
+
+snippet bt "belongs_to (bt)" w
+belongs_to :${1:object}${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}"
+endsnippet
+
+snippet hm "has_many (hm)" w
+has_many :${1:object}s${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}"
+endsnippet
+
+snippet ho "has_one (ho)" w
+has_one :${1:object}${2:, class_name: "${3:${1/[[:alpha:]]+|(_)/(?1::\u$0)/g}}"
+endsnippet
+
+snippet dd "dependent: :destroy" w
+dependent: :destroy
+endsnippet
+
+snippet dn "dependent: :nullify" w
+dependent: :nullify
 endsnippet
 
 global !p
@@ -156,10 +120,6 @@ snip.rv += 'module '
 `${0}
 `!p snip.rb += match.group(1)`  ${1:${VISUAL}}
 `!p snip.rv += match.group(1)`end
-endsnippet
-
-snippet "^(\s+)anaf" "accepts_nested_attributes_for" br
-`!p snip.rv = match.group(1)`accepts_nested_attributes_for :${1:association_name}${2:${3:, allow_destroy: true}${4:, reject_if: proc \{ |obj| ${5:obj.blank?} \}}}
 endsnippet
 
 snippet spec "init spec for given file" w

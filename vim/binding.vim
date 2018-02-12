@@ -9,6 +9,9 @@ let mapleader=","
   nmap <C-k> <C-w>k
   nmap <C-j> <C-w>j
 
+" Xkbswitch remapping slash in insert mode
+" inoremap / /
+
 inoremap <C-x><C-k> <NOP>
 
 vnoremap <leader>jt :!json_reformat -u<CR>
@@ -106,7 +109,7 @@ noremap <S-K> :nohl \| redraw!<CR>
   noremap Y y$
 
 " fix accident moves to EX mode
-noremap Q q
+noremap Q @q
 
 " nnoremap <Leader>r :%s/\<<C-r><C-w>\>/ge<left><left><left>
 " vnoremap <Leader>r y:%s/<C-r>"/ge<left><left><left>
@@ -149,8 +152,8 @@ nnoremap <F5> :so $HOME/.vimrc<CR>
   nnoremap <leader>t[ :Tab /^[^\[]*\zs\[<CR>
   vnoremap <leader>t[ :Tab /^[^\[]*\zs\[<CR>
 
-  nnoremap <leader>t, :Tab /,/l0c1l1<CR>
-  vnoremap <leader>t, :Tab /,/l0c1l1<CR>
+  nnoremap <leader>t, :Tab /,\zs/l1c0<CR>
+  vnoremap <leader>t, :Tab /,\zs/l1c0<CR>
 
   nnoremap <leader>t. :Tab /\./l0<CR>
   vnoremap <leader>t. :Tab /\./l0<CR>

@@ -105,6 +105,9 @@ call plug#begin('~/.vim/plugged')
   " Plug 'chrisbra/NrrwRgn'                                                     " <Leader>nr - open part of the window in a new split. Edit it and save = throw it back.
   Plug 'tpope/vim-repeat'                                                       " vim-surround repeated
   Plug 'tpope/vim-unimpaired'                                                   " Nice helper commands with ] and [
+    vmap <UP>   [egv
+    vmap <DOWN> ]egv
+
   Plug 'tpope/vim-surround'                                                     " Add adjective 's' - surrounding
     " Surround.vim settings {{{
     " -----------------------------------------------------
@@ -124,18 +127,20 @@ call plug#begin('~/.vim/plugged')
     let g:ycm_key_list_previous_completion = ['<C-p>']
     let g:ycm_min_num_identifier_candidate_chars = 5
 
+    let g:ycm_python_binary_path = 'python3'
+
   " Plug 'powerman/vim-plugin-ruscmd'                                             " Russian normal mode mappings - xkbswitch makes it useless
 
   " Custom text objects creation (dependency for the latter)
-  Plug 'kana/vim-textobj-user'
+  " Plug 'kana/vim-textobj-user'
   " Argument text object (via, >a)
   " Plug 'PeterRincker/vim-argumentative'
   " Indent text object (vii)
-  Plug 'kana/vim-textobj-indent'
+  " Plug 'kana/vim-textobj-indent'
   " Line text object (vil)
-  Plug 'kana/vim-textobj-line'
+  " Plug 'kana/vim-textobj-line'
   " Entire buffer text object (vae)
-  Plug 'kana/vim-textobj-entire'
+  " Plug 'kana/vim-textobj-entire'
 
   " Plug 'neomake/neomake'                                                        " Async task maker
   " Neomake on write
@@ -146,7 +151,7 @@ call plug#begin('~/.vim/plugged')
     "       \ 'errorformat' : '%f:%l:%c: %t: %m',
     "       \ 'postprocess' : function('neomake#makers#ft#ruby#RubocopEntryProcess')
     "       \ }
-    " let g:neomake_ruby_enabled_makers = ['rubocopauto']
+    " let g:neomake_ruby_enabled_makers = ['reek']
 
     " let g:neomake_typescript_enabled_makers = ['tsuquyomi']
 
@@ -156,50 +161,46 @@ call plug#begin('~/.vim/plugged')
     "   endif
     " endfunction
     "
-    " augroup neomake
-    "   autocmd!
-    "   autocmd BufWritePost * silent! call neomake#Make(1, [], function('s:Neomake_callback'))
-    " augroup END
 
   " Plug 'FooSoft/vim-argwrap'                                                  " Move arguments to new lines with <leader>a
 
   """"""" TMUX """""""
     Plug 'edkolev/tmuxline.vim'                                                   " nicely styled tmux
 
-      " TMUXLINE
-      let g:tmuxline_preset = {
-            \'a disabled' : '#{battery_icon} #{battery_percentage} #{battery_remain}',
-            \'b disabled' : '',
-            \'c disabled' : '',
-            \'win'        : [' #I:#W#F '],
-            \'cwin'       : ['☢  #I:#W#F '],
-            \'x'          : '#(~/config/bin/locale.sh)',
-            \'y'          : ['%R %d %b'],
-            \'z'          : ['#(~/config/bin/battery.sh)'],
-            \'options'    : {'status-justify': 'left'}}
+    " TMUXLINE
+    let g:tmuxline_preset = {
+          \'a'          : ['#(~/config/bin/battery.sh)'],
+          \'b disabled' : '',
+          \'c disabled' : '',
+          \'win'        : [' #I:#W#F '],
+          \'cwin'       : ['☢  #I:#W#F '],
+          \'x'          : '#(~/config/bin/locale.sh)',
+          \'y'          : ['%R %d %b'],
+          \'z disabled' : ['#(~/config/bin/battery.sh)'],
+          \'options'    : {'status-justify': 'left'}}
 
     Plug 'christoomey/vim-tmux-navigator'                                         " Scripts for being able to transition between vim and tmux tabs
-      let g:tmux_navigator_disable_when_zoomed = 1                                " Disable when zoomed tmux window
+    let g:tmux_navigator_disable_when_zoomed = 1                                " Disable when zoomed tmux window
     Plug 'benmills/vimux'                                                         " tmux command wrapper
     Plug 'skalnik/vim-vroom'                                                      " run current test file with <leader>r
-      let g:vroom_use_vimux=1
+    let g:vroom_use_vimux=1
 
-      let g:vroom_map_key=0 " Remap run keys to \d
-      nnoremap <leader>d :VroomRunTestFile
-      nnoremap <leader><S-d> :VroomRunNearestTest
+    let g:vroom_map_key=0 " Remap run keys to \d
+    nnoremap <leader>d :VroomRunTestFile
+    nnoremap <leader><S-d> :VroomRunNearestTest
 
-      " let g:vroom_use_spring=1
-      let g:vroom_clear_screen=1
-      " Load formatted info to quickfix
-      nnoremap <S-Right> :cfile tmp/quickfix <Bar> cnext<CR>
-      nnoremap <S-Left> :cfile tmp/quickfix <Bar> cprev<CR>
+    " let g:vroom_use_spring=1
+    let g:vroom_clear_screen=1
+    " Load formatted info to quickfix
+    nnoremap <S-Right> :cfile tmp/quickfix <Bar> cnext<CR>
+    nnoremap <S-Left> :cfile tmp/quickfix <Bar> cprev<CR>
 
-      nnoremap <Right> :cnext<CR>
-      nnoremap <Left> :cprevious<CR>
+    nnoremap <Right> :cnext<CR>
+    nnoremap <Left> :cprevious<CR>
 
-      let g:vroom_cucumber_path='cucumber'
-      let g:vroom_use_zeus=1
-      let g:vroom_spec_command='rspec -r ~/config/formatter/rspec -f RSpec::Core::Formatters::VimFormatter --out tmp/quickfix -f RSpec::Core::Formatters::VimFormatter'
+    let g:vroom_cucumber_path='cucumber'
+    let g:vroom_use_zeus=1
+    let g:vroom_spec_command='rspec -r ~/config/formatter/rspec -f RSpec::Core::Formatters::VimFormatter --out tmp/quickfix -f RSpec::Core::Formatters::VimFormatter'
 
     " Plug 'tpope/vim-obsession'                                                  " Remember tmux session to restore after system reboot
 
@@ -218,20 +219,15 @@ call plug#begin('~/.vim/plugged')
 
     " Use Python Version
     let g:UltiSnipsUsePythonVersion = 2
-    let g:UltiSnipsExpandTrigger='<C-j>'
-    let g:UltiSnipsListSnippets='<C-s>'
-    let g:UltiSnipsJumpForwardTrigger='<C-j>'
-    let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+    let g:UltiSnipsExpandTrigger='<F8>'
+    let g:UltiSnipsListSnippets='<F10>'
+    let g:UltiSnipsJumpForwardTrigger=g:UltiSnipsExpandTrigger
+    let g:UltiSnipsJumpBackwardTrigger='<F9>'
 
   " Plug 'mhinz/vim-sayonara'
-  Plug 'gavinbeatty/dragvisuals.vim'
-    vnoremap  <expr>  <LEFT>   DVB_Drag('left')
-    vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
-    vnoremap  <expr>  <DOWN>   DVB_Drag('down')
-    vnoremap  <expr>  <UP>     DVB_Drag('up')
 
   " Verbs
-   Plug 'christoomey/vim-sort-motion' " ??
+   " Plug 'christoomey/vim-sort-motion' " ??
 
   Plug 'easymotion/vim-easymotion'
 
@@ -298,7 +294,7 @@ call plug#begin('~/.vim/plugged')
 
     Plug 'tpope/vim-fugitive'                  " Git wrapper. Adds bindings for using Git inside vim.
     " Plug 'tpope/vim-rhubarb'                   " Open files in github + omni complition for github stuff
-    Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
+    " Plug 'airblade/vim-gitgutter'              " Side columns to show git changes
     "  let g:gitgutter_map_keys = 0
     "  set signcolumn=yes " Always show changes column
     "  let g:gitgutter_diff_args = '-w' " Ignore whitespace
@@ -323,10 +319,10 @@ call plug#begin('~/.vim/plugged')
 
     " Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
     " JSON
-      Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb', 'javascript'] }
+      " Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb', 'javascript'] }
 
     " JAVASCRIPT
-      Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
+      " Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
 
     " TYPESCRIPT
       set suffixesadd+=.ts
@@ -354,19 +350,17 @@ call plug#begin('~/.vim/plugged')
         let g:ruby_indent_access_modifier_style = 'outdent'
         let g:ruby_indent_block_style = 'do'
         let ruby_no_expensive = 1
-        let g:rubycomplete_buffer_loading = 1
-        let g:rubycomplete_classes_in_global = 1
-        let g:rubycomplete_rails = 1
       Plug 'tpope/vim-endwise'              , { 'for': ['ruby'] } " Autoend ruby blocks
-      Plug 'p0deje/vim-ruby-interpolation'  , { 'for': ['ruby'] }
-      Plug 'aliou/sql-heredoc.vim'          , { 'for': ['ruby'] } " Syntax highlighting for sql inside heredocs
+      Plug 'p0deje/vim-ruby-interpolation'  , { 'for': ['ruby', 'coffee'] }
+      " Plug 'aliou/sql-heredoc.vim'          , { 'for': ['ruby'] } " Syntax highlighting for sql inside heredocs
       Plug 'AndrewRadev/splitjoin.vim'      , { 'for': ['ruby'] } " Convert to one-liners with gS and gJ
         let g:splitjoin_split_mapping = 'gs'
         let g:splitjoin_join_mapping  = 'gj'
 
-      Plug 'nelstrom/vim-textobj-rubyblock' , { 'for': ['ruby'] } " r is ruby-block textobject
-      Plug 'tpope/vim-rails'               "  , { 'for': ['ruby'] }
-      Plug 'tmhedberg/matchit'              , { 'for': ['ruby'] } " Refactoring commands
+      " Plug 'nelstrom/vim-textobj-rubyblock' , { 'for': ['ruby'] } " r is ruby-block textobject
+      " Plug 'tpope/vim-rails'               "  , { 'for': ['ruby'] }
+      " Plug 'tmhedberg/matchit'              , { 'for': ['ruby'] } " Refactoring commands
+      runtime macros/matchit.vim
 
     " COFFEE_SCRIPT
 
@@ -415,6 +409,9 @@ call plug#begin('~/.vim/plugged')
     " GO
        set suffixesadd+=.go
 
+      Plug 'davidhalter/jedi-vim', { 'for': ['python'] }             " PY syntax
+      Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
+
       Plug 'fatih/vim-go', { 'for': ['go'] }
         let g:go_fmt_command = "gofmt" " Manage also imports on save: Add missing, remove redundant
         nmap <F12> <Plug>(go-run)
@@ -435,10 +432,10 @@ call plug#begin('~/.vim/plugged')
         " autocmd FileType go compiler golang
 
     " MARKDOWN
-      set suffixesadd+=.md
+      " set suffixesadd+=.md
 
-      Plug 'shime/vim-livedown', { 'for': ['markdown'] }
-      let g:livedown_open = 1
+      " Plug 'shime/vim-livedown', { 'for': ['markdown'] }
+      " let g:livedown_open = 1
 
   """""""""" LANGUAGE SPECIFIC """"""""""
 call plug#end()
@@ -470,6 +467,9 @@ set number         " Display current line original number
   hi link CtrlPMode2 String
   hi link CtrlPStats PreProc
   hi link CtrlPPrtBase PreProc
+
+  " Highlight for list chars
+  hi NonText ctermfg=154
   "
   " hi CursorLineNR ctermfg=118
   " hi! LineNr ctermfg=12
@@ -532,7 +532,8 @@ set timeoutlen=300 ttimeoutlen=0
 set splitbelow
 set splitright
 
-runtime macros/matchit.vim
+" set gdefault            " Use 'g' flag by default with :s/foo/bar/.
+
 
 " enable autowrite and persistent undo
 if has('persistent_undo')
@@ -544,6 +545,7 @@ if has('persistent_undo')
 endif
 
 set so=3                                                                        " display 3 lines below\above cursor
+set sidescrolloff=5
 set wig=*.o,*.obj,*swp,*.bac,*.class,*.pyc,*.pyo,*.png,*.jpg
 
 " ---------------------------------------------------------------------------------------------------------------------
