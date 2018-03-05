@@ -1,3 +1,4 @@
+
 set nocompatible
 set nohidden
 set t_Co=256
@@ -142,7 +143,7 @@ call plug#begin('~/.vim/plugged')
   " Entire buffer text object (vae)
   " Plug 'kana/vim-textobj-entire'
 
-  " Plug 'neomake/neomake'                                                        " Async task maker
+  Plug 'neomake/neomake'                                                        " Async task maker
   " Neomake on write
   " TODO: think about not counting corrected warnings to global warning count
     " let g:neomake_ruby_rubocopauto_maker = {
@@ -218,7 +219,7 @@ call plug#begin('~/.vim/plugged')
     let g:UltiSnipsEditSplit='vertical'
 
     " Use Python Version
-    let g:UltiSnipsUsePythonVersion = 2
+    let g:UltiSnipsUsePythonVersion = 3
     let g:UltiSnipsExpandTrigger='<F8>'
     let g:UltiSnipsListSnippets='<F10>'
     let g:UltiSnipsJumpForwardTrigger=g:UltiSnipsExpandTrigger
@@ -319,7 +320,7 @@ call plug#begin('~/.vim/plugged')
 
     " Plug 'axiaoxin/vim-json-line-format', { 'for': ['cucumber', 'coffee', 'typescript', 'rb'] }
     " JSON
-      " Plug 'tpope/vim-jdaddy', { 'for': ['cucumber', 'coffee', 'typescript', 'rb', 'javascript'] }
+      Plug 'tpope/vim-jdaddy'
 
     " JAVASCRIPT
       " Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
@@ -406,11 +407,17 @@ call plug#begin('~/.vim/plugged')
     " SLIM
       Plug 'slim-template/vim-slim', { 'for': ['slim'] }             " SLIM syntax
 
+
+    "Python
+      Plug 'nvie/vim-flake8', { 'for': ['python'] }             " PY styleguide
+      Plug 'davidhalter/jedi-vim', { 'for': ['python'] }             " PY syntax
+        let g:jedi#force_py_version=3
+      Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
+      Plug 'vim-python/python-syntax', { 'for': ['python'] }
+        let g:python_highlight_all = 1
+
     " GO
        set suffixesadd+=.go
-
-      Plug 'davidhalter/jedi-vim', { 'for': ['python'] }             " PY syntax
-      Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
 
       Plug 'fatih/vim-go', { 'for': ['go'] }
         let g:go_fmt_command = "gofmt" " Manage also imports on save: Add missing, remove redundant
@@ -423,7 +430,7 @@ call plug#begin('~/.vim/plugged')
         let g:go_highlight_build_constraints = 1
 
         " let $PATH = "/gorename/path:".$PATH
-        let $GOPATH = "/Users/vadim/dev/golang/"
+        " let $GOPATH = "/Users/vadim/dev/golang/"
 
       " Plug 'rjohnsondev/vim-compiler-go', { 'for': ['go'] }
       "   let g:golang_goroot = "/usr/local/Cellar/go/1.7.4_1/libexec"
@@ -507,7 +514,7 @@ set autoindent                                                                  
 set shiftwidth=2
 set tabstop=2
 
-" set formatoptions-=o                                                            " dont continue comments when pushing o/O
+set formatoptions+=cro                                                            " continue comments on new line, broken in python somewhy
 
 " View
 set ruler                                                                       " show cursor position

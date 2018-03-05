@@ -13,7 +13,10 @@ tasks/cucumber.rake
 /tmp/**/*
 
 *.log
+*.orig
 *.cache
 *.sw?
 
 lib/tasks/cucumber.rake
+
+.envrc

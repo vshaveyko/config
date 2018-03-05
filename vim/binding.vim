@@ -9,6 +9,10 @@ let mapleader=","
   nmap <C-k> <C-w>k
   nmap <C-j> <C-w>j
 
+" Clear highlighting on escape in normal mode
+nnoremap <esc> :noh<return><esc>
+" nnoremap <esc>^[ <esc>^[
+
 " Xkbswitch remapping slash in insert mode
 " inoremap / /
 

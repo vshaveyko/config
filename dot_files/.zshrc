@@ -1,3 +1,6 @@
+source ~/.bashrc
+source ~/.bash_profile
+
 # ZSH
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
@@ -77,6 +80,7 @@ export PATH="./bin:$PATH" # Add project ./bin executables as real commands. magi
 ### ALIASES
 #
 # VIM
+alias pip=pip3
 alias nvm="nvim"
 alias vm="nvim"
 alias nm="nvim"
@@ -172,3 +176,16 @@ ENABLE_CORRECTION="true"
 # For a full list of active aliases, run `alias`.
 
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+export TERM=xterm-256color
+
+function luigi_rerun() {
+  ~/config/luigi_rerun/redo "$@"
+}
+
+function luigi_rm() {
+  ~/config/luigi_rerun/rm "$@"
+}
+
+function luigi_out() {
+  ~/config/luigi_rerun/outputs "$@"
+}
