@@ -27,6 +27,9 @@ augroup ALL_AUTO_CMDS
   " RUBY
   autocmd BufWritePost *.rb silent! :Neomake
 
+  "GO
+  autocmd BufWritePost *.go silent! :Neomake
+
   " MARKDOWN
   au FileType markdown nmap gm :LivedownToggle<CR>
 

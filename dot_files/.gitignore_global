@@ -20,3 +20,5 @@ tasks/cucumber.rake
 lib/tasks/cucumber.rake
 
 .envrc
+
+personal_testing_and_stuff/*

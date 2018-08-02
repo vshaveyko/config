@@ -4,10 +4,9 @@ vnoremap ' ,
 
 let mapleader=","
 
-  nmap <C-h> <C-w>h
-  nmap <C-l> <C-w>l
-  nmap <C-k> <C-w>k
-  nmap <C-j> <C-w>j
+for bindfile in split(globpath("~/.vim/bindings", "*.vim" ), '\n')                    " open all config fiels in vim/cfg
+  execute('source '. bindfile)
+endfor
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -197,4 +196,4 @@ cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
 cnoremap <C-d> <Delete>
 
-inoremap <silent> <C-G><C-T> <C-R>=repeat(complete(col('.'),map(["%Y-%m-%d %H:%M:%S","%a, %d %b %Y %H:%M:%S %z","%Y %b %d","%d-%b-%y","%a %b %d %T %Z %Y"],'strftime(v:val)')+[localtime()]),0)<CR>
+inoremap <silent> <C-G><C-T> <C-R>=repeat(complete(col('.'),map(["%Y-%m-%d", "%Y-%m-%d %H:%M:%S","%a, %d %b %Y %H:%M:%S %z","%Y %b %d","%d-%b-%y","%a %b %d %T %Z %Y"],'strftime(v:val)')+[localtime()]),0)<CR>

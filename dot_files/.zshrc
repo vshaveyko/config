@@ -64,8 +64,8 @@ else
   export EDITOR='nvim'
 fi
 
-export GOPATH=$HOME/dev/golang
-export GOBIN=$HOME/dev/golang/bin
+# export GOPATH=$HOME/dev/golang
+# export GOBIN=$HOME/dev/golang/bin
 
 export GIT_ACC=vshaveyko
 
@@ -80,7 +80,9 @@ export PATH="./bin:$PATH" # Add project ./bin executables as real commands. magi
 ### ALIASES
 #
 # VIM
+alias pip2=/usr/local/opt/python@2/libexec/bin/pip
 alias pip=pip3
+alias python=python3
 alias nvm="nvim"
 alias vm="nvim"
 alias nm="nvim"

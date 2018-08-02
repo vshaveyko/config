@@ -1,5 +1,5 @@
 SELECT
-  OBJECT_NAME(OBJECT_ID) AS gaa.dev_ws1_scroll_tracking_channel,
+  OBJECT_NAME(OBJECT_ID) AS tb_name,
   name AS colName,
   TYPE_NAME(system_type_id),
   CASE
