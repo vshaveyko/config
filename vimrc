@@ -1,4 +1,3 @@
-
 set nocompatible
 set nohidden
 set t_Co=256
@@ -410,10 +409,13 @@ call plug#begin('~/.vim/plugged')
       Plug 'slim-template/vim-slim', { 'for': ['slim'] }             " SLIM syntax
 
 
-    "Python
+    " PYTHON
       Plug 'nvie/vim-flake8', { 'for': ['python'] }             " PY styleguide
       Plug 'davidhalter/jedi-vim', { 'for': ['python'] }             " PY syntax
         let g:jedi#force_py_version=3
+        let g:jedi#goto_command = "<c-]>"
+        let g:jedi#goto_assignments_command = ""
+
       Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
       Plug 'vim-python/python-syntax', { 'for': ['python'] }
         let g:python_highlight_all = 1
@@ -423,7 +425,7 @@ call plug#begin('~/.vim/plugged')
        set suffixesadd+=.go
 
       Plug 'fatih/vim-go', { 'for': ['go'] }
-        let g:go_fmt_command = "gofmt" " Manage also imports on save: Add missing, remove redundant
+        let g:go_fmt_command = "goimports" " Manage also imports on save: Add missing, remove redundant
         nmap <F12> <Plug>(go-run)
         let g:go_highlight_functions = 1
         let g:go_highlight_methods = 1
