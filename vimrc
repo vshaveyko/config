@@ -324,6 +324,8 @@ call plug#begin('~/.vim/plugged')
 
     " JAVASCRIPT
       " Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
+      Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+      Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 
     " TYPESCRIPT
       set suffixesadd+=.ts
@@ -415,6 +417,7 @@ call plug#begin('~/.vim/plugged')
       Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
       Plug 'vim-python/python-syntax', { 'for': ['python'] }
         let g:python_highlight_all = 1
+      Plug 'dbsr/vimpy'
 
     " GO
        set suffixesadd+=.go
