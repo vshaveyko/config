@@ -17,19 +17,19 @@ alias gcb="git checkout -b"
 alias gco="git checkout"
 alias gcp="git cherry-pick"
 
-# alias gd="git di"
+alias gd="git diff"
 # alias gdc="git dic"
-# alias gsh="git show"
+alias gsh="git show"
 # alias gf="git app"
 # alias gfa="git app -a"
 # alias gba="git branch -a"
 # alias glg="git lg"
-# alias gh="git hist"
-# alias gr='cd "`git rev-parse --show-toplevel`"'
+alias gh="git hist"
+alias gr='cd "`git rev-parse --show-toplevel`"'
 # alias gv="git vommit"
 
-# complete -F _git_diff gd
-# complete -F _git_diff gdc
+complete -F _git_diff gd
+complete -F _git_diff gdc
 complete -F _git_pull gp
 complete -F _git_branch gb
 complete -F _git_branch gbd

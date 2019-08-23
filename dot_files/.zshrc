@@ -110,7 +110,7 @@ alias zr4="zeus rails s webrick -p 4000"
 alias zrt="zeus rails s webrick -e test"
 
 alias zrt4="zeus rails s webrick -e test -p 4000"
-alias rdbn="rails db:migrate"
+alias rdbm="rails db:migrate"
 
 # GIT
 autoload bashcompinit
@@ -191,3 +191,4 @@ function luigi_rm() {
 function luigi_out() {
   ~/config/luigi_rerun/outputs "$@"
 }
+export PATH="/usr/local/opt/ruby/bin:$PATH"

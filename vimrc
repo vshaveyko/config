@@ -1,3 +1,5 @@
+let g:plug_url_format="git://github.com/%s.git"
+
 set nocompatible
 set nohidden
 set t_Co=256
@@ -306,6 +308,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin' " File Tree
       " Force Vim to not lag with nerd tree
       let g:NERDTreeLimitedSyntax = 1 " limit syntax for the most popular extensions
+      let NERDTreeIgnore=['__generated__[[dir]]', '\~$'] " Hide react-relay auto-generated files
 
     Plug 'ryanoasis/vim-devicons' " File tree icons load after nerdtree airline ctrlp
       let g:WebDevIconsNerdTreeAfterGlyphPadding = '' " Remove 2 space margin after icons from devicons in nerdtree
@@ -323,6 +326,9 @@ call plug#begin('~/.vim/plugged')
 
     " JAVASCRIPT
       " Plug 'isRuslan/vim-es6', { 'for': ['javascript'] }
+      Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+      Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+      Plug 'jparise/vim-graphql', { 'for': ['javascript', 'javascript.jsx'] }
 
     " TYPESCRIPT
       set suffixesadd+=.ts
@@ -349,7 +355,7 @@ call plug#begin('~/.vim/plugged')
       Plug 'vim-ruby/vim-ruby'              , { 'for': ['ruby'] }
         let g:ruby_indent_access_modifier_style = 'outdent'
         let g:ruby_indent_block_style = 'do'
-        let ruby_no_expensive = 1
+        " let ruby_no_expensive = 1 -- breaking indent after update for some reason
       Plug 'tpope/vim-endwise'              , { 'for': ['ruby'] } " Autoend ruby blocks
       Plug 'p0deje/vim-ruby-interpolation'  , { 'for': ['ruby', 'coffee'] }
       " Plug 'aliou/sql-heredoc.vim'          , { 'for': ['ruby'] } " Syntax highlighting for sql inside heredocs

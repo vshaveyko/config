@@ -140,5 +140,5 @@
 	excludesfile = ~/.gitignore_global
 [init]
 	templatedir = ~/.git_template
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+[url "https://github.com/"]
+	insteadOf = git@github.com:

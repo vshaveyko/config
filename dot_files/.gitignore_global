@@ -16,6 +16,7 @@ tasks/cucumber.rake
 *.orig
 *.cache
 *.sw?
+*.md~
 
 lib/tasks/cucumber.rake
 
