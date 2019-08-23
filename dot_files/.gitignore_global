@@ -17,6 +17,8 @@ tasks/cucumber.rake
 *.cache
 *.sw?
 
+.DS_Store
+
 lib/tasks/cucumber.rake
 
 .envrc
