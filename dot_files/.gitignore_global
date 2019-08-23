@@ -18,6 +18,8 @@ tasks/cucumber.rake
 *.sw?
 *.md~
 
+.DS_Store
+
 lib/tasks/cucumber.rake
 
 .envrc
